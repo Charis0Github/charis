@@ -17,6 +17,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
+
       <Route path="/layout" element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="about" element={<About />} />
@@ -26,6 +27,7 @@ function App() {
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="property" element={<Property />} />
       </Route>
+
       <Route path="/affiliate" element={<AffiliateLayout />}>
         <Route index element={<AffiliateLogin />} />
         <Route path="dashboard" element={<AffiliateDashboard />} />
