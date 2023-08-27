@@ -1,64 +1,72 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import dp from "../../assets/dp.png";
 import money from "../../assets/money.svg";
 import target from "../../assets/target.svg";
+import Input from "../../components/Input";
 
 const AffiliateDashboard = () => {
+  const [modal, setModal] = useState(false);
+  const [formDeets, setFormDeets] = useState({
+    accountNumber: "",
+    bankName: "",
+  });
+
+  const { accountNumber, bankName } = formDeets;
   const navigate = useNavigate();
   return (
     <div className="w-full h-full lg:flex gap-[60px] lg:items-start lg:justify-start px-5 lg:px-[70px] mb-10 mt-10">
       {/* LEFT SECTION STARTS HERE */}
       <div className="lg:flex-1 w-full h-full">
-        <h1 className="text-3xl text-[#FF6700]">Dashboard</h1>
+        <h1 className="text-3xl text-[#FF6700] font-sans">Dashboard</h1>
 
         {/* TOP LAYER */}
         <div className="w-full lg:flex gap-8 h-max mt-3">
           <div className="h-[160px] w-full  bg-[#F5F5F5] shadow-md shadow-black/30 pt-2 px-3 rounded-[5px]">
             {/* TOP CARD SECTION */}
             <div className="w-full flex items-center justify-between">
-              <p className="text-sm text-black/50">Total investment</p>
+              <p className="text-sm text-black/50">Balance</p>
             </div>
 
             {/* MIDDLE CARD SECTION*/}
             <p className="font-bold font-sans text-black text-2xl tracking-widest mt-8">
-              N200,000
+              N7,000
             </p>
           </div>
 
           <div className="h-[160px] w-full  bg-[#F5F5F5] shadow-md shadow-black/30 pt-2 px-3 rounded-[5px] mt-9 lg:mt-0">
             {/* TOP CARD SECTION */}
             <div className="w-full flex items-center justify-between">
-              <p className="text-sm text-black/50">Investment Target</p>
+              <p className="text-sm text-black/50">Unpaid Referrals</p>
             </div>
 
             {/* MIDDLE CARD SECTION*/}
             <p className="font-bold font-sans text-black text-2xl tracking-widest mt-8">
-              N5,000,000
+              5
             </p>
           </div>
 
           <div className="h-[160px] w-full  bg-[#F5F5F5] shadow-md shadow-black/30 pt-2 px-3 rounded-[5px] mt-9 lg:mt-0">
             {/* TOP CARD SECTION */}
             <div className="w-full flex items-center justify-between">
-              <p className="text-sm text-black/50">Investment Target</p>
+              <p className="text-sm text-black/50">Paid Referrals</p>
             </div>
 
             {/* MIDDLE CARD SECTION*/}
             <p className="font-bold font-sans text-black text-2xl tracking-widest mt-8">
-              N5,000,000
+              7
             </p>
           </div>
 
           <div className="h-[160px] w-full  bg-[#F5F5F5] shadow-md shadow-black/30 pt-2 px-3 rounded-[5px] mt-9 lg:mt-0">
             {/* TOP CARD SECTION */}
             <div className="w-full flex items-center justify-between">
-              <p className="text-sm text-black/50">Investment Target</p>
+              <p className="text-sm text-black/50">Withdrawn</p>
             </div>
 
             {/* MIDDLE CARD SECTION*/}
             <p className="font-bold font-sans text-black text-2xl tracking-widest mt-8">
-              N5,000,000
+              N10,000
             </p>
           </div>
         </div>
@@ -180,7 +188,10 @@ const AffiliateDashboard = () => {
               <p className="text-black/70 mt-2">Zenith Bank</p>
             </div>
 
-            <div className="bg-[rgb(253,102,2)] h-[18px] py-[20px] px-[25px] rounded-[5px] lg:place-self-center flex items-center justify-center my-7 text-white">
+            <div
+              onClick={() => setModal(true)}
+              className="bg-[rgb(253,102,2)] h-[18px] py-[20px] px-[25px] rounded-[5px] lg:place-self-center flex items-center justify-center my-7 text-white"
+            >
               Edit Details
             </div>
           </div>
@@ -188,6 +199,47 @@ const AffiliateDashboard = () => {
         </div>
       </div>
       {/* RIGHT SECTION ENDS HERE */}
+
+      {/* MODAL BEGINS HERE */}
+      {modal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10 p-4">
+          <div className="bg-white lg:p-8 p-4 lg:px-20 rounded-lg h-max w-[500px] relative">
+            <h1 className="text-black font-sans font-bold mb-10">
+              Payment Details
+            </h1>
+            <div className="flex flex-col w-full gap-2 mb-8">
+              <Input
+                type={"text"}
+                name={"accountNumber"}
+                placeholder={""}
+                label={"Account Number "}
+                value={accountNumber}
+              />
+              <p className="text-[#FD6602] font-sans">John Doe Emmanuel</p>
+            </div>
+
+            <Input
+              type={"text"}
+              name={"bankName"}
+              placeholder={""}
+              label={"Bank Name"}
+              value={bankName}
+            />
+
+            <button className="bg-black h-[18px] py-[20px] px-[25px] rounded-[5px] lg:place-self-center flex items-center justify-center w-[80%] my-7 text-white">
+              Done
+            </button>
+
+            <div
+              onClick={() => setModal(false)}
+              className="absolute -top-3 flex items-center justify-center lg:right-[-10px] -right-3 h-[20px] w-[20px] rounded-full p-1 bg-black text-white cursor-pointer"
+            >
+              <h1 className="text-xs font-bold">X</h1>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* MODAL ENDS HERE */}
     </div>
   );
 };

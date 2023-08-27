@@ -6,9 +6,9 @@ import { createUser, loginUser, reset } from "../Redux/Features/authSlice";
 
 const Login = () => {
   const pageState = localStorage.getItem("pageState");
+  const [register, setRegister] = useState(pageState);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [register, setRegister] = useState(pageState || false);
 
   const {
     isLoading,
@@ -43,15 +43,20 @@ const Login = () => {
     setLoginForm({ ...loginForm, [name]: value });
   };
 
-  const handleRegister = () => {
-    setRegister(!register);
-    localStorage.setItem("pageState", register);
+  const handleRegister = (data) => {
+    if (data === "login") {
+      setRegister("false");
+      localStorage.setItem("pageState", "false");
+    } else {
+      setRegister("true");
+      localStorage.setItem("pageState", "true");
+    }
     console.log("PAGE STATE:" + register);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (register) {
+    if (register === "true") {
       if (registerForm.password === registerForm.passwordConfirm) {
         const formData = {
           name: registerForm.name,
@@ -103,6 +108,15 @@ const Login = () => {
     }
   }, [isSuccess, isError, message, isSignInSuccess, isSignInError]);
 
+  useEffect(() => {
+    console.log(pageState);
+    console.log("register" + register);
+    if (pageState === null) {
+      setRegister("false");
+    } else {
+      return;
+    }
+  }, []);
   // useEffect(() => {
   //   dispatch(reset());
   // },[])
@@ -114,7 +128,7 @@ const Login = () => {
           <h1 className="text-black text-[20px] font-sans font-bold mb-[15px]">
             Welcome
           </h1>
-          {register ? (
+          {register === "true" ? (
             <p className="font-normal font-sans mb-[20px] text-[#11111195]">
               Let's get you signed up
             </p>
@@ -136,7 +150,7 @@ const Login = () => {
             </p>
           )}
 
-          {register ? (
+          {register === "true" ? (
             <React.Fragment>
               {/* RESISTRATION FORM BEGINS HERE  */}
               <div>
@@ -226,7 +240,7 @@ const Login = () => {
             </React.Fragment>
           ) : (
             <React.Fragment>
-              {/* LOGIN FORM ENDS HERE */}
+              {/* LOGIN FORM BEGINS HERE */}
               <div>
                 <label htmlFor="email-address" className="text-sm">
                   E-mail
@@ -291,16 +305,27 @@ const Login = () => {
           )}
         </form>
 
-        <p>
-          {register ? "Already Have an Account?" : "Don't Have an Account?"}
-          <span
-            onClick={() => handleRegister()}
-            className="text-[#0106A0] cursor-pointer"
-          >
-            {" "}
-            {register ? "Sign In" : "Sign Up"}
-          </span>
-        </p>
+        {register === "true" ? (
+          <p>
+            Already Have an Account?
+            <span
+              onClick={() => handleRegister("login")}
+              className="text-[#0106A0] cursor-pointer"
+            >
+              Sign In
+            </span>
+          </p>
+        ) : (
+          <p>
+            Don't Have an Account?
+            <span
+              onClick={() => handleRegister("register")}
+              className="text-[#0106A0] cursor-pointer"
+            >
+              Sign Up
+            </span>
+          </p>
+        )}
       </div>
       <div className="w-full h-full login flex items-center justify-center relative">
         <div className="absolute w-full h-full bg-[#ffffff5a]"></div>

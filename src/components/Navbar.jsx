@@ -106,7 +106,7 @@ const Navbar = () => {
           className=" relative flex items-center justify-between p-2 px-4 lg:py-2 rounded-lg space-x-2 w-auto text-white text-sm bg-[#FF6700]"
         >
           <img width={15} height={15} src={profile} alt="user icon" />
-          <p>{user ? user.user.name : "Username"}</p>
+          <p>{user ? user?.user?.name : "Username"}</p>
           <img width={20} height={20} src={arr} alt="drop down arrow icon" />
           {menu && (
             <ul className="absolute top-[40px] flex flex-col gap-4 items-start justify-start left-0 h-max py-4 px-4 w-max bg-[#000000] z-30 rounded-md text-white">
@@ -173,7 +173,7 @@ const Navbar = () => {
           className=" relative flex items-center justify-between p-2 px-4 lg:py-2 rounded-lg space-x-2 w-auto text-white text-sm bg-[#FF6700]"
         >
           <img width={15} height={15} src={profile} alt="user icon" />
-          <p>{user ? user.user.name : "User Name"}</p>
+          <p>{user ? user?.user?.name : "User Name"}</p>
           <img width={20} height={20} src={arr} alt="drop down arrow icon" />
 
           {menu && (

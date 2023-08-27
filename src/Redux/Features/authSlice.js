@@ -5,11 +5,12 @@ import axios from "axios";
 const BASE_URL = "https://motionless-pig-top-hat.cyclic.app/api/v1";
 
 // GET USER FROM LOCAL STORAGE
-const user = JSON.parse(localStorage.getItem("user"));
+// const user = JSON.parse(localStorage.getItem("user"));
 
 //INITIAL STATE FOR THE AUTH
 const initialState = {
-  user: user ? user : null,
+  user: {},
+  userDetails: {},
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -59,8 +60,32 @@ export const loginUser = createAsyncThunk(
       console.log(response.data);
       if (response.status === 200) {
         localStorage.setItem("token", response.data.token);
+        localStorage.setItem("uid", response.data._id);
         return response.data;
       }
+    } catch (error) {
+      if (error.response) {
+        const obj = error.response.data;
+        const objKey = Object.keys(obj)[0];
+        let err = obj[objKey];
+        // console.log(err)
+        return thunkAPI.rejectWithValue(err);
+      } else if (error.request) {
+        return thunkAPI.rejectWithValue("something went terribly wrong");
+      } else {
+        const obj = error.response.data;
+        const objKey = Object.keys(obj)[0];
+        let err = obj[objKey];
+        return thunkAPI.rejectWithValue(err);
+      }
+    }
+  }
+);
+
+export const getUserDetails = createAsyncThunk(
+  "auth/userDeets",
+  async (thunkAPI) => {
+    try {
     } catch (error) {
       if (error.response) {
         const obj = error.response.data;
