@@ -5,7 +5,7 @@ import arr from "../assets/dwnArr.svg";
 import logout from "../assets/logout.svg";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { AiOutlineClose } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { logOut } from "../Redux/Features/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -35,7 +35,7 @@ const Navbar = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
+  const { user, userDetails } = useSelector((state) => state.auth);
 
   const [active, setActive] = useState(localStorage.getItem("tab") || "2");
   const [menu, setMenu] = useState(false);
@@ -43,7 +43,7 @@ const Navbar = () => {
   const changeTab = (id) => {
     setActive(id.toString());
     if (id === 2) {
-      navigate("/layout");
+      navigate("/");
       setNav(!nav);
     }
     if (id === 3) {
@@ -64,6 +64,10 @@ const Navbar = () => {
     }
     if (id === 7) {
       navigate("dashboard");
+      setNav(!nav);
+    }
+    if (id === 8) {
+      navigate("/admin");
       setNav(!nav);
     }
   };
@@ -101,38 +105,58 @@ const Navbar = () => {
           </li>
         ))}
 
-        <div
-          onClick={() => setMenu(!menu)}
-          className=" relative flex items-center justify-between p-2 px-4 lg:py-2 rounded-lg space-x-2 w-auto text-white text-sm bg-[#FF6700]"
-        >
-          <img width={15} height={15} src={profile} alt="user icon" />
-          <p>{user ? user?.user?.name : "Username"}</p>
-          <img width={20} height={20} src={arr} alt="drop down arrow icon" />
-          {menu && (
-            <ul className="absolute top-[40px] flex flex-col gap-4 items-start justify-start left-0 h-max py-4 px-4 w-max bg-[#000000] z-30 rounded-md text-white">
-              <li
-                onClick={() => changeTab(7)}
-                className="text-sm p-1 hover:bg-[#FF6700] w-full px-2 flex items-center justify-start gap-3"
-              >
-                <img width={15} height={15} src={profile} alt="user icon" />
-                Main Dashboard
-              </li>
+        {user ? (
+          <div
+            onClick={() => setMenu(!menu)}
+            className=" relative flex items-center justify-between p-2 px-4 lg:py-2 rounded-lg space-x-2 w-auto text-white text-sm bg-[#FF6700]"
+          >
+            <img width={15} height={15} src={profile} alt="user icon" />
+            <p>{userDetails ? userDetails?.userData?.name : "Username"}</p>
+            <img width={20} height={20} src={arr} alt="drop down arrow icon" />
+            {menu && (
+              <ul className="absolute top-[40px] flex flex-col gap-4 items-start justify-start right-0 h-max py-4 px-4 w-max bg-[#000000] z-30 rounded-md text-white">
+                <li
+                  onClick={() => changeTab(7)}
+                  className="text-sm p-1 hover:bg-[#FF6700] w-full px-2 flex items-center justify-start gap-3"
+                >
+                  <img width={15} height={15} src={profile} alt="user icon" />
+                  Main Dashboard
+                </li>
 
-              <li className="text-sm p-1 hover:bg-[#FF6700] w-full px-2 flex items-center justify-start gap-3">
-                <img width={15} height={15} src={profile} alt="user icon" />
-                Affiliate Dashboard
-              </li>
+                <li className="text-sm p-1 hover:bg-[#FF6700] w-full px-2 flex items-center justify-start gap-3">
+                  <img width={15} height={15} src={profile} alt="user icon" />
+                  Affiliate Dashboard
+                </li>
 
-              <li
-                onClick={() => dispatch(logOut())}
-                className="text-sm p-1 hover:bg-[#FF6700] w-full px-2 flex items-center justify-start gap-3"
-              >
-                <img width={20} height={20} src={logout} alt="exit icon" />
-                Log Out
-              </li>
-            </ul>
-          )}
-        </div>
+                {userDetails?.userData?.role === "admin" ? (
+                  <li
+                    onClick={() => changeTab(8)}
+                    className="text-sm p-1 hover:bg-[#FF6700] w-full px-2 flex items-center justify-start gap-3"
+                  >
+                    <img width={15} height={15} src={profile} alt="user icon" />
+                    Admin Dashboard
+                  </li>
+                ) : null}
+
+                <li
+                  onClick={() => dispatch(logOut())}
+                  className="text-sm p-1 hover:bg-[#FF6700] w-full px-2 flex items-center justify-start gap-3"
+                >
+                  <img width={20} height={20} src={logout} alt="exit icon" />
+                  Log Out
+                </li>
+              </ul>
+            )}
+          </div>
+        ) : (
+          <Link
+            to="/login"
+            className=" relative flex items-center justify-between p-2 px-4 lg:py-2 rounded-lg space-x-2 w-auto text-white text-sm bg-[#FF6700]"
+          >
+            <img width={15} height={15} src={profile} alt="user icon" />
+            <p className="text-white font-semibold font-sans ">Sign In</p>
+          </Link>
+        )}
       </ul>
 
       <div className="lg:hidden z-50">
@@ -168,39 +192,58 @@ const Navbar = () => {
           </li>
         ))}
 
-        <div
-          onClick={() => setMenu(!menu)}
-          className=" relative flex items-center justify-between p-2 px-4 lg:py-2 rounded-lg space-x-2 w-auto text-white text-sm bg-[#FF6700]"
-        >
-          <img width={15} height={15} src={profile} alt="user icon" />
-          <p>{user ? user?.user?.name : "User Name"}</p>
-          <img width={20} height={20} src={arr} alt="drop down arrow icon" />
+        {user ? (
+          <div
+            onClick={() => setMenu(!menu)}
+            className=" relative flex items-center justify-between p-2 px-4 lg:py-2 rounded-lg space-x-2 w-auto text-white text-sm bg-[#FF6700]"
+          >
+            <img width={15} height={15} src={profile} alt="user icon" />
+            <p>{userDetails ? userDetails?.userData?.name : "Username"}</p>
+            <img width={20} height={20} src={arr} alt="drop down arrow icon" />
+            {menu && (
+              <ul className="absolute top-[40px] flex flex-col gap-4 items-start justify-start right-0 h-max py-4 px-4 w-max bg-[#000000] z-30 rounded-md text-white">
+                <li
+                  onClick={() => changeTab(7)}
+                  className="text-sm p-1 hover:bg-[#FF6700] w-full px-2 flex items-center justify-start gap-3"
+                >
+                  <img width={15} height={15} src={profile} alt="user icon" />
+                  Main Dashboard
+                </li>
 
-          {menu && (
-            <ul className="absolute top-[40px] flex flex-col gap-4 items-start justify-start left-0 h-max py-4 px-4 w-max bg-[#000000] z-50 rounded-md text-white">
-              <li
-                onClick={() => changeTab(7)}
-                className="text-sm p-1 hover:bg-[#FF6700] w-full px-2 flex items-center justify-start gap-3"
-              >
-                <img width={15} height={15} src={profile} alt="user icon" />
-                Main Dashboard
-              </li>
+                <li className="text-sm p-1 hover:bg-[#FF6700] w-full px-2 flex items-center justify-start gap-3">
+                  <img width={15} height={15} src={profile} alt="user icon" />
+                  Affiliate Dashboard
+                </li>
 
-              <li className="text-sm p-1 hover:bg-[#FF6700] w-full px-2 flex items-center justify-start gap-3">
-                <img width={15} height={15} src={profile} alt="user icon" />
-                Affiliate Dashboard
-              </li>
+                {userDetails?.userData?.role === "admin" ? (
+                  <li
+                    onClick={() => changeTab(8)}
+                    className="text-sm p-1 hover:bg-[#FF6700] w-full px-2 flex items-center justify-start gap-3"
+                  >
+                    <img width={15} height={15} src={profile} alt="user icon" />
+                    Admin Dashboard
+                  </li>
+                ) : null}
 
-              <li
-                onClick={() => dispatch(logOut())}
-                className="text-sm p-1 hover:bg-[#FF6700] w-full px-2 flex items-center justify-start gap-3"
-              >
-                <img width={20} height={20} src={logout} alt="exit icon" />
-                Log Out
-              </li>
-            </ul>
-          )}
-        </div>
+                <li
+                  onClick={() => dispatch(logOut())}
+                  className="text-sm p-1 hover:bg-[#FF6700] w-full px-2 flex items-center justify-start gap-3"
+                >
+                  <img width={20} height={20} src={logout} alt="exit icon" />
+                  Log Out
+                </li>
+              </ul>
+            )}
+          </div>
+        ) : (
+          <Link
+            to="/login"
+            className=" relative flex items-center justify-between p-2 px-4 lg:py-2 rounded-lg space-x-2 w-auto text-white text-sm bg-[#FF6700]"
+          >
+            <img width={15} height={15} src={profile} alt="user icon" />
+            <p className="text-white font-semibold font-sans ">Sign In</p>
+          </Link>
+        )}
       </ul>
     </div>
   );

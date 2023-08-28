@@ -3,9 +3,12 @@ import { useNavigate } from "react-router-dom";
 import dp from "../assets/dp.png";
 import money from "../assets/money.svg";
 import target from "../assets/target.svg";
+import { useSelector } from "react-redux";
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const { userDetails } = useSelector((state) => state.auth);
+
   return (
     <div className="w-full h-full lg:flex gap-[60px] px-5 lg:px-[70px] mb-10 mt-10">
       <div className="lg:flex-1 w-full h-full">
@@ -13,30 +16,30 @@ const Dashboard = () => {
         <div className="w-full  lg:px-0 h-[230px] aspect-auto rounded-[10px] profile-banner bg-cover lg:bg-cover bg-no-repeat bg-left flex flex-col items-center justify-center">
           <div className="lg:w-[500px] flex flex-col gap-4 lg:gap-1 lg:pl-5 w-full px-5 h-full lg:h-auto pt-10 lg:pt-0 lg:mt-0 bg-black/60 lg:bg-transparent">
             <h1 className="text-white/70 text-sm font-extralight text-left">
-              Hi, Umoru Emmanuel
+              Hi, {userDetails ? userDetails?.userData?.name : "user's name"}
             </h1>
             <h1 className="text-white text-xl font-medium my-1 text-left">
               Welcome to your Client Dashboard
             </h1>
             <h1 className="text-white/70 text-sm font-extralight text-left">
               Here, You can track your payment , View your profile status , get
-              a loan and so much more{" "}
+              a loan and so much more
             </h1>
           </div>
         </div>
 
         {/* CARD SECTION STARTS HERE */}
         <div className="w-full lg:flex gap-8 h-max mt-3">
-          <div className="h-[185px] w-full lg:w-[290px] bg-white shadow-md shadow-black/30 pt-2 px-3 rounded-[5px]">
+          <div className="h-[185px] w-full lg:w-full bg-white shadow-md shadow-black/30 pt-2 px-3 rounded-[5px]">
             {/* TOP CARD SECTION */}
             <div className="w-full flex items-center justify-between">
-              <p className="text-sm text-black/50">Total investment</p>
+              <p className="text-sm text-black/50">Savings</p>
               <img src={money} className="bg-[#FD6602] p-1" />
             </div>
 
             {/* MIDDLE CARD SECTION*/}
             <p className="font-bold font-sans text-black text-2xl tracking-widest mt-8">
-              N200,000
+              N0.00
             </p>
 
             {/* BOTTOM CARD SECTION*/}
@@ -50,16 +53,29 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="h-[185px] w-full lg:w-[290px] bg-white shadow-md shadow-black/30 pt-2 px-3 rounded-[5px] mt-9 lg:mt-0">
+          <div className="h-[185px] w-full lg:w-full bg-white shadow-md shadow-black/30 pt-2 px-3 rounded-[5px] mt-9 lg:mt-0">
             {/* TOP CARD SECTION */}
             <div className="w-full flex items-center justify-between">
-              <p className="text-sm text-black/50">Investment Target</p>
+              <p className="text-sm text-black/50">House Payment</p>
               <img src={target} className="bg-[#FD6602] p-1" />
             </div>
 
             {/* MIDDLE CARD SECTION*/}
             <p className="font-bold font-sans text-black text-2xl tracking-widest mt-8">
-              N5,000,000
+              N0.00
+            </p>
+          </div>
+
+          <div className="h-[185px] w-full lg:w-full bg-white shadow-md shadow-black/30 pt-2 px-3 rounded-[5px] mt-9 lg:mt-0">
+            {/* TOP CARD SECTION */}
+            <div className="w-full flex items-center justify-between">
+              <p className="text-sm text-black/50">House Target</p>
+              <img src={target} className="bg-[#FD6602] p-1" />
+            </div>
+
+            {/* MIDDLE CARD SECTION*/}
+            <p className="font-bold font-sans text-black text-2xl tracking-widest mt-8">
+              N0.00
             </p>
           </div>
         </div>
@@ -93,48 +109,6 @@ const Dashboard = () => {
                 <td className="pb-2 pr-8 text-green-400">Successful</td>
                 <td className="pb-2 pr-8">0011054FY</td>
               </tr>
-              <tr>
-                <td className="pb-2 pr-8">Umoru Emmanuel</td>
-                <td className="pb-2 pr-8">N20,000</td>
-                <td className="pb-2 pr-8">01/08/2023</td>
-                <td className="pb-2 pr-8 text-red-400">Successful</td>
-                <td className="pb-2 pr-8">0011054FY</td>
-              </tr>
-              <tr>
-                <td className="pb-2 pr-8">Umoru Emmanuel</td>
-                <td className="pb-2 pr-8">N20,000</td>
-                <td className="pb-2 pr-8">01/08/2023</td>
-                <td className="pb-2 pr-8 text-green-400">Successful</td>
-                <td className="pb-2 pr-8">0011054FY</td>
-              </tr>
-              <tr>
-                <td className="pb-2 pr-8">Umoru Emmanuel</td>
-                <td className="pb-2 pr-8">N20,000</td>
-                <td className="pb-2 pr-8">01/08/2023</td>
-                <td className="pb-2 pr-8 text-red-400">Successful</td>
-                <td className="pb-2 pr-8">0011054FY</td>
-              </tr>
-              <tr>
-                <td className="pb-2 pr-8">Umoru Emmanuel</td>
-                <td className="pb-2 pr-8">N20,000</td>
-                <td className="pb-2 pr-8">01/08/2023</td>
-                <td className="pb-2 pr-8 text-red-400">Successful</td>
-                <td className="pb-2 pr-8">0011054FY</td>
-              </tr>
-              <tr>
-                <td className="pb-2 pr-8">Umoru Emmanuel</td>
-                <td className="pb-2 pr-8">N20,000</td>
-                <td className="pb-2 pr-8">01/08/2023</td>
-                <td className="pb-2 pr-8 text-green-400">Successful</td>
-                <td className="pb-2 pr-8">0011054FY</td>
-              </tr>
-              <tr>
-                <td className="pb-2 pr-8">Umoru Emmanuel</td>
-                <td className="pb-2 pr-8">N20,000</td>
-                <td className="pb-2 pr-8">01/08/2023</td>
-                <td className="pb-2 pr-8 text-green-400">Successful</td>
-                <td className="pb-2 pr-8">0011054FY</td>
-              </tr>
             </tbody>
           </table>
         </div>
@@ -143,7 +117,7 @@ const Dashboard = () => {
       <div className="lg:w-[330px] w-full h-full mt-10 lg:mt-0">
         {/* NAVIGATION BUTTON */}
         <div
-          onClick={() => navigate("/layout")}
+          onClick={() => navigate("/")}
           className="w-full h-[32px] flex bg-black items-center justify-center gap-5 rounded-[5px] cursor-pointer"
         >
           <h1 className="text-white">Go back to website</h1>
@@ -162,7 +136,7 @@ const Dashboard = () => {
         </div>
 
         {/* PROFILE SECTION */}
-        <div className="flex flex-col w-full h-full items-center justify-center lg:px-[40px] px-5 mt-5 bg-white shadow-md shadow-black/30">
+        <div className="flex flex-col w-full h-full items-center justify-center lg:px-[28px] px-5 mt-5 bg-white shadow-md shadow-black/30">
           {/* PROFILE SECTION STARTS HERE */}
           <img
             src={dp}
@@ -170,19 +144,33 @@ const Dashboard = () => {
             className="w-[138px] h-[138px] rounded-full mt-10 object-cover mb-5"
           />
 
-          <h1 className="font-bold text-xl">Umoru Emmanuel</h1>
+          <h1 className="font-bold text-xl">
+            {userDetails ? userDetails?.userData?.name : "user's Name"}
+          </h1>
           <p className="text-black/70">(Active User)</p>
 
-          <p className="text-black/70 mt-8">Umoru.emmanuel@yahoo.com</p>
-          <p className="text-black/70">+234-907-634-5063</p>
+          <p className="text-black/70 mt-8">
+            {userDetails ? userDetails?.userData?.email : "user's Email"}
+            {/* Umoru.emmanuel@yahoo.com */}
+          </p>
+          <p className="text-black/70">
+            {userDetails
+              ? userDetails?.userData?.phoneNumber
+              : "user's Phone Number"}
+          </p>
 
-          <div className="bg-[rgb(253,102,2)] h-[18px] py-[15px] px-[25px] rounded-[5px] flex items-center justify-center my-7 text-white">
-            Get a loan
+          <div className="w-full flex gap-4 items-center">
+            <div className="bg-[rgb(253,102,2)] w-full h-[20px] py-[15px] px-[15px] rounded-[5px] flex items-center justify-center my-7 text-white">
+              Get a loan
+            </div>
+            <div className="bg-[#000] w-full h-[20px] py-[15px] px-[5px] rounded-[5px] flex items-center justify-center my-7 text-white text-sm">
+              Pay Share Capital
+            </div>
           </div>
           {/* PROFILE SECTION ENDS HEREm*/}
 
           {/* ONLINE STORE DISPLAY STARTS HERE */}
-          <div className="lg:w-[280px] w-full h-[231px] bg-no-repeat bg-center bg-shop-banner object-cover rounded-[10px] mb-20 px-5">
+          <div className="lg:w-[280px] w-full h-[231px] bg-no-repeat bg-center shop-banner object-cover rounded-[10px] mb-20 px-5">
             <div className="w-[92px] h-[24px] bg-white rounded-[10px] mt-4 flex items-center justify-center">
               <p className="text-xs text-center">Shop Online</p>
             </div>
@@ -195,7 +183,7 @@ const Dashboard = () => {
           {/* ONLINE STORE DISPLAY ENDS HERE */}
 
           {/* CARD DISPLAY STARTS HERE */}
-          <div className="lg:w-[290px] w-full bg-no-repeat bg-center h-[178px] bg-card-banner  object-cover rounded-[20px] mb-10 px-5 ">
+          <div className="lg:w-[290px] w-full bg-no-repeat bg-center h-[178px] card-banner  object-cover rounded-[20px] mb-10 px-5 ">
             <p className="text-white/70 font-extralight mt-5 text-xs">
               Debit Naira
             </p>

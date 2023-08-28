@@ -16,6 +16,9 @@ const initialState = {
   isLoading: false,
   isSignInSuccess: false,
   isSignInError: false,
+  userDeetsLoading: false,
+  userDeetsSuccess: false,
+  userDeetsError: false,
   message: "",
 };
 
@@ -85,13 +88,24 @@ export const loginUser = createAsyncThunk(
 export const getUserDetails = createAsyncThunk(
   "auth/userDeets",
   async (thunkAPI) => {
+    const id = localStorage.getItem("uid");
+    const token = localStorage.getItem("token");
+    // console.log("USER ID: " + id);
     try {
+      const response = await axios.get(BASE_URL + `/users/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.status === 200) {
+        return response.data;
+      }
     } catch (error) {
       if (error.response) {
         const obj = error.response.data;
         const objKey = Object.keys(obj)[0];
         let err = obj[objKey];
-        // console.log(err)
+        console.log(err);
         return thunkAPI.rejectWithValue(err);
       } else if (error.request) {
         return thunkAPI.rejectWithValue("something went terribly wrong");
@@ -156,6 +170,23 @@ export const authSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
         state.user = null;
+      })
+
+      // USER DETAILS HANDLER
+      .addCase(getUserDetails.pending, (state) => {
+        state.userDeetsLoading = true;
+      })
+      .addCase(getUserDetails.fulfilled, (state, action) => {
+        state.userDeetsLoading = false;
+        state.userDeetsSuccess = true;
+        state.userDeetsError = false;
+        state.userDetails = action.payload;
+      })
+      .addCase(getUserDetails.rejected, (state, action) => {
+        state.userDeetsLoading = false;
+        state.userDeetsSuccess = false;
+        state.userDeetsError = true;
+        state.message = action.payload;
       });
   },
 });

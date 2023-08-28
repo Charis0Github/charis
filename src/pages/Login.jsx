@@ -2,7 +2,12 @@ import React, { useEffect, useState } from "react";
 import login1 from "../assets/login1.png";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { createUser, loginUser, reset } from "../Redux/Features/authSlice";
+import {
+  createUser,
+  loginUser,
+  reset,
+  getUserDetails,
+} from "../Redux/Features/authSlice";
 
 const Login = () => {
   const pageState = localStorage.getItem("pageState");
@@ -101,7 +106,8 @@ const Login = () => {
     }
 
     if (isSignInSuccess) {
-      navigate("/layout");
+      dispatch(getUserDetails());
+      navigate("/");
       setTimeout(() => {
         dispatch(reset());
       }, 2000);
@@ -177,7 +183,6 @@ const Login = () => {
                   name="email"
                   type="email"
                   required
-                  autoComplete="email"
                   onChange={handleRegisterChange}
                   className="relative block w-full appearance-none rounded-lg border border-[#D9D9D9] mb-[20px] px-3 py-3 text-gray-900 placeholder-[#11111195] focus:border-[#D9D9D9] focus:outline-none sm:text-sm"
                   placeholder="Enter your e-mail"
@@ -208,7 +213,6 @@ const Login = () => {
                   name="password"
                   type="password"
                   required
-                  autoComplete="current-password"
                   onChange={handleRegisterChange}
                   className="relative block w-full appearance-none rounded-lg border border-[#D9D9D9] mb-[20px] px-3 py-3 text-gray-900 placeholder-[#11111195] focus:border-[#D9D9D9] focus:outline-none sm:text-sm"
                   placeholder="Enter your Password"
@@ -249,7 +253,6 @@ const Login = () => {
                   id="email-address"
                   name="email"
                   type="email"
-                  autoComplete="email"
                   onChange={handleLoginChange}
                   className="relative block w-full appearance-none rounded-lg border border-[#D9D9D9] mb-[20px] px-3 py-3 text-gray-900 placeholder-[#11111195] focus:border-[#D9D9D9] focus:outline-none sm:text-sm"
                   placeholder="Enter your e-mail"
@@ -264,7 +267,6 @@ const Login = () => {
                   id="password"
                   name="password"
                   type="password"
-                  autoComplete="current-password"
                   onChange={handleLoginChange}
                   className="relative block w-full appearance-none rounded-lg border border-[#D9D9D9] mb-[20px] px-3 py-3 text-gray-900 placeholder-[#11111195] focus:border-[#D9D9D9] focus:outline-none sm:text-sm"
                   placeholder="Enter your Password"

@@ -4,6 +4,7 @@ import dp from "../../assets/dp.png";
 import money from "../../assets/money.svg";
 import target from "../../assets/target.svg";
 import Input from "../../components/Input";
+import { useSelector } from "react-redux";
 
 const AffiliateDashboard = () => {
   const [modal, setModal] = useState(false);
@@ -11,6 +12,8 @@ const AffiliateDashboard = () => {
     accountNumber: "",
     bankName: "",
   });
+
+  const { userDetails } = useSelector((state) => state.auth);
 
   const { accountNumber, bankName } = formDeets;
   const navigate = useNavigate();
@@ -137,7 +140,7 @@ const AffiliateDashboard = () => {
       <div className="lg:w-[330px] w-full h-full mt-10 lg:mt-0">
         {/* NAVIGATION BUTTON */}
         <div
-          onClick={() => navigate("/layout")}
+          onClick={() => navigate("/")}
           className="w-full h-[32px] flex bg-black items-center justify-center gap-5 rounded-[5px] cursor-pointer"
         >
           <h1 className="text-white">Go to website</h1>

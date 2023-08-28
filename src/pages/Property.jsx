@@ -35,46 +35,6 @@ const Property = () => {
 
       {/* PROPERTY DISPLAY SECTION STARTS */}
       <div className="w-full lg:flex-wrap flex lg:flex-row flex-col h-max items-center justify-start gap-[6.79rem] py-10 px-5 lg:px-0">
-        {/* <div className="card shadow-md shadow-black/50 ">
-          <div className="flex flex-col w-full h-full ">
-            <img
-              src={property1}
-              className=" h-full w-full object-cover rounded-t-lg"
-            />
-            <div className="w-full h-full p-3 rounded-b-lg flex flex-col gap-5  py-5">
-              <h1 className="w-full text-3xl font-semibold"> N5,000,000</h1>
-              <p className="w-[300px]">
-                Residential house in a friendly neighboorhood
-              </p>
-
-              <div className="w-full flex items-center gap-3 mt-4">
-                <img
-                  src={location}
-                  className=" h-5 w-5 object-cover rounded-t-lg"
-                />
-                <p>37 Omoregbe Street, Benin City</p>
-              </div>
-
-              <div className="w-full flex items-center justify-between">
-                <div className="w-full flex items-center gap-3">
-                  <img
-                    src={sqft}
-                    className=" h-5 w-5 object-cover rounded-t-lg"
-                  />
-                  <p>4000 sqft</p>
-                </div>
-
-                <div className="w-full flex items-center justify-center gap-3">
-                  <img
-                    src={room}
-                    className=" h-5 w-5 object-cover rounded-t-lg"
-                  />
-                  <p className="">4 Bedroom</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> */}
         {property
           ? property?.properties?.map((item) => (
               <div key={item._id} className="card shadow-md shadow-black/50 ">

@@ -52,6 +52,14 @@
   background-image: url("./assets/bg-profile-page.png");
 }
 
+.shop-banner{
+  background-image: url("./assets/shop-online.png");
+}
+
+.card-banner{
+  background-image: url("./assets/card-img.png");
+}
+
 .news {
   position: relative;
 }

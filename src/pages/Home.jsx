@@ -16,12 +16,16 @@ import prop3 from "../assets/prop3.png";
 import prop4 from "../assets/prop4.png";
 import Input from "../components/Input";
 import { Form1, Form2, Form3, Form4 } from "./Forms/Forms";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Home = () => {
   const [active, setActive] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const [steps, setSteps] = useState(0);
+
+  const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
 
   const tabs = [
     { id: 1, text: "Get house allocation" },
@@ -37,6 +41,14 @@ const Home = () => {
 
   const close = () => {
     setIsOpen(false);
+  };
+
+  const handleForm = () => {
+    if (user) {
+      setIsOpen(true);
+    } else {
+      navigate("/login");
+    }
   };
 
   const handleStep = (step) => {
@@ -227,11 +239,11 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="flex items-center lg:justify-start justify-center w-full mt-3 lg:pl-20 ">
-            <h1
-              onClick={() => setIsOpen(true)}
-              className="text-black bg-white join p-2 rounded-lg text-sm px-6 py-3 font-bold cursor-pointer"
-            >
+          <div
+            onClick={handleForm}
+            className="flex items-center lg:justify-start justify-center w-full mt-3 lg:pl-20 "
+          >
+            <h1 className="text-black bg-white join p-2 rounded-lg text-sm px-6 py-3 font-bold cursor-pointer">
               Join co-operative
             </h1>
           </div>
@@ -365,7 +377,7 @@ const Home = () => {
             </p>
 
             <button className="flex items-center space-x-3 justify-between mt-8 text-lg bg-black py-2 px-4 lg:px-6  lg:py-2 rounded-md w-auto font-bold text-white">
-              <Link to="/layout/property" className="font-bold text-sm">
+              <Link to="/property" className="font-bold text-sm">
                 View Properties
               </Link>
             </button>

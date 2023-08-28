@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const AffiliateLayout = () => {
+const AdminLayout = () => {
   const user = useSelector((state) => state.auth.user);
   return (
     <div className="w-full h-full">
@@ -10,4 +10,4 @@ const AffiliateLayout = () => {
   );
 };
 
-export default AffiliateLayout;
+export default AdminLayout;
