@@ -56,33 +56,34 @@ const Login = () => {
       setRegister("true");
       localStorage.setItem("pageState", "true");
     }
-    console.log("PAGE STATE:" + register);
+    // console.log("PAGE STATE:" + register);
   };
 
-  const handleSubmit = (e) => {
+  const handleRegisterSubmit = (e) => {
     e.preventDefault();
-    if (register === "true") {
-      if (registerForm.password === registerForm.passwordConfirm) {
-        const formData = {
-          name: registerForm.name,
-          email: registerForm.email,
-          phoneNumber: registerForm.phone,
-          password: registerForm.password,
-        };
-        dispatch(createUser(formData));
-      } else {
-        setInfo("passwords do no match");
-        setTimeout(() => {
-          setInfo("");
-        }, 3000);
-      }
-    } else {
+    if (registerForm.password === registerForm.passwordConfirm) {
       const formData = {
-        email: loginForm.email,
-        password: loginForm.password,
+        name: registerForm.name,
+        email: registerForm.email,
+        phoneNumber: registerForm.phone,
+        password: registerForm.password,
       };
-      dispatch(loginUser(formData));
+      dispatch(createUser(formData));
+    } else {
+      setInfo("passwords do no match");
+      setTimeout(() => {
+        setInfo("");
+      }, 3000);
     }
+  };
+
+  const handleLoginSubmit = (e) => {
+    e.preventDefault();
+    const formData = {
+      email: loginForm.email,
+      password: loginForm.password,
+    };
+    dispatch(loginUser(formData));
   };
 
   useEffect(() => {
@@ -115,8 +116,8 @@ const Login = () => {
   }, [isSuccess, isError, message, isSignInSuccess, isSignInError]);
 
   useEffect(() => {
-    console.log(pageState);
-    console.log("register" + register);
+    // console.log(pageState);
+    // console.log("register" + register);
     if (pageState === null) {
       setRegister("false");
     } else {
@@ -130,35 +131,33 @@ const Login = () => {
   return (
     <div className="w-full h-screen lg:flex items-center">
       <div className="w-full h-full flex flex-col items-center justify-center">
-        <form onSubmit={handleSubmit} className="w-full lg:px-24 p-6 py-6">
-          <h1 className="text-black text-[20px] font-sans font-bold mb-[15px]">
-            Welcome
-          </h1>
-          {register === "true" ? (
-            <p className="font-normal font-sans mb-[20px] text-[#11111195]">
-              Let's get you signed up
-            </p>
-          ) : (
-            <p className="font-normal font-sans mb-[20px] text-[#11111195]">
-              Let's get you logged in
-            </p>
-          )}
-
-          {message && (
-            <p
-              className={`${
-                isSuccess
-                  ? "text-white font-semibold bg-green-400 px-3 py-1 text-base"
-                  : "text-red-400 text-base"
-              } text-center`}
+        {register === "true" ? (
+          <React.Fragment>
+            {/* RESISTRATION FORM BEGINS HERE  */}
+            <form
+              onSubmit={handleRegisterSubmit}
+              className="w-full lg:px-24 p-6 py-6"
             >
-              {message}
-            </p>
-          )}
+              <h1 className="text-black text-[20px] font-sans font-bold mb-[15px]">
+                Welcome
+              </h1>
 
-          {register === "true" ? (
-            <React.Fragment>
-              {/* RESISTRATION FORM BEGINS HERE  */}
+              <p className="font-normal font-sans mb-[20px] text-[#11111195]">
+                Let's get you signed up
+              </p>
+
+              {message && (
+                <p
+                  className={`${
+                    isSuccess
+                      ? "text-white font-semibold bg-green-400 px-3 py-1 text-base"
+                      : "text-red-400 text-base"
+                  } text-center`}
+                >
+                  {message}
+                </p>
+              )}
+
               <div>
                 <label htmlFor="name" className="text-sm">
                   Name
@@ -240,11 +239,36 @@ const Login = () => {
               >
                 {isLoading ? "Processing" : "Sign Up"}
               </button>
-              {/* REGISTRATION FORM ENDS HERE */}
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
-              {/* LOGIN FORM BEGINS HERE */}
+            </form>
+            {/* REGISTRATION FORM ENDS HERE */}
+          </React.Fragment>
+        ) : (
+          <React.Fragment>
+            {/* LOGIN FORM BEGINS HERE */}
+            <form
+              onSubmit={handleLoginSubmit}
+              className="w-full lg:px-24 p-6 py-6"
+            >
+              <h1 className="text-black text-[20px] font-sans font-bold mb-[15px]">
+                Welcome
+              </h1>
+
+              <p className="font-normal font-sans mb-[20px] text-[#11111195]">
+                Let's get you logged in
+              </p>
+
+              {message && (
+                <p
+                  className={`${
+                    isSuccess
+                      ? "text-white font-semibold bg-green-400 px-3 py-1 text-base"
+                      : "text-red-400 text-base"
+                  } text-center`}
+                >
+                  {message}
+                </p>
+              )}
+
               <div>
                 <label htmlFor="email-address" className="text-sm">
                   E-mail
@@ -302,10 +326,10 @@ const Login = () => {
               >
                 {isLoading ? "Processing" : "Sign In"}
               </button>
-              {/* LOGIN FORM ENDS HERE */}
-            </React.Fragment>
-          )}
-        </form>
+            </form>
+            {/* LOGIN FORM ENDS HERE */}
+          </React.Fragment>
+        )}
 
         {register === "true" ? (
           <p>
