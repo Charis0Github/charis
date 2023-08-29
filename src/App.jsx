@@ -26,7 +26,7 @@ function App() {
         <Route path="contact" element={<Contact />} />
         <Route path="blog" element={<Blog />} />
         <Route path="event" element={<Event />} />
-        {user ? <Route path="dashboard" element={<Dashboard />} /> : null}
+        <Route path="dashboard" element={<Dashboard />} />
         <Route path="property" element={<Property />} />
       </Route>
 
