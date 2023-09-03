@@ -35,7 +35,7 @@ const AffiliateDashboard = () => {
 
                 {/* MIDDLE CARD SECTION*/}
                 <p className="font-bold font-sans text-black text-2xl tracking-widest mt-8">
-                  N7,000
+                  N{userDetails ? userDetails?.userData?.balance : "balance"}
                 </p>
               </div>
 
@@ -47,7 +47,10 @@ const AffiliateDashboard = () => {
 
                 {/* MIDDLE CARD SECTION*/}
                 <p className="font-bold font-sans text-black text-2xl tracking-widest mt-8">
-                  5
+                  N
+                  {userDetails
+                    ? userDetails?.userData?.unpaidRefs
+                    : "unpaidRefs"}
                 </p>
               </div>
 
@@ -59,7 +62,7 @@ const AffiliateDashboard = () => {
 
                 {/* MIDDLE CARD SECTION*/}
                 <p className="font-bold font-sans text-black text-2xl tracking-widest mt-8">
-                  7
+                  N{userDetails ? userDetails?.userData?.paidRefs : "paidRefs"}
                 </p>
               </div>
 
@@ -71,7 +74,8 @@ const AffiliateDashboard = () => {
 
                 {/* MIDDLE CARD SECTION*/}
                 <p className="font-bold font-sans text-black text-2xl tracking-widest mt-8">
-                  N10,000
+                  N
+                  {userDetails ? userDetails?.userData?.withdrawn : "Withdrawn"}
                 </p>
               </div>
             </div>
@@ -164,13 +168,25 @@ const AffiliateDashboard = () => {
               {/* PROFILE SECTION STARTS HERE */}
               <div className="flex flex-col w-full items-center justify-center">
                 <div className="w-[130px] h-[130px] rounded-full mt-10 mb-3 flex items-center justify-center bg-black text-white text-2xl">
-                  MA
+                  {userDetails
+                    ? userDetails?.userData?.name.charAt(0).toUpperCase()
+                    : "initial"}
                 </div>
 
-                <h1 className="font-bold text-xl">Manny2345</h1>
+                <h1 className="font-bold text-xl">
+                  {userDetails
+                    ? userDetails?.userData?.affiliateUserName
+                    : "Username"}
+                </h1>
 
-                <p className="text-black/70 mt-2">Umoru.emmanuel@yahoo.com</p>
-                <p className="text-black/70">+234-907-634-5063</p>
+                <p className="text-black/70 mt-2">
+                  {userDetails ? userDetails?.userData?.email : "Email"}
+                </p>
+                <p className="text-black/70">
+                  {userDetails
+                    ? userDetails?.userData?.phoneNumber
+                    : "Phone Number"}
+                </p>
 
                 <div className="bg-[rgb(253,102,2)] h-[18px] py-[15px] px-[25px] rounded-[5px] flex items-center justify-center my-7 text-white">
                   Copy Referral Link

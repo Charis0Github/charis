@@ -15,6 +15,11 @@ import AffiliateLayout from "./pages/Affiliate/AffiliateLayout";
 import AffiliateDashboard from "./pages/Affiliate/AffiliateDashboard";
 import AdminLayout from "./pages/Admin/AdminLayout";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
+import Users from "./pages/Admin/Users";
+import Payment from "./pages/Admin/Payment";
+import AdminProperty from "./pages/Admin/AdminProperty";
+import Affiliates from "./pages/Admin/Affiliates";
+import Settings from "./pages/Admin/Settings";
 
 function App() {
   const user = useSelector((state) => state.auth.user);
@@ -37,8 +42,14 @@ function App() {
         <Route path="dashboard" element={<AffiliateDashboard />} />
       </Route>
 
-      <Route path="/admin" element={<AdminLayout />}>
-        <Route index element={<AdminDashboard />} />
+      <Route element={<AdminLayout />}>
+        <Route exact path="/admin" element={<AdminDashboard />}>
+          <Route index element={<Users />} />
+          <Route path="payment" element={<Payment />} />
+          <Route path="property" element={<AdminProperty />} />
+          <Route path="affiliates" element={<Affiliates />} />
+          <Route path="settings" element={<Settings />} />
+        </Route>
       </Route>
     </Routes>
   );

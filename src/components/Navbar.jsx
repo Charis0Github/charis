@@ -8,6 +8,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { logOut } from "../Redux/Features/authSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { logoutProperty, resetProperty } from "../Redux/Features/propertySlice";
 
 const Navbar = () => {
   const links = [
@@ -72,6 +73,19 @@ const Navbar = () => {
     }
   };
 
+  const handleAffiliate = () => {
+    if (userDetails.userData.affiliateUserName) {
+      navigate("/affiliate/dashboard");
+    } else {
+      navigate("/affiliate");
+    }
+  };
+
+  const handleLogout = () => {
+    dispatch(logoutProperty());
+    dispatch(logOut());
+  };
+
   useEffect(() => {
     localStorage.setItem("tab", active);
   }, [active]);
@@ -123,7 +137,10 @@ const Navbar = () => {
                   Main Dashboard
                 </li>
 
-                <li className="text-sm p-1 hover:bg-[#FF6700] w-full px-2 flex items-center justify-start gap-3">
+                <li
+                  onClick={handleAffiliate}
+                  className="text-sm p-1 hover:bg-[#FF6700] w-full px-2 flex items-center justify-start gap-3"
+                >
                   <img width={15} height={15} src={profile} alt="user icon" />
                   Affiliate Dashboard
                 </li>
@@ -139,7 +156,7 @@ const Navbar = () => {
                 ) : null}
 
                 <li
-                  onClick={() => dispatch(logOut())}
+                  onClick={handleLogout}
                   className="text-sm p-1 hover:bg-[#FF6700] w-full px-2 flex items-center justify-start gap-3"
                 >
                   <img width={20} height={20} src={logout} alt="exit icon" />
@@ -210,7 +227,10 @@ const Navbar = () => {
                   Main Dashboard
                 </li>
 
-                <li className="text-sm p-1 hover:bg-[#FF6700] w-full px-2 flex items-center justify-start gap-3">
+                <li
+                  onClick={handleAffiliate}
+                  className="text-sm p-1 hover:bg-[#FF6700] w-full px-2 flex items-center justify-start gap-3"
+                >
                   <img width={15} height={15} src={profile} alt="user icon" />
                   Affiliate Dashboard
                 </li>

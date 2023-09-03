@@ -40,6 +40,66 @@ export const getProperty = createAsyncThunk(
   }
 );
 
+export const createProperty = createAsyncThunk(
+  "property/create",
+  async (body, thunkAPI) => {
+    // const token = localStorage.getItem("token");
+    try {
+      const response = await axios.post(BASE_URL + "/property", body, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      if (response.status === 200) {
+        console.log(JSON.stringify(response.data));
+        return response.data;
+      }
+    } catch (error) {
+      if (error.response) {
+        const obj = error.response.data;
+        const objKey = Object.keys(obj)[0];
+        let err = obj[objKey];
+        // console.log(err)
+        return thunkAPI.rejectWithValue(err);
+      } else if (error.request) {
+        return thunkAPI.rejectWithValue("something went terribly wrong");
+      } else {
+        const obj = error.response.data;
+        const objKey = Object.keys(obj)[0];
+        let err = obj[objKey];
+        return thunkAPI.rejectWithValue(err);
+      }
+    }
+  }
+);
+
+export const deleteProperty = createAsyncThunk(
+  "property/delete",
+  async (id, thunkAPI) => {
+    try {
+      const response = await axios.delete(BASE_URL + `/property/${id}`);
+      if (response.status === 200) {
+        return response.data.msg;
+      }
+    } catch (error) {
+      if (error.response) {
+        const obj = error.response.data;
+        const objKey = Object.keys(obj)[0];
+        let err = obj[objKey];
+        // console.log(err)
+        return thunkAPI.rejectWithValue(err);
+      } else if (error.request) {
+        return thunkAPI.rejectWithValue("something went terribly wrong");
+      } else {
+        const obj = error.response.data;
+        const objKey = Object.keys(obj)[0];
+        let err = obj[objKey];
+        return thunkAPI.rejectWithValue(err);
+      }
+    }
+  }
+);
+
 export const propertySlice = createSlice({
   name: "property",
   initialState,
@@ -49,6 +109,8 @@ export const propertySlice = createSlice({
       state.propertyLoading = false;
       state.propertySuccess = false;
       state.propertyMessage = "";
+    },
+    logoutProperty: (state) => {
       state.property = "";
     },
   },
@@ -68,9 +130,41 @@ export const propertySlice = createSlice({
         state.propertyError = true;
         state.propertySuccess = false;
         state.propertyMessage = action.payload;
+      })
+
+      .addCase(createProperty.pending, (state) => {
+        state.propertyLoading = true;
+      })
+      .addCase(createProperty.fulfilled, (state, action) => {
+        state.propertyLoading = false;
+        state.propertyError = false;
+        state.propertySuccess = true;
+        // state.property = action.payload;
+      })
+      .addCase(createProperty.rejected, (state, action) => {
+        state.propertyLoading = false;
+        state.propertyError = true;
+        state.propertySuccess = false;
+        state.propertyMessage = action.payload;
+      })
+
+      .addCase(deleteProperty.pending, (state) => {
+        state.propertyLoading = true;
+      })
+      .addCase(deleteProperty.fulfilled, (state, action) => {
+        state.propertyLoading = false;
+        state.propertyError = false;
+        state.propertySuccess = true;
+        state.propertyMessage = action.payload;
+      })
+      .addCase(deleteProperty.rejected, (state, action) => {
+        state.propertyLoading = false;
+        state.propertyError = true;
+        state.propertySuccess = false;
+        state.propertyMessage = action.payload;
       });
   },
 });
 
-export const { resetProperty } = propertySlice.actions;
+export const { resetProperty, logoutProperty } = propertySlice.actions;
 export default propertySlice.reducer;

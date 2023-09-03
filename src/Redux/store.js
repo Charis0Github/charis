@@ -13,17 +13,21 @@ import storage from "redux-persist/lib/storage";
 import formReducer from "./Features/formSlice";
 import authReducer from "./Features/authSlice";
 import propertyReducer from "./Features/propertySlice";
+import affiliateReducer from "./Features/affiliateEnrollSlice";
+import userReducer from "./Features/userSlice";
 
 const reducers = combineReducers({
   formData: formReducer,
   auth: authReducer,
   property: propertyReducer,
+  affiliate: affiliateReducer,
+  users: userReducer,
 });
 
 const persistConfig = {
   key: "charisStorage",
   storage: storage,
-  whiteList: ["auth", "formData"],
+  whiteList: ["auth", "formData", "allUsers"],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

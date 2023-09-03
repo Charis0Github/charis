@@ -14,7 +14,7 @@ const Property = () => {
     dispatch(getProperty());
 
     return () => {
-      dispatch(resetProperty());
+      // dispatch(resetProperty());
     };
   }, []);
   return (
@@ -43,13 +43,18 @@ const Property = () => {
                     src={item.imageLink}
                     className=" h-[300px] w-full object-cover rounded-t-lg"
                   />
-                  <div className="w-full h-full p-3 rounded-b-lg flex flex-col gap-5  py-5">
-                    <h1 className="w-full text-3xl font-semibold">
-                      N{item.price}
+                  <div className="w-full  p-3 rounded-b-lg flex flex-col gap-5 py-2 mb-2">
+                    <h1 className="w-full text-2xl font-semibold h-[70px]">
+                      {item.name} ({item.type})
                     </h1>
-                    <p className="w-[300px]">{item.description}</p>
+                    <h1 className="w-full text-lg font-medium">
+                      Price: N{item.price}
+                    </h1>
+                    <p className="w-full text-ellipsis h-[60px] overflow-y-auto">
+                      {item.description}
+                    </p>
 
-                    <div className="w-full flex items-center gap-3 mt-4">
+                    <div className="w-full flex  items-center gap-3 mt-2">
                       <img
                         src={location}
                         className=" h-5 w-5 object-cover rounded-t-lg"

@@ -60,6 +60,10 @@
   background-image: url("./assets/card-img.png");
 }
 
+.user_card_banner{
+  background-image: url("./assets/user_card_bg.png");
+}
+
 .news {
   position: relative;
 }
@@ -167,6 +171,14 @@
   max-width: calc(29.33% - 20px);
   width: 100%;
   height: max-content;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+}
+.card1{
+  flex:0 0 calc(29.33% - 20px);
+  max-width: calc(29.33% - 20px);
+  width: 100%;
+  height: 570px;
   background-color: #f9f9f9;
   border-radius: 10px;
 }

@@ -25,7 +25,7 @@ const Home = () => {
   const [steps, setSteps] = useState(0);
 
   const navigate = useNavigate();
-  const { user } = useSelector((state) => state.auth);
+  const { user, userDetails } = useSelector((state) => state.auth);
 
   const tabs = [
     { id: 1, text: "Get house allocation" },
@@ -37,6 +37,14 @@ const Home = () => {
   const handleClick = (id, index) => {
     setActive(index);
     console.log(id);
+  };
+
+  const handleAffiliate = () => {
+    if (userDetails.userData.affiliateUserName) {
+      navigate("/affiliate/dashboard");
+    } else {
+      navigate("/affiliate");
+    }
   };
 
   const close = () => {
@@ -96,12 +104,12 @@ const Home = () => {
                 <p className="font-bold text-sm">Get Started</p>
               </button>
 
-              <Link
-                to="/affiliate"
+              <div
+                onClick={handleAffiliate}
                 className="text-black bg-white border-[1px] border-black w-auto join p-2 rounded-lg text-sm px-6 py-3 font-bold cursor-pointer"
               >
                 Become an affiliate
-              </Link>
+              </div>
             </div>
           </div>
 
