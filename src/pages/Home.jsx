@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import hero from "../assets/hero.png";
 import con1 from "../assets/con1.svg";
 import con2 from "../assets/con2.svg";
@@ -17,15 +17,19 @@ import prop4 from "../assets/prop4.png";
 import Input from "../components/Input";
 import { Form1, Form2, Form3, Form4 } from "./Forms/Forms";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { resetPayment } from "../Redux/Features/paymentSlice";
+import { resetFormData } from "../Redux/Features/formSlice";
 
 const Home = () => {
   const [active, setActive] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const [steps, setSteps] = useState(0);
+  const [file, setFile] = useState(null);
 
   const navigate = useNavigate();
   const { user, userDetails } = useSelector((state) => state.auth);
+  const { paymentStatus } = useSelector((state) => state.payment);
 
   const tabs = [
     { id: 1, text: "Get house allocation" },
@@ -47,13 +51,19 @@ const Home = () => {
     }
   };
 
+  const dispatch = useDispatch();
+
   const close = () => {
     setIsOpen(false);
   };
 
   const handleForm = () => {
     if (user) {
-      setIsOpen(true);
+      if (userDetails?.userData?.status === "paid") {
+        alert("You've made payment already");
+      } else {
+        setIsOpen(true);
+      }
     } else {
       navigate("/login");
     }
@@ -75,6 +85,23 @@ const Home = () => {
     }
   };
 
+  useEffect(() => {
+    if (paymentStatus) {
+      window.location.href = paymentStatus.response.data.link;
+    }
+  }, [paymentStatus]);
+
+  // const display = () => {
+  //   const data = localStorage.getItem("image");
+  //   setFile(JSON.stringify(data));
+  // };
+
+  // useEffect(() => {
+  //   return () => {
+  //     // dispatch(resetPayment());
+  //   };
+  // }, []);
+
   return (
     <>
       {/* HERO SECTION STARTS */}
@@ -89,14 +116,14 @@ const Home = () => {
               </span>
             </h1>
             <p className="mt-12 lg:w-[90%] text-lg font-extralight text-[#5A5A50] ">
-              Access basic neccessities at a cheaper rate,own
+              Access basic neccessities at a cheaper rate.
               <br />
-              your home on a rent to own basis or an outright
+              Own your home on a rent to own basis or an outright payment.
               <br />
-              payment,earn dividends when you invest into
+              Earn dividends when you invest into the co-operative.
               <br />
-              the co-operative,access loans at
-              <span className="text-[#FF6700]"> 2% interest rate.</span>
+              Access loans at
+              <span className="text-[#FF6700]"> 5% interest rate.</span>
             </p>
 
             <div className="flex items-center  gap-6 w-max mt-12">
@@ -270,9 +297,14 @@ const Home = () => {
       {/* SERVICE SECTION ENDS */}
 
       {/* PARTNERS SECTION STARTS */}
-      <h1 className="text-3xl font-extrabold text-black text-center mt-[7rem]">
+      <h1
+        // onClick={display}
+        className="text-3xl font-extrabold text-black text-center mt-[7rem]"
+      >
         Our Partners
+        {/* {file && file} */}
       </h1>
+
       <div className="images lg:flex items-center justify-center w-full flex flex-col lg:flex-row lg:space-x-5 lg:mt-[3rem] mt-20 space-y-5 lg:space-y-0 lg:mb-[10rem]">
         <img src={p1} width={200} height={200} />
         <img src={p2} width={200} height={200} />

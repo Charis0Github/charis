@@ -8,6 +8,7 @@ const Layout = () => {
   return (
     <div className="w-full h-full">
       <Navbar />
+
       <Outlet />
       <Footer />
     </div>

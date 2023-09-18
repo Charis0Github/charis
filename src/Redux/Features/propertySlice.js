@@ -6,7 +6,7 @@ const BASE_URL = "https://motionless-pig-top-hat.cyclic.app/api/v1";
 
 //INITIAL STATE FOR THE AUTH
 const initialState = {
-  property: "",
+  property: null,
   propertyError: false,
   propertySuccess: false,
   propertyLoading: false,
@@ -111,7 +111,7 @@ export const propertySlice = createSlice({
       state.propertyMessage = "";
     },
     logoutProperty: (state) => {
-      state.property = "";
+      state.property = null;
     },
   },
   extraReducers: (builder) => {

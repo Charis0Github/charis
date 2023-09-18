@@ -1,24 +1,119 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import dp from "../../assets/dp.png";
 import money from "../../assets/money.svg";
 import target from "../../assets/target.svg";
 import Input from "../../components/Input";
-import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  resetWithdrawal,
+  withdrawalDetailsUpdate,
+} from "../../Redux/Features/WithdrawalDetailsSlice";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { getUserDetails } from "../../Redux/Features/authSlice";
+import {
+  requestPayment,
+  resetRequestPay,
+} from "../../Redux/Features/requestFundSlice";
 
 const AffiliateDashboard = () => {
   const [modal, setModal] = useState(false);
+  const [withdrawModal, setWithdrawModal] = useState(false);
   const [formDeets, setFormDeets] = useState({
     accountNumber: "",
-    bankName: "",
+    bank: "",
   });
-
+  const [amount, setAmount] = useState("");
   const { user, userDetails } = useSelector((state) => state.auth);
+  const {
+    withdrawalDeetsLoading,
+    withdrawalDeetsSuccess,
+    withdrawalDeetsError,
+    withdrawalDeetsMessage,
+  } = useSelector((state) => state.paymentDetails);
+  const {
+    requestPayLoading,
+    requestPaySuccess,
+    requestPayError,
+    requestPayMessage,
+  } = useSelector((state) => state.withdrawal);
+  const { accountNumber, bank } = formDeets;
+  const dispatch = useDispatch();
 
-  const { accountNumber, bankName } = formDeets;
+  const copyLink = () => {
+    navigator.clipboard.writeText(
+      "http://localhost:5173/referralLogin/" + userDetails.userData.myRefCode
+    );
+  };
+
+  const updateDetails = () => {
+    if (accountNumber && bank) {
+      const reqBody = {
+        accountNumber,
+        bank,
+      };
+      dispatch(withdrawalDetailsUpdate(reqBody));
+    }
+  };
+
+  const request = () => {
+    if (amount) {
+      const formBody = {
+        amount,
+      };
+      dispatch(requestPayment(formBody));
+    }
+  };
+
+  useEffect(() => {
+    if (withdrawalDeetsSuccess) {
+      toast.success("Details updated successfully");
+      dispatch(getUserDetails());
+      setModal(false);
+      setTimeout(() => {
+        dispatch(resetWithdrawal());
+      }, 3000);
+    }
+
+    if (withdrawalDeetsError) {
+      toast.error(withdrawalDeetsMessage);
+      setModal(false);
+      setTimeout(() => {
+        dispatch(resetWithdrawal());
+      }, 3000);
+    }
+
+    if (requestPaySuccess) {
+      toast.success("Request made successfully");
+      dispatch(resetRequestPay());
+      setWithdrawModal(false);
+      setTimeout(() => {
+        dispatch(resetRequestPay());
+      }, 3000);
+    }
+    if (requestPayError) {
+      toast.error(requestPayMessage);
+      dispatch(resetRequestPay());
+      setWithdrawModal(false);
+      setTimeout(() => {
+        dispatch(resetRequestPay());
+      }, 3000);
+    }
+  }, [
+    withdrawalDeetsError,
+    withdrawalDeetsSuccess,
+    withdrawalDeetsMessage,
+    requestPaySuccess,
+    requestPayError,
+    requestPayMessage,
+  ]);
+
   const navigate = useNavigate();
   return (
     <React.Fragment>
+      <ToastContainer position="top-center" hideProgressBar />
       {user ? (
         <div className="w-full h-full lg:flex gap-[60px] lg:items-start lg:justify-start px-5 lg:px-[70px] mb-10 mt-10">
           {/* LEFT SECTION STARTS HERE */}
@@ -83,7 +178,10 @@ const AffiliateDashboard = () => {
             {/* MIDDLE LAYER */}
             <div className="w-full flex items-center justify-between h-max mt-20">
               <h1>Withdrawal Status</h1>
-              <button className="bg-black py-2 px-10 w-max text-white rounded-md">
+              <button
+                onClick={() => setWithdrawModal(true)}
+                className="bg-black py-2 px-10 w-max text-white rounded-md"
+              >
                 Request Funds
               </button>
             </div>
@@ -188,7 +286,10 @@ const AffiliateDashboard = () => {
                     : "Phone Number"}
                 </p>
 
-                <div className="bg-[rgb(253,102,2)] h-[18px] py-[15px] px-[25px] rounded-[5px] flex items-center justify-center my-7 text-white">
+                <div
+                  onClick={copyLink}
+                  className="bg-[rgb(253,102,2)] h-[18px] py-[15px] px-[25px] rounded-[5px] flex items-center justify-center my-7 text-white"
+                >
                   Copy Referral Link
                 </div>
               </div>
@@ -201,12 +302,17 @@ const AffiliateDashboard = () => {
 
                 <div className="flex items-center gap-7">
                   <p className="text-black/70 mt-2">Account Number:</p>
-                  <p className="text-black/70 mt-2">2210737985</p>
+                  <p className="text-black/70 mt-2">
+                    {" "}
+                    {userDetails && userDetails?.userData?.accountNumber}
+                  </p>
                 </div>
 
                 <div className="flex items-center gap-28">
                   <p className="text-black/70 mt-2">Bank: </p>
-                  <p className="text-black/70 mt-2">Zenith Bank</p>
+                  <p className="text-black/70 mt-2">
+                    {userDetails && userDetails?.userData?.bank}
+                  </p>
                 </div>
 
                 <div
@@ -232,23 +338,38 @@ const AffiliateDashboard = () => {
                   <Input
                     type={"text"}
                     name={"accountNumber"}
-                    placeholder={""}
+                    placeholder={"Input Account Number"}
                     label={"Account Number "}
                     value={accountNumber}
+                    onChange={(e) =>
+                      setFormDeets({
+                        ...formDeets,
+                        accountNumber: e.target.value,
+                      })
+                    }
                   />
                   <p className="text-[#FD6602] font-sans">John Doe Emmanuel</p>
                 </div>
 
                 <Input
                   type={"text"}
-                  name={"bankName"}
+                  name={"bank"}
                   placeholder={""}
                   label={"Bank Name"}
-                  value={bankName}
+                  value={bank}
+                  onChange={(e) =>
+                    setFormDeets({
+                      ...formDeets,
+                      bank: e.target.value,
+                    })
+                  }
                 />
 
-                <button className="bg-black h-[18px] py-[20px] px-[25px] rounded-[5px] lg:place-self-center flex items-center justify-center w-[80%] my-7 text-white">
-                  Done
+                <button
+                  onClick={updateDetails}
+                  className="bg-black h-[18px] py-[20px] px-[25px] rounded-[5px] lg:place-self-center flex items-center justify-center w-[80%] my-7 text-white"
+                >
+                  {withdrawalDeetsLoading ? "Processing" : "Update"}
                 </button>
 
                 <div
@@ -260,6 +381,38 @@ const AffiliateDashboard = () => {
               </div>
             </div>
           )}
+
+          {withdrawModal && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10 p-4">
+              <div className="bg-white lg:p-8 p-4 lg:px-20 rounded-lg h-max w-[500px] relative">
+                <h1 className="text-black font-sans font-bold mb-10">
+                  Request Funds
+                </h1>
+                <Input
+                  type="number"
+                  name="amount"
+                  placeholder={"e.g: 5000"}
+                  onChange={(e) => setAmount(e.target.value)}
+                  label="Amount"
+                />
+
+                <button
+                  onClick={request}
+                  className="bg-black h-[18px] py-[20px] px-[25px] rounded-[5px] lg:place-self-center flex items-center justify-center w-[80%] my-7 text-white"
+                >
+                  {requestPayLoading ? "processing" : "Confirm"}
+                </button>
+
+                <div
+                  onClick={() => setWithdrawModal(false)}
+                  className="absolute -top-3 flex items-center justify-center lg:right-[-10px] -right-3 h-[20px] w-[20px] rounded-full p-1 bg-black text-white cursor-pointer"
+                >
+                  <h1 className="text-xs font-bold">X</h1>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* MODAL ENDS HERE */}
         </div>
       ) : (

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import copy from "../../assets/copy.svg";
 
 const Payment = () => {
   return (
@@ -22,52 +23,36 @@ const Payment = () => {
               <td className=" pr-3 pb-4">03, Jun 2023</td>
               <td className=" pr-3 pb-4">N100,000 </td>
               <td className=" pr-3 pb-4">Membership</td>
-              <td className=" pr-3 pb-4">08142826234</td>
-              <td className=" pr-3 pb-4">Umoru.emmanuel@yahoo.com</td>
-            </tr>
-            <tr>
-              <td className="text-clip pr-3 pb-4">Dami Owolabi</td>
-              <td className=" pr-3 pb-4">03, Jun 2023</td>
-              <td className=" pr-3 pb-4">N100,000 </td>
-              <td className=" pr-3 pb-4">Membership</td>
-              <td className=" pr-3 pb-4">08142826234</td>
-              <td className=" pr-3 pb-4">Umoru.emmanuel@yahoo.com</td>
-            </tr>
-            <tr>
-              <td className="text-clip pr-3 pb-4">Emmanuel Esther</td>
-              <td className=" pr-3 pb-4">03, Jun 2023</td>
-              <td className=" pr-3 pb-4">N100,000 </td>
-              <td className=" pr-3 pb-4">Membership</td>
-              <td className=" pr-3 pb-4">08142826234</td>
-              <td className=" pr-3 pb-4">Umoru.emmanuel@yahoo.com</td>
-            </tr>
-            <tr>
-              <td className="text-clip pr-3 pb-4">Johnson Jeremiah</td>
-              <td className=" pr-3 pb-4">03, Jun 2023</td>
-              <td className=" pr-3 pb-4">N100,000 </td>
-              <td className=" pr-3 pb-4">Membership</td>
-              <td className=" pr-3 pb-4">08142826234</td>
-              <td className=" pr-3 pb-4">Umoru.emmanuel@yahoo.com</td>
-            </tr>
-            <tr>
-              <td className="text-clip pr-3 pb-4">
-                Umoru Emmanuel ikenna okorie
+              <td className=" pr-3 pb-4">
+                <div className="flex items-center gap-1">
+                  <p>0819238473</p>
+                  <img src={copy} />
+                </div>
               </td>
-              <td className=" pr-3 pb-4">03, Jun 2023</td>
-              <td className=" pr-3 pb-4">N100,000 </td>
-              <td className=" pr-3 pb-4">Membership</td>
-              <td className=" pr-3 pb-4">08142826234</td>
-              <td className=" pr-3 pb-4">Umoru.emmanuel@yahoo.com</td>
+              <td className=" pr-3 pb-4">
+                <div className="flex items-center gap-1">
+                  <p>Umoru.emmanuel@yahoo.com</p>
+                  <img src={copy} />
+                </div>
+              </td>
             </tr>
             <tr>
-              <td className="text-clip pr-3 pb-4">
-                Umoru Emmanuel ikenna okorie
-              </td>
+              <td className="text-clip pr-3 pb-4">Umoru Emmanuel okorie</td>
               <td className=" pr-3 pb-4">03, Jun 2023</td>
               <td className=" pr-3 pb-4">N100,000 </td>
               <td className=" pr-3 pb-4">Membership</td>
-              <td className=" pr-3 pb-4">08142826234</td>
-              <td className=" pr-3 pb-4">Umoru.emmanuel@yahoo.com</td>
+              <td className=" pr-3 pb-4">
+                <div className="flex items-center gap-1">
+                  <p>0819238473</p>
+                  <img src={copy} />
+                </div>
+              </td>
+              <td className=" pr-3 pb-4">
+                <div className="flex items-center gap-1">
+                  <p>Umoru.emmanuel@yahoo.com</p>
+                  <img src={copy} />
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>

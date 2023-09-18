@@ -9,6 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { logOut } from "../Redux/Features/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutProperty, resetProperty } from "../Redux/Features/propertySlice";
+import { userLogout } from "../Redux/Features/userSlice";
 
 const Navbar = () => {
   const links = [
@@ -82,6 +83,7 @@ const Navbar = () => {
   };
 
   const handleLogout = () => {
+    dispatch(userLogout());
     dispatch(logoutProperty());
     dispatch(logOut());
   };
@@ -246,7 +248,7 @@ const Navbar = () => {
                 ) : null}
 
                 <li
-                  onClick={() => dispatch(logOut())}
+                  onClick={handleLogout}
                   className="text-sm p-1 hover:bg-[#FF6700] w-full px-2 flex items-center justify-start gap-3"
                 >
                   <img width={20} height={20} src={logout} alt="exit icon" />

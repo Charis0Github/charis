@@ -15,6 +15,10 @@ import authReducer from "./Features/authSlice";
 import propertyReducer from "./Features/propertySlice";
 import affiliateReducer from "./Features/affiliateEnrollSlice";
 import userReducer from "./Features/userSlice";
+import paymentReducer from "./Features/paymentSlice";
+import requestFundReducer from "./Features/requestFundSlice";
+import withdrawalDetailsReducer from "./Features/WithdrawalDetailsSlice";
+import calculateShareCapitalReducer from "./Features/calculateShareCapitalSlice";
 
 const reducers = combineReducers({
   formData: formReducer,
@@ -22,6 +26,10 @@ const reducers = combineReducers({
   property: propertyReducer,
   affiliate: affiliateReducer,
   users: userReducer,
+  payment: paymentReducer,
+  withdrawal: requestFundReducer,
+  paymentDetails: withdrawalDetailsReducer,
+  shareCapital: calculateShareCapitalReducer,
 });
 
 const persistConfig = {

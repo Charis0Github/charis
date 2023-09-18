@@ -20,6 +20,8 @@ import Payment from "./pages/Admin/Payment";
 import AdminProperty from "./pages/Admin/AdminProperty";
 import Affiliates from "./pages/Admin/Affiliates";
 import Settings from "./pages/Admin/Settings";
+import VerifyPayment from "./pages/VerifyPayment";
+import ReferralLogin from "./pages/ReferralLogin";
 
 function App() {
   const user = useSelector((state) => state.auth.user);
@@ -34,14 +36,14 @@ function App() {
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="property" element={<Property />} />
       </Route>
-
       <Route path="/login" element={<Login />} />
+      <Route path="/referralLogin/:referralCode" element={<ReferralLogin />} />
 
+      <Route path="/verify" element={<VerifyPayment />} />
       <Route path="/affiliate" element={<AffiliateLayout />}>
         <Route index element={<AffiliateLogin />} />
         <Route path="dashboard" element={<AffiliateDashboard />} />
       </Route>
-
       <Route element={<AdminLayout />}>
         <Route exact path="/admin" element={<AdminDashboard />}>
           <Route index element={<Users />} />

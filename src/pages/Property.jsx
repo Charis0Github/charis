@@ -3,19 +3,21 @@ import property1 from "../assets/property1.png";
 import location from "../assets/location 2.svg";
 import sqft from "../assets/sqft.svg";
 import room from "../assets/room.svg";
+import load from "../assets/loading.json";
+import Lottie from "lottie-react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProperty, resetProperty } from "../Redux/Features/propertySlice";
 
 const Property = () => {
   const dispatch = useDispatch();
-  const { property } = useSelector((state) => state.property);
+  const { property, propertyLoading } = useSelector((state) => state.property);
 
   useEffect(() => {
-    dispatch(getProperty());
-
-    return () => {
-      // dispatch(resetProperty());
-    };
+    if (property) {
+      return;
+    } else {
+      dispatch(getProperty());
+    }
   }, []);
   return (
     <div className="lg:px-[64px] w-full min-h-screen h-full px-5 ">
@@ -86,6 +88,14 @@ const Property = () => {
           : null}
       </div>
       {/* PROPERTY DISPLAY SECTION ENDS */}
+
+      {propertyLoading && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-30 p-4">
+          <div className="bg-transparent lg:p-8 p-4 rounded-lg h-max w-[300px] relative overflow-y-auto">
+            <Lottie animationData={load} width={200} height={200} loop={true} />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
