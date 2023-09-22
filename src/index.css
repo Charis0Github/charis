@@ -186,6 +186,38 @@
   border-radius: 10px;
 }
 
+.containerStyles{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  max-width: 60%;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-left: -15px;
+}
+
+.previousPage {
+    width: 50px;
+    background-color: #FD6602;
+    color: #f9f9f9; 
+    padding: 5px;
+    border-radius: 3px;
+    display: none;
+}
+
+.nextPage{
+    width: 50px;
+    background-color: #FD6602;
+    color: #f9f9f9; 
+    padding: 5px;
+    border-radius: 3px;
+    display: none;
+}
+
+.activePage {
+  color: #FD6602;
+}
+
 @media (max-width: 768px){
   .circle::after {
     top: 12rem;
@@ -216,4 +248,7 @@
       background-color: #f9f9f9;
       border-radius: 10px;
     }
+        .containerStyles{
+          overflow-x: scroll;
+        }
 }

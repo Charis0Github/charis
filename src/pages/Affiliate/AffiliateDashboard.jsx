@@ -17,6 +17,10 @@ import {
   requestPayment,
   resetRequestPay,
 } from "../../Redux/Features/requestFundSlice";
+import {
+  getUserWithdrawal,
+  resetUserWithdrawal,
+} from "../../Redux/Features/userWithdrawalSlice";
 
 const AffiliateDashboard = () => {
   const [modal, setModal] = useState(false);
@@ -39,6 +43,13 @@ const AffiliateDashboard = () => {
     requestPayError,
     requestPayMessage,
   } = useSelector((state) => state.withdrawal);
+  const {
+    userWithdrawalLoading,
+    userWithdrawalSuccess,
+    userWithdrawalError,
+    userWithdrawalMessage,
+    userWithdrawal,
+  } = useSelector((state) => state.userWithdrawal);
   const { accountNumber, bank } = formDeets;
   const dispatch = useDispatch();
 
@@ -46,6 +57,7 @@ const AffiliateDashboard = () => {
     navigator.clipboard.writeText(
       "http://localhost:5173/referralLogin/" + userDetails.userData.myRefCode
     );
+    toast.success("Copied");
   };
 
   const updateDetails = () => {
@@ -109,6 +121,30 @@ const AffiliateDashboard = () => {
     requestPayError,
     requestPayMessage,
   ]);
+
+  useEffect(() => {
+    if (userWithdrawalSuccess) {
+      toast.success("withdrawals fetched");
+      setTimeout(() => {
+        dispatch(resetUserWithdrawal());
+      }, 3000);
+    }
+    if (userWithdrawalError) {
+      toast.error(userWithdrawalMessage);
+      setTimeout(() => {
+        dispatch(resetUserWithdrawal());
+      }, 3000);
+    }
+  }, [
+    userWithdrawalLoading,
+    userWithdrawalSuccess,
+    userWithdrawalError,
+    userWithdrawalMessage,
+  ]);
+
+  useEffect(() => {
+    dispatch(getUserWithdrawal());
+  }, []);
 
   const navigate = useNavigate();
   return (
@@ -198,42 +234,33 @@ const AffiliateDashboard = () => {
                 </thead>
 
                 <tbody>
-                  <tr>
-                    <td className="pb-4 ">N200,000,000</td>
-                    <td className="pb-4 ">01/08/2023</td>
-                    <td className="pb-4 ">
-                      <p className="bg-green-400 text-black py-1 px-6 w-max rounded-md">
-                        Successful
-                      </p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="pb-4 ">N20,000</td>
-                    <td className="pb-4 ">01/08/2023</td>
-                    <td className="pb-4 ">
-                      <p className="bg-red-400 text-black py-1 px-6 w-max rounded-md">
-                        Declined
-                      </p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="pb-4 ">N20,000</td>
-                    <td className="pb-4 ">01/08/2023</td>
-                    <td className="pb-4 ">
-                      <p className="bg-yellow-300 text-black py-1 px-6 w-max rounded-md">
-                        Pending
-                      </p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="pb-4 ">N20,000</td>
-                    <td className="pb-4 ">01/08/2023</td>
-                    <td className="pb-4 ">
-                      <p className="bg-green-400 text-black py-1 px-6 w-max rounded-md">
-                        Successful
-                      </p>
-                    </td>
-                  </tr>
+                  {userWithdrawal
+                    ? userWithdrawal?.withdrawals.map((item) => (
+                        <tr key={item._id}>
+                          <td className="pb-4 ">{item.amount}</td>
+                          <td className="pb-4 ">01/08/2023</td>
+                          <td className="pb-4 ">
+                            <p
+                              className={` ${
+                                item.withdrawalStatus === "approved" &&
+                                "bg-green-400"
+                              } 
+                               ${
+                                 item.withdrawalStatus === "pending" &&
+                                 "bg-yellow-300"
+                               } 
+                               ${
+                                 item.withdrawalStatus === "declined" &&
+                                 "bg-red-400"
+                               } 
+                              text-black py-1 px-6 w-max rounded-md`}
+                            >
+                              {item.withdrawalStatus}
+                            </p>
+                          </td>
+                        </tr>
+                      ))
+                    : null}
                 </tbody>
               </table>
             </div>
@@ -395,6 +422,9 @@ const AffiliateDashboard = () => {
                   onChange={(e) => setAmount(e.target.value)}
                   label="Amount"
                 />
+                <p className="text-black/50 text-sm mt-1">
+                  Minimum amount withdrawable is 1000
+                </p>
 
                 <button
                   onClick={request}

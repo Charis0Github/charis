@@ -3,11 +3,17 @@ import view from "../../assets/view_icon.svg";
 import copy from "../../assets/copy.svg";
 import load from "../../assets/loading.json";
 import Lottie from "lottie-react";
+import ReactPaginate from "react-paginate";
 import { useDispatch, useSelector } from "react-redux";
 import { getUsers, usersReset } from "../../Redux/Features/userSlice";
 import { MdMail } from "react-icons/md";
 import { BsTelephoneFill } from "react-icons/bs";
 import { FaAddressBook } from "react-icons/fa";
+import { GrRefresh } from "react-icons/gr";
+import {
+  getAdminUserPayment,
+  resetAdminUserPayment,
+} from "../../Redux/Features/adminUserPayment";
 
 const Users = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,6 +22,14 @@ const Users = () => {
   const { allUsers, usersError, usersLoading, usersMessage, usersSuccess } =
     useSelector((state) => state.users);
 
+  const {
+    adminUserPayment,
+    adminUserPaymentError,
+    adminUserPaymentSuccess,
+    adminUserPaymentMessage,
+    adminUserPaymentLoading,
+  } = useSelector((state) => state.adminUserPayment);
+
   function formatDate(inputDate) {
     const date = new Date(inputDate);
     const options = { year: "numeric", month: "long", day: "numeric" };
@@ -23,6 +37,18 @@ const Users = () => {
 
     return formattedDate;
   }
+
+  const [pageNumber, setPageNumber] = useState(0);
+
+  const itemsPerPage = 7;
+  const firstIndex = pageNumber * itemsPerPage;
+
+  const pageCount = Math.ceil(allUsers.length / itemsPerPage);
+
+  const changePage = (selected) => {
+    setPageNumber(selected.selected);
+    // console.log("selected Number" + selected);
+  };
 
   const bioData = () => {
     return (
@@ -250,7 +276,7 @@ const Users = () => {
           </p>
         </div>
 
-        <div className="w-full mt-8 flex flex-col gap-10 px-5">
+        <div className="w-full mt-8 flex flex-col gap-3 px-5 h-[90%] overflow-y-scroll">
           {/* CARD SECTION STARTS HERE */}
           <div className="h-[199px] w-[360px] px-4 py-4 rounded-lg user_card_banner bg-cover flex flex-col text-white  gap-10">
             <p>Amount Raised</p>
@@ -260,34 +286,43 @@ const Users = () => {
           </div>
           {/* CARD SECTION ENDS HERE */}
 
-          <table className="mt-10 w-full table-auto">
-            <thead>
-              <tr className="text-black/50 font-extralight">
-                <th className="text-left pb-4 w-2/5">Amount</th>
-                <th className="text-left pb-4 w-2/5">Date</th>
-                <th className="text-left pb-4 w-2/5">Title</th>
-              </tr>
-            </thead>
+          {adminUserPaymentLoading ? (
+            <div className="flex w-full items-center justify-center mt-28 text-2xl text-[#FD6602]">
+              Fetching Payment History.... Please Wait
+            </div>
+          ) : (
+            <div className="w-full">
+              <table className="mt-2 w-full table-auto">
+                <thead>
+                  <tr className="text-black/50 font-extralight">
+                    <th className="text-left pb-4 w-2/5">Amount</th>
+                    <th className="text-left pb-4 w-2/5">Date</th>
+                    <th className="text-left pb-4 w-2/5">Title</th>
+                  </tr>
+                </thead>
 
-            <tbody>
-              <tr>
-                <td className="text-clip pr-3 pb-4">Umoru Emmanuel okorie</td>
-                <td className=" pr-3 pb-4">03, Jun 2023</td>
-                <td className=" pr-3 pb-4">membership</td>
-              </tr>
-              <tr>
-                <td className="text-clip pr-3 pb-4">Umoru Emmanuel okorie</td>
-                <td className=" pr-3 pb-4">03, Jun 2023</td>
-                <td className=" pr-3 pb-4">House payment</td>
-              </tr>
-            </tbody>
-          </table>
+                <tbody>
+                  {adminUserPayment &&
+                    adminUserPayment?.payments.map((item) => (
+                      <tr key={item._id}>
+                        <td className="text-clip pr-3 pb-4">{item.amount}</td>
+                        <td className=" pr-3 pb-4">
+                          {formatDate(item.datePaid)}
+                        </td>
+                        <td className=" pr-3 pb-4">{item.tag}</td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       </div>
     );
   };
 
   const showBioModal = (item) => {
+    dispatch(getAdminUserPayment(item._id));
     setSelected(item);
     setIsOpen(true);
   };
@@ -307,6 +342,25 @@ const Users = () => {
       }, 2000);
     }
   }, [usersSuccess, usersError, usersMessage]);
+
+  useEffect(() => {
+    if (adminUserPaymentSuccess) {
+      setTimeout(() => {
+        dispatch(resetAdminUserPayment());
+      }, 2000);
+    }
+
+    if (adminUserPaymentError) {
+      setTimeout(() => {
+        dispatch(resetAdminUserPayment());
+      }, 2000);
+    }
+  }, [
+    adminUserPaymentError,
+    adminUserPaymentSuccess,
+    adminUserPaymentMessage,
+    adminUserPaymentLoading,
+  ]);
 
   useEffect(() => {
     if (allUsers.length > 0) {
@@ -354,49 +408,78 @@ const Users = () => {
 
           <tbody>
             {allUsers
-              ? allUsers.map((item) => (
-                  <tr key={item._id}>
-                    <td className="text-clip pr-3">{item.name}</td>
-                    <td className=" pr-3">{formatDate(item.createdAt)}</td>
-                    <td className=" pr-3">
-                      {item.shareCapital ? item.shareCapital : "N/A"}
-                    </td>
-                    <td className=" pr-3">{item.gender}</td>
-                    <td className=" pr-3 truncate">
-                      <div className="flex items-center gap-1">
-                        {item.phoneNumber.substring(0, 5) + "...."}
-                        <img src={copy} />
-                      </div>
-                    </td>
-                    <td className=" pr-3">
-                      <div className="flex items-center gap-1">
-                        {item.email.substring(0, 8) + "...."}
-                        <img src={copy} />
-                      </div>
-                    </td>
+              ? allUsers
+                  .slice(firstIndex, firstIndex + itemsPerPage)
+                  .map((item) => (
+                    <tr key={item._id}>
+                      <td className="text-clip pr-3">{item.name}</td>
+                      <td className=" pr-3">{formatDate(item.createdAt)}</td>
+                      <td className=" pr-3">
+                        {item.shareCapital ? item.shareCapital : "N/A"}
+                      </td>
+                      <td className=" pr-3">{item.gender}</td>
+                      <td className=" pr-3 truncate">
+                        <div className="flex items-center gap-1">
+                          {item.phoneNumber.substring(0, 5) + "...."}
+                          <img src={copy} />
+                        </div>
+                      </td>
+                      <td className=" pr-3">
+                        <div className="flex items-center gap-1">
+                          {item.email.substring(0, 8) + "...."}
+                          <img src={copy} />
+                        </div>
+                      </td>
 
-                    <td className="flex items-center gap-2 w-full py-2 pr-3">
-                      <p className="text-black text-lg ">1</p>
-                      <div className="text-white px-5 text-2xl h-max rounded-md bg-black flex items-center gap-5">
-                        <p>-</p>
-                        <p>+</p>
-                      </div>
-                    </td>
+                      <td className="flex items-center gap-2 w-full py-2 pr-3">
+                        <p className="text-black text-lg ">1</p>
+                        <div className="text-white px-5 text-2xl h-max rounded-md bg-black flex items-center gap-5">
+                          <p>-</p>
+                          <p>+</p>
+                        </div>
+                      </td>
 
-                    <td className=" ">
-                      <div
-                        onClick={() => showBioModal(item)}
-                        className="flex items-center gap-3 cursor-pointer"
-                      >
-                        <p className="text-[#FD6602]">views</p>
-                        <img src={view} />
-                      </div>
-                    </td>
-                  </tr>
-                ))
+                      <td className=" ">
+                        <div
+                          onClick={() => showBioModal(item)}
+                          className="flex items-center gap-3 cursor-pointer"
+                        >
+                          <p className="text-[#FD6602]">views</p>
+                          <img src={view} />
+                        </div>
+                      </td>
+                    </tr>
+                  ))
               : null}
           </tbody>
         </table>
+      </div>
+
+      <div className="flex items-end justify-between w-full mt-[30px]">
+        <div
+          onClick={() => dispatch(getUsers())}
+          className="text-[#FD6602] flex items-center gap-4 w-full cursor-pointer"
+        >
+          <GrRefresh color="#FD6602" className="cursor-pointer" /> Refresh Users
+        </div>
+
+        <div className="w-full flex flex-col items-end justify-center ">
+          <p className="text-base text-[#FD6602]  mb-[7px] mr-6">
+            showing {Math.floor(firstIndex + itemsPerPage)} of {allUsers.length}{" "}
+            entries
+          </p>
+
+          <ReactPaginate
+            previousLabel={"Prev"}
+            nextLabel={"Next"}
+            pageCount={pageCount}
+            onPageChange={changePage}
+            containerClassName={"containerStyles"}
+            previousLinkClassName={"previousPage"}
+            nextLinkClassName={"nextPage"}
+            activeLinkClassName={"activePage"}
+          />
+        </div>
       </div>
 
       {usersLoading && (

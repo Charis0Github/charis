@@ -5,6 +5,8 @@ import money from "../assets/money.svg";
 import target from "../assets/target.svg";
 import Lottie from "lottie-react";
 import load from "../assets/loading.json";
+import ReactPaginate from "react-paginate";
+import { GrRefresh } from "react-icons/gr";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -14,6 +16,10 @@ import {
   getShareCapital,
   resetShareCapital,
 } from "../Redux/Features/calculateShareCapitalSlice";
+import {
+  getSinglePayment,
+  resetSinglePayment,
+} from "../Redux/Features/SinglePaymentHistorySlice";
 
 const Dashboard = () => {
   const [payModal, setPayModal] = useState(false);
@@ -21,16 +27,52 @@ const Dashboard = () => {
   const [infoModal, setInfoModal] = useState(false);
   const [shareModal, setShareModal] = useState(false);
   const [shareModal1, setShareModal1] = useState(false);
+  const [noImg, setNoImg] = useState(false);
   const [selected, setSelected] = useState("");
+  const {
+    singlePaymentHistory,
+    singlePaymentLoading,
+    singlePaymentSuccess,
+    singlePaymentError,
+    singlePaymentMessage,
+  } = useSelector((state) => state.singleUserPayment);
+
   const [shareBody, setShareBody] = useState({
     houseAmount: "",
     spread: "",
   });
+  const [pageNumber, setPageNumber] = useState(0);
+  const itemsPerPage = 10;
+  const firstIndex = pageNumber * itemsPerPage;
+
+  const display = singlePaymentHistory?.payments
+    .slice(firstIndex, firstIndex + itemsPerPage)
+    .map((item) => {
+      return (
+        <tr key={item._id}>
+          <td className="pb-2 pr-8">Umoru Emmanuel</td>
+          <td className="pb-2 pr-8">N {item.amount}</td>
+          <td className="pb-2 pr-8">{formatDate(item.datePaid)}</td>
+          <td className="pb-2 pr-8 text-green-400">Successful</td>
+          <td className="pb-2 pr-8">{item.transactionId}</td>
+        </tr>
+      );
+    });
+
+  const pageCount = Math.ceil(
+    singlePaymentHistory?.payments.length / itemsPerPage
+  );
+
+  const changePage = (selected) => {
+    setPageNumber(selected.selected);
+    // console.log("selected Number" + selected);
+  };
 
   const { user, userDetails } = useSelector((state) => state.auth);
   const { paymentStatus, paymentLoading } = useSelector(
     (state) => state.payment
   );
+
   const {
     shareCapital,
     calculateShareLoading,
@@ -38,6 +80,7 @@ const Dashboard = () => {
     calculateShareError,
     calculateShareMessage,
   } = useSelector((state) => state.shareCapital);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -103,6 +146,14 @@ const Dashboard = () => {
     setShareModal1(true);
   };
 
+  function formatDate(inputDate) {
+    const date = new Date(inputDate);
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    const formattedDate = date.toLocaleDateString("en-US", options);
+
+    return formattedDate;
+  }
+
   const getCapital = () => {
     setShareModal1(false);
     if (shareBody.houseAmount && shareBody.spread) {
@@ -124,8 +175,18 @@ const Dashboard = () => {
   }, [paymentStatus]);
 
   useEffect(() => {
-    console.log(shareBody.spread);
-  }, [shareBody.spread]);
+    if (!singlePaymentHistory) {
+      dispatch(getSinglePayment());
+    }
+
+    if ("imageLink" in userDetails.userData) {
+      setNoImg(false);
+      console.log(noImg);
+    } else {
+      console.log(noImg);
+      setNoImg(true);
+    }
+  }, []);
 
   useEffect(() => {
     if (calculateShareSuccess) {
@@ -137,6 +198,27 @@ const Dashboard = () => {
       dispatch(resetShareCapital());
     }
   }, [calculateShareSuccess, calculateShareError, calculateShareMessage]);
+
+  useEffect(() => {
+    if (singlePaymentSuccess) {
+      toast.success("payment history fetched successfully");
+      setTimeout(() => {
+        dispatch(resetSinglePayment());
+      }, 3000);
+    }
+
+    if (singlePaymentError) {
+      toast.error(singlePaymentMessage);
+      setTimeout(() => {
+        dispatch(resetSinglePayment());
+      }, 3000);
+    }
+  }, [
+    singlePaymentLoading,
+    singlePaymentSuccess,
+    singlePaymentError,
+    singlePaymentMessage,
+  ]);
 
   return (
     <React.Fragment>
@@ -160,7 +242,6 @@ const Dashboard = () => {
                 </h1>
               </div>
             </div>
-
             {/* CARD SECTION STARTS HERE */}
             <div className="w-full lg:flex gap-8 h-max mt-3">
               <div className="h-[185px] w-full lg:w-full bg-white shadow-md shadow-black/30 pt-2 px-3 rounded-[5px]">
@@ -212,9 +293,7 @@ const Dashboard = () => {
                 </p>
               </div>
             </div>
-
             <h1 className="text-lg font-bold mt-10">Payment History</h1>
-
             <div className="w-full overflow-x-auto">
               <table className="mt-10 w-full table-auto">
                 <thead className="w-full">
@@ -227,23 +306,36 @@ const Dashboard = () => {
                   </tr>
                 </thead>
 
-                <tbody>
-                  <tr>
-                    <td className="pb-2 pr-8">Umoru Emmanuel</td>
-                    <td className="pb-2 pr-8">N20,000</td>
-                    <td className="pb-2 pr-8">01/08/2023</td>
-                    <td className="pb-2 pr-8 text-green-400">Successful</td>
-                    <td className="pb-2 pr-8">0011054FY</td>
-                  </tr>
-                  <tr>
-                    <td className="pb-2 pr-8">Umoru Emmanuel</td>
-                    <td className="pb-2 pr-8">N20,000</td>
-                    <td className="pb-2 pr-8">01/08/2023</td>
-                    <td className="pb-2 pr-8 text-green-400">Successful</td>
-                    <td className="pb-2 pr-8">0011054FY</td>
-                  </tr>
-                </tbody>
+                <tbody>{display}</tbody>
               </table>
+            </div>
+
+            <div className="flex items-end justify-between w-full mt-[30px]">
+              <div
+                onClick={() => dispatch(getSinglePayment())}
+                className="text-[#FD6602] flex items-center gap-4 w-full cursor-pointer"
+              >
+                <GrRefresh color="#FD6602" className="cursor-pointer" /> Refresh
+                Payments
+              </div>
+
+              <div className="w-full flex flex-col items-end justify-center ">
+                <p className="text-base text-[#FD6602] mt-[30px] mb-[7px] mr-6">
+                  showing {Math.floor(firstIndex + itemsPerPage)} of{" "}
+                  {singlePaymentHistory.payments.length} entries
+                </p>
+
+                <ReactPaginate
+                  previousLabel={"Prev"}
+                  nextLabel={"Next"}
+                  pageCount={pageCount}
+                  onPageChange={changePage}
+                  containerClassName={"containerStyles"}
+                  previousLinkClassName={"previousPage"}
+                  nextLinkClassName={"nextPage"}
+                  activeLinkClassName={"activePage"}
+                />
+              </div>
             </div>
           </div>
 
@@ -271,17 +363,19 @@ const Dashboard = () => {
             {/* PROFILE SECTION */}
             <div className="flex flex-col w-full h-full items-center justify-center lg:px-[28px] px-5 mt-5 bg-white shadow-md shadow-black/30">
               {/* PROFILE SECTION STARTS HERE */}
-              {userDetails?.userData?.imageLink ? (
-                <img
-                  src={userDetails?.userData?.imageLink}
-                  alt="profile image"
-                  className="w-[138px] h-[138px] rounded-full mt-10 object-cover mb-5"
-                />
-              ) : (
-                <div className="w-[138px] h-[138px] bg-[#eeeeee] rounded-full mt-10 mb-5 flex items-center justify-center text-center">
-                  Profile Image
-                </div>
-              )}
+              <div className="">
+                {userDetails?.userData?.imageLink ? (
+                  <img
+                    src={userDetails?.userData?.imageLink}
+                    alt="profile image"
+                    className="w-[138px] h-[138px] rounded-full mt-10 object-cover mb-5"
+                  />
+                ) : (
+                  <div className="w-[138px] h-[138px] bg-[#eeeeee] rounded-full mt-10 mb-5 flex items-center justify-center text-center">
+                    Profile Image
+                  </div>
+                )}
+              </div>
 
               <h1 className="font-bold text-xl">
                 {userDetails ? userDetails?.userData?.name : "user's Name"}
@@ -559,6 +653,27 @@ const Dashboard = () => {
                   height={200}
                   loop={true}
                 />
+              </div>
+            </div>
+          )}
+
+          {noImg && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10 p-4">
+              <div className="bg-white flex flex-col gap-16 font-sans items-center lg:p-8 p-4 rounded-lg h-[40%] w-[500px] relative ">
+                <div
+                  onClick={() => setNoImg(false)}
+                  className="absolute -top-3 flex items-center justify-center lg:-right-2 right-2 h-[30px] w-[30px] rounded-full p-1 bg-black text-white cursor-pointer"
+                >
+                  <h1 className="text-sm font-bold">X</h1>
+                </div>
+                <h1 className="text-2xl font-semibold font-sans text-[rgb(253,102,2)]">
+                  Please upload your profile image.
+                </h1>
+
+                <p className="text-center text-lg">
+                  Your Profile Image is required to Validate your payments and
+                  identity
+                </p>
               </div>
             </div>
           )}

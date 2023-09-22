@@ -1,6 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getPendingWithdrawal } from "../../Redux/Features/pendingWithdrawal";
+import { getApprovedWithdrawal } from "../../Redux/Features/approvedWithdrawal";
 
-const requestView = () => {
+const RequestView = () => {
+  const { pendingWithdrawal } = useSelector((state) => state.pendingWithdrawal);
+
+  function formatDate(inputDate) {
+    const date = new Date(inputDate);
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    const formattedDate = date.toLocaleDateString("en-US", options);
+
+    return formattedDate;
+  }
+
   return (
     <div className="w-full overflow-x-auto">
       <table className="mt-10 w-full table-auto">
@@ -14,32 +27,40 @@ const requestView = () => {
         </thead>
 
         <tbody>
-          <tr>
-            <td className="text-clip pr-3 pb-4">Umoru Emmanuel okorie</td>
-            <td className=" pr-3 pb-4">N100,000 </td>
-            <td className=" pr-3 pb-4">03, Jun 2023</td>
-            <td className=" pr-3 pb-4">
-              <div className="w-[143px] h-[42px] bg-black rounded-md text-white flex items-center justify-center">
-                Make Payment
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td className="text-clip pr-3 pb-4">Umoru Emmanuel okorie</td>
-            <td className=" pr-3 pb-4">N100,000 </td>
-            <td className=" pr-3 pb-4">03, Jun 2023</td>
-            <td className=" pr-3 pb-4">
-              <div className="w-[143px] h-[42px] bg-black rounded-md text-white flex items-center justify-center">
-                Make Payment
-              </div>
-            </td>
-          </tr>
+          {pendingWithdrawal &&
+            pendingWithdrawal?.pending.map((item) => {
+              return (
+                <tr key={item._id}>
+                  <td className="text-clip pr-3 pb-4">{item.name}</td>
+                  <td className=" pr-3 pb-4">{item.amount}</td>
+                  <td className=" pr-3 pb-4">{formatDate(item.createdAt)}</td>
+                  <td className=" pr-3 pb-4">
+                    <div className="w-[143px] h-[42px] bg-black rounded-md text-white flex items-center justify-center">
+                      Make Payment
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
         </tbody>
       </table>
     </div>
   );
 };
-const historyView = () => {
+
+const HistoryView = () => {
+  const { approvedWithdrawal } = useSelector(
+    (state) => state.approvedWithdrawal
+  );
+
+  function formatDate(inputDate) {
+    const date = new Date(inputDate);
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    const formattedDate = date.toLocaleDateString("en-US", options);
+
+    return formattedDate;
+  }
+
   return (
     <div className="w-full overflow-x-auto">
       <table className="mt-10 w-full table-auto">
@@ -53,26 +74,21 @@ const historyView = () => {
         </thead>
 
         <tbody>
-          <tr>
-            <td className="text-clip pr-3 pb-4">Umoru Emmanuel okorie</td>
-            <td className=" pr-3 pb-4">N100,000 </td>
-            <td className=" pr-3 pb-4">03, Jun 2023</td>
-            <td className=" pr-3 pb-4">
-              <p className="w-max px-4 py-1 bg-[#60D66980] rounded-md text-black">
-                Successful
-              </p>
-            </td>
-          </tr>
-          <tr>
-            <td className="text-clip pr-3 pb-4">Umoru Emmanuel okorie</td>
-            <td className=" pr-3 pb-4">N100,000 </td>
-            <td className=" pr-3 pb-4">03, Jun 2023</td>
-            <td className=" pr-3 pb-4">
-              <p className="w-max px-4 py-1 bg-[#60D66980] rounded-md text-black">
-                Successful
-              </p>
-            </td>
-          </tr>
+          {approvedWithdrawal &&
+            approvedWithdrawal?.withdrawals.map((item) => {
+              return (
+                <tr key={item._id}>
+                  <td className="text-clip pr-3 pb-4">{item.name}</td>
+                  <td className=" pr-3 pb-4">{item.amount}</td>
+                  <td className=" pr-3 pb-4">{formatDate(item.createdAt)}</td>
+                  <td className=" pr-3 pb-4">
+                    <p className="w-max px-4 py-1 bg-[#60D66980] rounded-md text-black">
+                      Successful
+                    </p>
+                  </td>
+                </tr>
+              );
+            })}
         </tbody>
       </table>
     </div>
@@ -81,14 +97,32 @@ const historyView = () => {
 
 const Affiliates = () => {
   const [view, setView] = useState("request");
+  const dispatch = useDispatch();
+
+  const renderPage = () => {
+    switch (view) {
+      case "request":
+        return <RequestView />;
+      case "history":
+        return <HistoryView />;
+      default:
+        return <div> EMPTY MAHN</div>;
+    }
+  };
+
+  useEffect(() => {
+    dispatch(getPendingWithdrawal());
+    dispatch(getApprovedWithdrawal());
+  }, []);
+
   return (
     <div className="flex flex-col w-full px-10 h-screen py-8 overflow-y-auto">
       <div className="w-full flex items-center gap-8">
         <p
           className={`${
             view === "request"
-              ? "font-semibold border-b-2 border-[#FD6602]"
-              : "font-normal"
+              ? "font-semibold border-b-2 border-[#FD6602] cursor-pointer"
+              : "font-normal cursor-pointer"
           }`}
           onClick={() => setView("request")}
         >
@@ -97,17 +131,15 @@ const Affiliates = () => {
         <p
           className={`${
             view === "history"
-              ? "font-semibold border-b-2 border-[#FD6602]"
-              : "font-normal"
+              ? "font-semibold border-b-2 border-[#FD6602] cursor-pointer"
+              : "font-normal cursor-pointer"
           }`}
           onClick={() => setView("history")}
         >
           History
         </p>
       </div>
-      <div className="w-full h-full">
-        {view === "request" ? requestView() : historyView()}
-      </div>
+      <div className="w-full h-full">{renderPage()}</div>
     </div>
   );
 };

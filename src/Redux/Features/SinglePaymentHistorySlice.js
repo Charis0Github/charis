@@ -19,7 +19,7 @@ export const getSinglePayment = createAsyncThunk(
     const token = localStorage.getItem("token");
     const id = localStorage.getItem("uid");
     try {
-      const response = await axios.get(BASE_URL + `/users/${id}`, {
+      const response = await axios.get(BASE_URL + `/payment/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -47,10 +47,33 @@ export const getSinglePayment = createAsyncThunk(
 const singlePaymentHistorySlice = createSlice({
   name: "singlePaymentHistory",
   initialState,
-  reducers: {},
+  reducers: {
+    resetSinglePayment: (state) => {
+      state.singlePaymentError = false;
+      state.singlePaymentLoading = false;
+      state.singlePaymentSuccess = false;
+      state.singlePaymentMessage = "";
+    },
+  },
   extraReducers: (builder) => {
-    builder;
+    builder
+      .addCase(getSinglePayment.pending, (state) => {
+        state.singlePaymentLoading = true;
+      })
+      .addCase(getSinglePayment.fulfilled, (state, action) => {
+        state.singlePaymentLoading = false;
+        state.singlePaymentSuccess = true;
+        state.singlePaymentError = false;
+        state.singlePaymentHistory = action.payload;
+      })
+      .addCase(getSinglePayment.rejected, (state, action) => {
+        state.singlePaymentLoading = false;
+        state.singlePaymentError = true;
+        state.singlePaymentSuccess = false;
+        state.singlePaymentMessage = action.payload;
+      });
   },
 });
 
+export const { resetSinglePayment } = singlePaymentHistorySlice.actions;
 export default singlePaymentHistorySlice.reducer;

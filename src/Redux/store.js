@@ -19,6 +19,12 @@ import paymentReducer from "./Features/paymentSlice";
 import requestFundReducer from "./Features/requestFundSlice";
 import withdrawalDetailsReducer from "./Features/WithdrawalDetailsSlice";
 import calculateShareCapitalReducer from "./Features/calculateShareCapitalSlice";
+import userWithdrawalReducer from "./Features/userWithdrawalSlice";
+import singlePaymentHistoryReducer from "./Features/SinglePaymentHistorySlice";
+import pendingWithdrawalReducer from "./Features/pendingWithdrawal";
+import approvedWithdrawalReducer from "./Features/approvedWithdrawal";
+import allUserPaymentReducer from "./Features/allUserPaymentSlice";
+import adminUserPaymentReducer from "./Features/adminUserPayment";
 
 const reducers = combineReducers({
   formData: formReducer,
@@ -30,6 +36,12 @@ const reducers = combineReducers({
   withdrawal: requestFundReducer,
   paymentDetails: withdrawalDetailsReducer,
   shareCapital: calculateShareCapitalReducer,
+  userWithdrawal: userWithdrawalReducer,
+  singleUserPayment: singlePaymentHistoryReducer,
+  pendingWithdrawal: pendingWithdrawalReducer,
+  approvedWithdrawal: approvedWithdrawalReducer,
+  allPayment: allUserPaymentReducer,
+  adminUserPayment: adminUserPaymentReducer,
 });
 
 const persistConfig = {
