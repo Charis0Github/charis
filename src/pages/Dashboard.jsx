@@ -45,19 +45,21 @@ const Dashboard = () => {
   const itemsPerPage = 10;
   const firstIndex = pageNumber * itemsPerPage;
 
-  const display = singlePaymentHistory?.payments
-    .slice(firstIndex, firstIndex + itemsPerPage)
-    .map((item) => {
-      return (
-        <tr key={item._id}>
-          <td className="pb-2 pr-8">Umoru Emmanuel</td>
-          <td className="pb-2 pr-8">N {item.amount}</td>
-          <td className="pb-2 pr-8">{formatDate(item.datePaid)}</td>
-          <td className="pb-2 pr-8 text-green-400">Successful</td>
-          <td className="pb-2 pr-8">{item.transactionId}</td>
-        </tr>
-      );
-    });
+  const display =
+    singlePaymentHistory &&
+    singlePaymentHistory?.payments
+      .slice(firstIndex, firstIndex + itemsPerPage)
+      .map((item) => {
+        return (
+          <tr key={item._id}>
+            <td className="pb-2 pr-8">Umoru Emmanuel</td>
+            <td className="pb-2 pr-8">N {item.amount}</td>
+            <td className="pb-2 pr-8">{formatDate(item.datePaid)}</td>
+            <td className="pb-2 pr-8 text-green-400">Successful</td>
+            <td className="pb-2 pr-8">{item.transactionId}</td>
+          </tr>
+        );
+      });
 
   const pageCount = Math.ceil(
     singlePaymentHistory?.payments.length / itemsPerPage
