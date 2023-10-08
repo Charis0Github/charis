@@ -308,10 +308,10 @@ const Home = () => {
       <div className="images lg:flex items-center justify-center w-full flex flex-col lg:flex-row lg:space-x-5 lg:mt-[3rem] mt-20 space-y-5 lg:space-y-0 lg:mb-[10rem]">
         <img src={p1} width={200} height={200} />
         <img src={p2} width={200} height={200} />
-        <img src={p3} width={200} height={200} />
+        {/* <img src={p3} width={200} height={200} />
         <img src={p4} width={200} height={200} />
         <img src={p5} width={200} height={200} />
-        <img src={p6} width={200} height={200} />
+        <img src={p6} width={200} height={200} /> */}
       </div>
       {/* PARTNERS SECTION ENDS */}
 
@@ -340,7 +340,7 @@ const Home = () => {
           </p>
 
           <button className="flex items-center space-x-3 justify-between mt-8 mb-16 lg:mb-0 text-lg bg-black py-2 px-4 lg:px-6  lg:py-3 rounded-md w-max font-bold text-white">
-            <p className="font-bold text-sm">Register now</p>
+            <p className="font-bold text-sm">Activate</p>
           </button>
         </div>
         {/* CHOOSE US SECTION ENDS */}

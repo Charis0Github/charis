@@ -245,8 +245,8 @@ const Dashboard = () => {
               </div>
             </div>
             {/* CARD SECTION STARTS HERE */}
-            <div className="w-full lg:flex gap-8 h-max mt-3">
-              <div className="h-[185px] w-full lg:w-full bg-white shadow-md shadow-black/30 pt-2 px-3 rounded-[5px]">
+            <div className="w-full lg:flex gap-6 h-max mt-3 flex-wrap">
+              <div className="h-[185px] w-full lg:w-[285px] bg-white shadow-md shadow-black/30 pt-2 px-3 rounded-[5px]">
                 {/* TOP CARD SECTION */}
                 <div className="w-full flex items-center justify-between">
                   <p className="text-sm text-black/50">Savings</p>
@@ -254,12 +254,12 @@ const Dashboard = () => {
                 </div>
 
                 {/* MIDDLE CARD SECTION*/}
-                <p className="font-bold font-sans text-black text-2xl tracking-widest mt-8">
+                <p className="font-bold font-sans text-black text-2xl tracking-widest ">
                   N0.00
                 </p>
 
                 {/* BOTTOM CARD SECTION*/}
-                <div className="flex items-center justify-between text-xs mt-8">
+                <div className="flex items-center justify-between text-xs mt-14">
                   <p className="w-[200px]">
                     Note: Next payment coming up 10 August,2023
                   </p>
@@ -269,7 +269,7 @@ const Dashboard = () => {
                 </div>
               </div>
 
-              <div className="h-[185px] w-full lg:w-full bg-white shadow-md shadow-black/30 pt-2 px-3 rounded-[5px] mt-9 lg:mt-0">
+              <div className="h-[185px] w-full lg:w-[285px] bg-white shadow-md shadow-black/30 pt-2 px-3 rounded-[5px] mt-9 lg:mt-0">
                 {/* TOP CARD SECTION */}
                 <div className="w-full flex items-center justify-between">
                   <p className="text-sm text-black/50">House Payment</p>
@@ -277,12 +277,12 @@ const Dashboard = () => {
                 </div>
 
                 {/* MIDDLE CARD SECTION*/}
-                <p className="font-bold font-sans text-black text-2xl tracking-widest mt-8">
+                <p className="font-bold font-sans text-black text-2xl tracking-widest ">
                   N0.00
                 </p>
               </div>
 
-              <div className="h-[185px] w-full lg:w-full bg-white shadow-md shadow-black/30 pt-2 px-3 rounded-[5px] mt-9 lg:mt-0">
+              <div className="h-[185px] w-full lg:w-[285px] bg-white shadow-md shadow-black/30 pt-2 px-3 rounded-[5px] mt-9 lg:mt-0">
                 {/* TOP CARD SECTION */}
                 <div className="w-full flex items-center justify-between">
                   <p className="text-sm text-black/50">House Target</p>
@@ -290,11 +290,40 @@ const Dashboard = () => {
                 </div>
 
                 {/* MIDDLE CARD SECTION*/}
-                <p className="font-bold font-sans text-black text-2xl tracking-widest mt-8">
+                <p className="font-bold font-sans text-black text-2xl tracking-widest ">
                   N0.00
                 </p>
               </div>
+
+              <div className="h-[185px] w-full lg:w-[285px] bg-white shadow-md shadow-black/30 pt-2 px-3 rounded-[5px] mt-9 lg:mt-0">
+                {/* TOP CARD SECTION */}
+                <div className="w-full flex items-center justify-between">
+                  <p className="text-sm text-black/50">Investment</p>
+                  <img src={target} className="bg-[#FD6602] p-1" />
+                </div>
+
+                {/* MIDDLE CARD SECTION*/}
+                <p className="font-bold font-sans text-black text-2xl tracking-widest mt-1">
+                  N0.00
+                </p>
+
+                {/* BOTTOM CARD SECTION*/}
+                <div className="flex items-center justify-between text-xs mt-12">
+                  <div className="w-[200px]">
+                    <p className="font-sans text-black text-sm tracking-widest">
+                      ROI
+                    </p>
+                    <p className="font-bold font-sans text-black text-lg tracking-widest">
+                      N0.00
+                    </p>
+                  </div>
+                  <div className="bg-black px-2 py-1 rounded-[5px] text-white text-center text-xs w-max">
+                    Withdraw
+                  </div>
+                </div>
+              </div>
             </div>
+
             <h1 className="text-lg font-bold mt-10">Payment History</h1>
             <div className="w-full overflow-x-auto">
               <table className="mt-10 w-full table-auto">
