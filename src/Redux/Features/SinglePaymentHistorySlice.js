@@ -54,6 +54,10 @@ const singlePaymentHistorySlice = createSlice({
       state.singlePaymentSuccess = false;
       state.singlePaymentMessage = "";
     },
+
+    resetSingularPayment: (state) => {
+      state.singlePaymentHistory = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -75,5 +79,6 @@ const singlePaymentHistorySlice = createSlice({
   },
 });
 
-export const { resetSinglePayment } = singlePaymentHistorySlice.actions;
+export const { resetSinglePayment, resetSingularPayment } =
+  singlePaymentHistorySlice.actions;
 export default singlePaymentHistorySlice.reducer;

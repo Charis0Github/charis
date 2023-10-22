@@ -6,15 +6,16 @@ import con3 from "../assets/con3.svg";
 import con4 from "../assets/con4.svg";
 import p1 from "../assets/p1.png";
 import p2 from "../assets/p2.png";
-import p3 from "../assets/p3.png";
-import p4 from "../assets/p4.png";
-import p5 from "../assets/p5.png";
-import p6 from "../assets/p6.png";
+import p3 from "../assets/pt1.jpeg";
+import p4 from "../assets/pt2.jpeg";
+import p5 from "../assets/pt3.jpeg";
+import p6 from "../assets/pt4.jpeg";
 import prop1 from "../assets/prop1.png";
 import prop2 from "../assets/prop2.png";
 import prop3 from "../assets/prop3.png";
 import prop4 from "../assets/prop4.png";
 import Input from "../components/Input";
+import add from "../assets/add.svg";
 import { Form1, Form2, Form3, Form4 } from "./Forms/Forms";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,11 +26,33 @@ const Home = () => {
   const [active, setActive] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const [steps, setSteps] = useState(0);
+  const [prompt, setPrompt] = useState(false);
   const [file, setFile] = useState(null);
 
   const navigate = useNavigate();
   const { user, userDetails } = useSelector((state) => state.auth);
   const { paymentStatus } = useSelector((state) => state.payment);
+  const {
+    property,
+    propertySuccess,
+    propertyLoading,
+    propertyError,
+    propertyMessage,
+  } = useSelector((state) => state.property);
+
+  const [isListing, setIsListing] = useState(false);
+  const [previewImageUrl, setPreviewImageUrl] = useState("");
+  const [propertyForm, setPropertyForm] = useState({
+    price: "",
+    description: "",
+    location: "",
+    sqft: "",
+    roomNumber: "",
+    type: "",
+    status: "available",
+    name: "",
+    file: "",
+  });
 
   const tabs = [
     { id: 1, text: "Get house allocation" },
@@ -51,6 +74,47 @@ const Home = () => {
     }
   };
 
+  const handleChange = (event) => {
+    const { name, value, files } = event.target;
+    setPropertyForm({
+      ...propertyForm,
+      [name]: name === "file" ? files[0] : value,
+    });
+
+    if (files) {
+      const file = files[0];
+      const imageUrl = URL.createObjectURL(file);
+      setPreviewImageUrl(imageUrl);
+    }
+  };
+
+  //NEW PROPERTY SUBMIT HANDLER
+  const handlePropertySubmit = (e) => {
+    e.preventDefault();
+    if (
+      !propertyForm.description &&
+      !propertyForm.file &&
+      !propertyForm.location &&
+      !propertyForm.name &&
+      !propertyForm.price &&
+      !propertyForm.roomNumber &&
+      !propertyForm.sqft &&
+      !propertyForm.type
+    ) {
+      alert("Please enter all required fields");
+    } else {
+      dispatch(createProperty(propertyForm));
+    }
+  };
+
+  const handleHomeOwnership = () => {
+    if (userDetails.userData.status === "not-paid") {
+      setIsOpen(true);
+    } else {
+      setPrompt(true);
+    }
+  };
+
   const dispatch = useDispatch();
 
   const close = () => {
@@ -60,7 +124,7 @@ const Home = () => {
   const handleForm = () => {
     if (user) {
       if (userDetails?.userData?.status === "paid") {
-        alert("You've made payment already");
+        setPrompt(true);
       } else {
         setIsOpen(true);
       }
@@ -90,6 +154,10 @@ const Home = () => {
       window.location.href = paymentStatus.response.data.link;
     }
   }, [paymentStatus]);
+
+  // useEffect(() => {
+  //   dispatch(resetPayment());
+  // }, []);
 
   // const display = () => {
   //   const data = localStorage.getItem("image");
@@ -126,8 +194,11 @@ const Home = () => {
               <span className="text-[#FF6700]"> 5% interest rate.</span>
             </p>
 
-            <div className="flex items-center  gap-6 w-max mt-12">
-              <button className="flex items-center space-x-3 justify-between  text-lg bg-black py-2 px-4 lg:px-6  lg:py-4 rounded-md w-auto font-bold text-white">
+            <div className="flex items-center  gap-5 lg:w-max w-[300px]  mt-12 flex-wrap">
+              <button
+                onClick={handleHomeOwnership}
+                className="flex items-center space-x-3 justify-between  text-lg bg-black py-2 px-4 lg:px-6  lg:py-4 rounded-md w-auto font-bold text-white"
+              >
                 <p className="font-bold text-sm">Get Started</p>
               </button>
 
@@ -136,6 +207,13 @@ const Home = () => {
                 className="text-black bg-white border-[1px] border-black w-auto join p-2 rounded-lg text-sm px-6 py-3 font-bold cursor-pointer"
               >
                 Become an affiliate
+              </div>
+
+              <div
+                onClick={() => setIsListing(true)}
+                className="text-black bg-white border-[1px] border-black w-auto join p-2 rounded-lg text-sm px-6 py-3 font-bold cursor-pointer"
+              >
+                List Property
               </div>
             </div>
           </div>
@@ -307,11 +385,11 @@ const Home = () => {
 
       <div className="images lg:flex items-center justify-center w-full flex flex-col lg:flex-row lg:space-x-5 lg:mt-[3rem] mt-20 space-y-5 lg:space-y-0 lg:mb-[10rem]">
         <img src={p1} width={200} height={200} />
-        <img src={p2} width={200} height={200} />
-        {/* <img src={p3} width={200} height={200} />
+        {/* <img src={p2} width={200} height={200} /> */}
+        <img src={p3} width={200} height={200} />
         <img src={p4} width={200} height={200} />
         <img src={p5} width={200} height={200} />
-        <img src={p6} width={200} height={200} /> */}
+        <img src={p6} width={200} height={200} />
       </div>
       {/* PARTNERS SECTION ENDS */}
 
@@ -339,9 +417,9 @@ const Home = () => {
             <br />
           </p>
 
-          <button className="flex items-center space-x-3 justify-between mt-8 mb-16 lg:mb-0 text-lg bg-black py-2 px-4 lg:px-6  lg:py-3 rounded-md w-max font-bold text-white">
+          {/* <button className="flex items-center space-x-3 justify-between mt-8 mb-16 lg:mb-0 text-lg bg-black py-2 px-4 lg:px-6  lg:py-3 rounded-md w-max font-bold text-white">
             <p className="font-bold text-sm">Activate</p>
-          </button>
+          </button> */}
         </div>
         {/* CHOOSE US SECTION ENDS */}
 
@@ -443,6 +521,144 @@ const Home = () => {
             <div className="w-full h-max flex flex-col items-start gap-5 mb-10 mt-10">
               {renderForm()}
             </div>
+          </div>
+        </div>
+      )}
+
+      {isListing && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white lg:p-8 p-4 rounded-lg h-[95%] w-[500px] relative overflow-y-auto">
+            <h1 className="text-left lg:text-2xl text-lg mb-10">
+              Create Property
+            </h1>
+
+            <div
+              onClick={() => setIsListing(false)}
+              className="absolute top-3 flex items-center justify-center lg:right-5 right-2 h-[20px] w-[20px] rounded-full p-1 bg-black text-white cursor-pointer"
+            >
+              <h1 className="text-xs font-bold">X</h1>
+            </div>
+
+            <form
+              // onSubmit={handlePropertySubmit}
+              className="flex flex-col w-full gap-7"
+            >
+              <Input
+                type={"text"}
+                name={"name"}
+                placeholder={"Type in name of Property"}
+                label={"Name"}
+                value={propertyForm.name}
+                onChange={handleChange}
+              />
+              <Input
+                type={"text"}
+                name={"price"}
+                placeholder={"Type in price of Property E.g 200000000"}
+                label={"Price"}
+                value={propertyForm.price}
+                onChange={handleChange}
+              />
+
+              <Input
+                type={"text"}
+                name={"type"}
+                placeholder={"Type of Property E.g Duplex"}
+                label={"Type"}
+                value={propertyForm.type}
+                onChange={handleChange}
+              />
+              <Input
+                type={"text"}
+                name={"description"}
+                placeholder={"Type in a short description of the property"}
+                label={"Description"}
+                value={propertyForm.description}
+                onChange={handleChange}
+              />
+
+              <Input
+                type={"text"}
+                name={"location"}
+                placeholder={"Type location of property"}
+                label={"Location"}
+                value={propertyForm.location}
+                onChange={handleChange}
+              />
+
+              <Input
+                type={"text"}
+                name={"sqft"}
+                placeholder={"Type in Dimension of Property (sqft)"}
+                label={"Dimension"}
+                value={propertyForm.sqft}
+                onChange={handleChange}
+              />
+
+              <Input
+                type={"text"}
+                name={"roomNumber"}
+                placeholder={"Type in number of bedrooms"}
+                label={"Bedroom"}
+                value={propertyForm.roomNumber}
+                onChange={handleChange}
+              />
+
+              <div>
+                <h1 className="text-base font-semibold font-sans">Media</h1>
+                <p className="text-sm font-extralight">
+                  Upload picture of your logo (5mb max)
+                </p>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 rounded-lg  justify-end relative p-2 bg-[#FF6700] w-max">
+                    <img src={add} className="w-5 h-5" />
+                    <label htmlFor="file" className="text-white">
+                      Upload picture
+                    </label>
+                    <input
+                      type="file"
+                      id="file"
+                      onChange={handleChange}
+                      name="file"
+                      className="absolute opacity-0 cursor-pointer p-2 appearance-none "
+                    />
+                    {/* <p className='absolute left-[8.5rem] w-full'>{file ? file.name : null}</p> */}
+                  </div>
+
+                  <img
+                    src={previewImageUrl ? previewImageUrl : null}
+                    className="w-16 h-16 rounded-full"
+                  />
+                </div>
+              </div>
+
+              <button
+                // type="submit"
+                className="w-max px-5 py-1 bg-black flex items-center justify-center text-white font-sans rounded-lg"
+              >
+                {propertyLoading ? "creating property" : "Add property"}
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {prompt && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10 p-4">
+          <div className="bg-white flex flex-col gap-16 font-sans items-center lg:p-8 p-4 rounded-lg h-[40%] w-[500px] relative ">
+            <div
+              onClick={() => setPrompt(false)}
+              className="absolute -top-3 flex items-center justify-center lg:-right-2 right-2 h-[30px] w-[30px] rounded-full p-1 bg-black text-white cursor-pointer"
+            >
+              <h1 className="text-sm font-bold">X</h1>
+            </div>
+            <h1 className="text-2xl font-semibold font-sans text-[rgb(253,102,2)]">
+              Already Regitered
+            </h1>
+
+            <p className="text-center text-lg">
+              You are already an active member
+            </p>
           </div>
         </div>
       )}

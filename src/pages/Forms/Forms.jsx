@@ -309,8 +309,8 @@ export const Form3 = ({ handleStep }) => {
 };
 
 export const Form4 = ({ handleStep }) => {
-  const [previewImageUrl, setPreviewImageUrl] = useState("");
-  const [picture, setPicture] = useState("");
+  // const [previewImageUrl, setPreviewImageUrl] = useState("");
+  // const [picture, setPicture] = useState("");
   const dispatch = useDispatch();
   const {
     title,
@@ -383,38 +383,30 @@ export const Form4 = ({ handleStep }) => {
   // };
 
   const makePayment = () => {
-    const data = {
-      title,
-      nationality,
-      address,
-      gender,
-      dob,
-      lga,
-      profession,
-      officeAddress,
-      statusRank,
-      monthlyIncome,
-      yearsOfService,
-      retirementAge,
-      educationalQualification,
-      nextOfKinName,
-      nextOfKinAddress,
-      relationship,
-      nextOfKinPhoneNumber,
-      nextOfKinEmail,
-      houseSize,
-      houseType,
-      preferredLocation,
-      paymentPlan,
-      file: picture,
-    };
-
-    // console.log(data);
-    dispatch(corporativeRegister(data));
-  };
-
-  useEffect(() => {
-    if (corporativeSuccess) {
+    if (
+      title &&
+      nationality &&
+      address &&
+      gender &&
+      dob &&
+      lga &&
+      profession &&
+      officeAddress &&
+      statusRank &&
+      monthlyIncome &&
+      yearsOfService &&
+      retirementAge &&
+      educationalQualification &&
+      nextOfKinName &&
+      nextOfKinAddress &&
+      relationship &&
+      nextOfKinPhoneNumber &&
+      nextOfKinEmail &&
+      houseSize &&
+      houseType &&
+      preferredLocation &&
+      paymentPlan
+    ) {
       const reqBody = {
         amount: "25000",
         redirect: "http://localhost:5173/verify",
@@ -422,11 +414,22 @@ export const Form4 = ({ handleStep }) => {
       };
       dispatch(createPaymentLink(reqBody));
     }
+  };
 
-    if (corporativeError) {
-      toast.error(corporativeMessage);
-    }
-  }, [corporativeSuccess, corporativeError, corporativeSuccess]);
+  // useEffect(() => {
+  //   if (corporativeSuccess) {
+  //     const reqBody = {
+  //       amount: "25000",
+  //       redirect: "http://localhost:5173/verify",
+  //       tag: "reg",
+  //     };
+  //     dispatch(createPaymentLink(reqBody));
+  //   }
+
+  //   if (corporativeError) {
+  //     toast.error(corporativeMessage);
+  //   }
+  // }, [corporativeSuccess, corporativeError, corporativeSuccess]);
 
   return (
     <div className="w-full flex flex-col gap-5">
@@ -497,10 +500,11 @@ export const Form4 = ({ handleStep }) => {
         </label>
       ))}
 
-      <h1 className="text-base font-sans font-medium my-1">
+      {/* <h1 className="text-base font-sans font-medium my-1">
         Passport Upload (Passport Selfie Picture)
-      </h1>
-      <div className="flex items-center justify-between">
+      </h1> */}
+
+      {/* <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 rounded-lg  justify-end relative p-2 bg-[#FF6700] w-max">
           <img src={add} className="w-5 h-5" />
           <label htmlFor="file" className="text-white">
@@ -513,14 +517,14 @@ export const Form4 = ({ handleStep }) => {
             name="file"
             className="absolute opacity-0 cursor-pointer p-2 appearance-none "
           />
-          {/* <p className='absolute left-[8.5rem] w-full'>{file ? file.name : null}</p> */}
+          <p className='absolute left-[8.5rem] w-full'>{file ? file.name : null}</p>
         </div>
 
         <img
           src={previewImageUrl ? previewImageUrl : null}
           className="w-16 h-16 rounded-full"
         />
-      </div>
+      </div> */}
 
       <div className="mt-3 flex items-center  gap-3 w-full">
         <button

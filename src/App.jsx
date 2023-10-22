@@ -22,6 +22,7 @@ import Affiliates from "./pages/Admin/Affiliates";
 import Settings from "./pages/Admin/Settings";
 import VerifyPayment from "./pages/VerifyPayment";
 import ReferralLogin from "./pages/ReferralLogin";
+import SingleProperty from "./pages/PropertyDetails";
 
 function App() {
   const user = useSelector((state) => state.auth.user);
@@ -35,6 +36,7 @@ function App() {
         <Route path="event" element={<Event />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="property" element={<Property />} />
+        <Route path="list-property" element={<SingleProperty />} />
       </Route>
       <Route path="/login" element={<Login />} />
       <Route path="/referralLogin/:referralCode" element={<ReferralLogin />} />

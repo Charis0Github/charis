@@ -10,6 +10,7 @@ import { logOut } from "../Redux/Features/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutProperty, resetProperty } from "../Redux/Features/propertySlice";
 import { userLogout } from "../Redux/Features/userSlice";
+import { resetSingularPayment } from "../Redux/Features/SinglePaymentHistorySlice";
 
 const Navbar = () => {
   const links = [
@@ -41,6 +42,7 @@ const Navbar = () => {
 
   const [active, setActive] = useState(localStorage.getItem("tab") || "2");
   const [menu, setMenu] = useState(false);
+  const [prompt, setPrompt] = useState(false);
 
   const changeTab = (id) => {
     setActive(id.toString());
@@ -65,8 +67,12 @@ const Navbar = () => {
       setNav(!nav);
     }
     if (id === 7) {
-      navigate("dashboard");
-      setNav(!nav);
+      if (userDetails.userData.status === "paid") {
+        navigate("dashboard");
+        setNav(!nav);
+      } else {
+        setPrompt(true);
+      }
     }
     if (id === 8) {
       navigate("/admin");
@@ -85,6 +91,7 @@ const Navbar = () => {
   const handleLogout = () => {
     dispatch(userLogout());
     dispatch(logoutProperty());
+    dispatch(resetSingularPayment());
     dispatch(logOut());
   };
 
@@ -124,7 +131,7 @@ const Navbar = () => {
         {user ? (
           <div
             onClick={() => setMenu(!menu)}
-            className=" relative flex items-center justify-between p-2 px-4 lg:py-2 rounded-lg space-x-2 w-auto text-white text-sm bg-[#FF6700]"
+            className=" relative flex items-center justify-between p-2 px-4 lg:py-2 rounded-lg space-x-2 w-auto text-white text-sm bg-[#FF6700] cursor-pointer"
           >
             <img width={15} height={15} src={profile} alt="user icon" />
             <p>{userDetails ? userDetails?.userData?.name : "Username"}</p>
@@ -267,6 +274,27 @@ const Navbar = () => {
           </Link>
         )}
       </ul>
+
+      {prompt && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10 p-4">
+          <div className="bg-white flex flex-col gap-16 font-sans items-center lg:p-8 p-4 rounded-lg h-[40%] w-[500px] relative ">
+            <div
+              onClick={() => setPrompt(false)}
+              className="absolute -top-3 flex items-center justify-center lg:-right-2 right-2 h-[30px] w-[30px] rounded-full p-1 bg-black text-white cursor-pointer"
+            >
+              <h1 className="text-sm font-bold">X</h1>
+            </div>
+            <h1 className="text-2xl font-semibold font-sans text-[rgb(253,102,2)]">
+              Not Eligible
+            </h1>
+
+            <p className="text-center text-lg">
+              You are not an active member yet! Please commplete the membership
+              registration process
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

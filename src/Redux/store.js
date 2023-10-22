@@ -25,6 +25,9 @@ import pendingWithdrawalReducer from "./Features/pendingWithdrawal";
 import approvedWithdrawalReducer from "./Features/approvedWithdrawal";
 import allUserPaymentReducer from "./Features/allUserPaymentSlice";
 import adminUserPaymentReducer from "./Features/adminUserPayment";
+import calculateInvestmentReducer from "./Features/calculateInvestment";
+import uploadImageReducer from "./Features/uploadImageSlice";
+import eligibilityReducer from "./Features/eligibilitySlice";
 
 const reducers = combineReducers({
   formData: formReducer,
@@ -42,6 +45,9 @@ const reducers = combineReducers({
   approvedWithdrawal: approvedWithdrawalReducer,
   allPayment: allUserPaymentReducer,
   adminUserPayment: adminUserPaymentReducer,
+  calculateInvest: calculateInvestmentReducer,
+  imgUpload: uploadImageReducer,
+  eligible: eligibilityReducer,
 });
 
 const persistConfig = {

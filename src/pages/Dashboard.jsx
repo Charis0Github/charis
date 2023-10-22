@@ -3,6 +3,7 @@ import { useNavigate, Navigate } from "react-router-dom";
 import dp from "../assets/dp.png";
 import money from "../assets/money.svg";
 import target from "../assets/target.svg";
+import add from "../assets/add.svg";
 import Lottie from "lottie-react";
 import load from "../assets/loading.json";
 import ReactPaginate from "react-paginate";
@@ -20,13 +21,33 @@ import {
   getSinglePayment,
   resetSinglePayment,
 } from "../Redux/Features/SinglePaymentHistorySlice";
+import Input from "../components/Input";
+import {
+  getROI,
+  resetCalculateInvestment,
+} from "../Redux/Features/calculateInvestment";
+import {
+  imageUpload,
+  resetImageUpload,
+} from "../Redux/Features/uploadImageSlice";
+import { getUserDetails } from "../Redux/Features/authSlice";
+import {
+  checkEligibility,
+  resetEigibility,
+} from "../Redux/Features/eligibilitySlice";
 
 const Dashboard = () => {
   const [payModal, setPayModal] = useState(false);
   const [houseModal, setHouseModal] = useState(false);
   const [infoModal, setInfoModal] = useState(false);
+  const [infoModal1, setInfoModal1] = useState(false);
   const [shareModal, setShareModal] = useState(false);
   const [shareModal1, setShareModal1] = useState(false);
+
+  const [investModal, setInvestModal] = useState(false);
+  const [investModal1, setInvestModal1] = useState(false);
+  const [savingsModal, setSavingsModal] = useState(false);
+  const [monthlyModal, setMonthlyModal] = useState(false);
   const [noImg, setNoImg] = useState(false);
   const [selected, setSelected] = useState("");
   const {
@@ -37,10 +58,37 @@ const Dashboard = () => {
     singlePaymentMessage,
   } = useSelector((state) => state.singleUserPayment);
 
+  const {
+    imageUploadLoading,
+    imageUploadSuccess,
+    imageUploadError,
+    imageUploadMessage,
+  } = useSelector((state) => state.imgUpload);
+
+  const {
+    loanEligibleLoading,
+    loanEligibleSuccess,
+    loanEligibleError,
+    loanEligibleMessage,
+    loanEligible,
+  } = useSelector((state) => state.eligible);
+
   const [shareBody, setShareBody] = useState({
     houseAmount: "",
     spread: "",
   });
+
+  const [investBody, setInvestBody] = useState({
+    amount: "",
+    spread: "",
+  });
+
+  const [savingsBody, setSavingsBody] = useState({
+    amount: "",
+  });
+
+  const [file, setFile] = useState(null);
+
   const [pageNumber, setPageNumber] = useState(0);
   const itemsPerPage = 10;
   const firstIndex = pageNumber * itemsPerPage;
@@ -52,8 +100,8 @@ const Dashboard = () => {
       .map((item) => {
         return (
           <tr key={item._id}>
-            <td className="pb-2 pr-8">Umoru Emmanuel</td>
-            <td className="pb-2 pr-8">N {item.amount}</td>
+            {/* <td className="pb-2 pr-8">Umoru Emmanuel</td> */}
+            <td className="pb-2 pr-8">N {formatNumber(item.amount)}</td>
             <td className="pb-2 pr-8">{formatDate(item.datePaid)}</td>
             <td className="pb-2 pr-8 text-green-400">Successful</td>
             <td className="pb-2 pr-8">{item.transactionId}</td>
@@ -82,6 +130,14 @@ const Dashboard = () => {
     calculateShareError,
     calculateShareMessage,
   } = useSelector((state) => state.shareCapital);
+
+  const {
+    investmentData,
+    calculateInvestmentLoading,
+    calculateInvestmentSuccess,
+    calculateInvestmentError,
+    calculateInvestmentMessage,
+  } = useSelector((state) => state.calculateInvest);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -117,6 +173,10 @@ const Dashboard = () => {
       setPayModal(false);
       setShareModal(true);
     }
+    if (selected === "invest") {
+      setPayModal(false);
+      setInvestModal(true);
+    }
   };
 
   const handlePayment = () => {
@@ -137,8 +197,35 @@ const Dashboard = () => {
       };
       dispatch(createPaymentLink(reqBody));
     }
+
+    if (selected === "invest") {
+      const reqBody = {
+        amount: investmentData.investmentAmount,
+        redirect: "http://localhost:5173/verify",
+        tag: selected,
+      };
+      dispatch(createPaymentLink(reqBody));
+    }
+
+    if (selected === "savings") {
+      const reqBody = {
+        amount: savingsBody.amount,
+        redirect: "http://localhost:5173/verify",
+        tag: selected,
+      };
+      dispatch(createPaymentLink(reqBody));
+    }
+    if (selected === "monthly") {
+      const reqBody = {
+        amount: userDetails?.userData?.monthlyHousePayment,
+        redirect: "http://localhost:5173/verify",
+        tag: selected,
+      };
+      dispatch(createPaymentLink(reqBody));
+    }
   };
 
+  //
   const sharedBodyAmount = (number) => {
     setShareBody({
       ...shareBody,
@@ -146,6 +233,12 @@ const Dashboard = () => {
     });
     setShareModal(false);
     setShareModal1(true);
+  };
+
+  // AFTER INVESTMENT AMOUNT NEXT STEP
+  const nextStepInvest = () => {
+    setInvestModal(false);
+    setInvestModal1(true);
   };
 
   function formatDate(inputDate) {
@@ -167,6 +260,26 @@ const Dashboard = () => {
     } else console.log("wahala dey o");
   };
 
+  const getinvetsment = () => {
+    setInvestModal1(false);
+    if (investBody.amount && investBody.spread) {
+      const formBody = {
+        spread: investBody.spread,
+        amount: investBody.amount,
+      };
+      dispatch(getROI(formBody));
+    } else console.log("wahala dey o");
+  };
+
+  const setImg = () => {
+    if (file) {
+      const body = {
+        file: file,
+      };
+      dispatch(imageUpload(body));
+    }
+  };
+
   const numbers = Array.from({ length: 50 }, (_, index) => index + 1);
   const months = Array.from({ length: 30 }, (_, index) => index + 1);
 
@@ -175,6 +288,10 @@ const Dashboard = () => {
       window.location.href = paymentStatus.response.data.link;
     }
   }, [paymentStatus]);
+
+  // useEffect(() => {
+  //   dispatch(getSinglePayment());
+  // }, [singlePaymentHistory]);
 
   useEffect(() => {
     if (!singlePaymentHistory) {
@@ -191,6 +308,18 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
+    if (loanEligibleSuccess) {
+      // toast.success("it worked");
+      dispatch(resetEigibility());
+    }
+    if (loanEligibleError) {
+      toast.error(
+        "To qualify for a loan you need to have been part of the co-operative for at least 3 months"
+      );
+      dispatch(resetEigibility());
+    }
+  }, [loanEligibleSuccess, loanEligibleError, loanEligibleMessage]);
+  useEffect(() => {
     if (calculateShareSuccess) {
       setInfoModal(true);
       dispatch(resetShareCapital());
@@ -200,6 +329,37 @@ const Dashboard = () => {
       dispatch(resetShareCapital());
     }
   }, [calculateShareSuccess, calculateShareError, calculateShareMessage]);
+
+  useEffect(() => {
+    if (imageUploadSuccess) {
+      toast.success("Image Uploaded Successfully");
+      dispatch(getUserDetails());
+      setTimeout(() => {
+        dispatch(resetImageUpload());
+      }, 2000);
+    }
+    if (imageUploadError) {
+      toast.error(imageUploadMessage);
+      setTimeout(() => {
+        dispatch(resetImageUpload());
+      }, 2000);
+    }
+  }, [imageUploadError, imageUploadSuccess, imageUploadMessage]);
+
+  useEffect(() => {
+    if (calculateInvestmentSuccess) {
+      setInfoModal1(true);
+      dispatch(resetCalculateInvestment());
+    }
+    if (calculateInvestmentError) {
+      toast.error(calculateInvestmentMessage);
+      dispatch(resetCalculateInvestment());
+    }
+  }, [
+    calculateInvestmentSuccess,
+    calculateInvestmentError,
+    calculateInvestmentMessage,
+  ]);
 
   useEffect(() => {
     if (singlePaymentSuccess) {
@@ -221,6 +381,8 @@ const Dashboard = () => {
     singlePaymentError,
     singlePaymentMessage,
   ]);
+
+  const investSpread = [1, 2, 3, 4, 5];
 
   return (
     <React.Fragment>
@@ -255,15 +417,21 @@ const Dashboard = () => {
 
                 {/* MIDDLE CARD SECTION*/}
                 <p className="font-bold font-sans text-black text-2xl tracking-widest ">
-                  N0.00
+                  {userDetails
+                    ? "N" + formatNumber(userDetails?.userData?.savings)
+                    : "N0.00"}
                 </p>
 
                 {/* BOTTOM CARD SECTION*/}
                 <div className="flex items-center justify-between text-xs mt-14">
                   <p className="w-[200px]">
-                    Note: Next payment coming up 10 August,2023
+                    Note: Next payment coming up{" "}
+                    {formatDate(userDetails?.userData?.savingsDueDate)}
                   </p>
-                  <div className="bg-black px-2 py-1 rounded-[5px] text-white text-center text-xs w-max">
+                  <div
+                    onClick={() => setSavingsModal(true)}
+                    className="bg-black px-2 py-1 rounded-[5px] text-white text-center text-xs w-max"
+                  >
                     pay now
                   </div>
                 </div>
@@ -278,8 +446,26 @@ const Dashboard = () => {
 
                 {/* MIDDLE CARD SECTION*/}
                 <p className="font-bold font-sans text-black text-2xl tracking-widest ">
-                  N0.00
+                  {userDetails
+                    ? "N" + userDetails?.userData?.housePayment
+                    : "N0.00"}
                 </p>
+
+                <div className="flex items-center justify-between text-xs mt-14">
+                  <p className="w-[200px]">
+                    Note: Next payment coming up{" "}
+                    {formatDate(userDetails?.userData?.dueDate)}
+                  </p>
+                  <div
+                    onClick={() => {
+                      handleSelect("monthly");
+                      setMonthlyModal(true);
+                    }}
+                    className="bg-black px-2 py-1 rounded-[5px] text-white text-center text-xs w-max"
+                  >
+                    pay now
+                  </div>
+                </div>
               </div>
 
               <div className="h-[185px] w-full lg:w-[285px] bg-white shadow-md shadow-black/30 pt-2 px-3 rounded-[5px] mt-9 lg:mt-0">
@@ -291,7 +477,9 @@ const Dashboard = () => {
 
                 {/* MIDDLE CARD SECTION*/}
                 <p className="font-bold font-sans text-black text-2xl tracking-widest ">
-                  N0.00
+                  {userDetails
+                    ? "N" + formatNumber(userDetails?.userData?.houseTarget)
+                    : "N0.00"}
                 </p>
               </div>
 
@@ -304,7 +492,10 @@ const Dashboard = () => {
 
                 {/* MIDDLE CARD SECTION*/}
                 <p className="font-bold font-sans text-black text-2xl tracking-widest mt-1">
-                  N0.00
+                  {userDetails
+                    ? "N" +
+                      formatNumber(userDetails?.userData?.investmentAmount)
+                    : "N0.00"}
                 </p>
 
                 {/* BOTTOM CARD SECTION*/}
@@ -314,7 +505,7 @@ const Dashboard = () => {
                       ROI
                     </p>
                     <p className="font-bold font-sans text-black text-lg tracking-widest">
-                      N0.00
+                      {userDetails ? "N" + userDetails?.userData?.roi : "N0.00"}
                     </p>
                   </div>
                   <div className="bg-black px-2 py-1 rounded-[5px] text-white text-center text-xs w-max">
@@ -329,7 +520,7 @@ const Dashboard = () => {
               <table className="mt-10 w-full table-auto">
                 <thead className="w-full">
                   <tr className="text-black/50 font-extralight">
-                    <th className="text-left pb-2">Name</th>
+                    {/* <th className="text-left pb-2">Name</th> */}
                     <th className="text-left pb-2">Amount</th>
                     <th className="text-left pb-2">Date</th>
                     <th className="text-left pb-2">Status</th>
@@ -341,7 +532,7 @@ const Dashboard = () => {
               </table>
             </div>
 
-            <div className="flex items-end justify-between w-full mt-[30px]">
+            <div className="flex lg:items-end items-center justify-between w-full mt-[30px]">
               <div
                 onClick={() => dispatch(getSinglePayment())}
                 className="text-[#FD6602] flex items-center gap-4 w-full cursor-pointer"
@@ -351,7 +542,7 @@ const Dashboard = () => {
               </div>
 
               <div className="w-full flex flex-col items-end justify-center ">
-                <p className="text-base text-[#FD6602] mt-[30px] mb-[7px] mr-6">
+                <p className="text-base text-[#FD6602] mt-[30px] mb-[7px] lg:mr-6">
                   showing {Math.ceil(firstIndex + itemsPerPage)} of{" "}
                   {singlePaymentHistory?.payments?.length} entries
                 </p>
@@ -402,8 +593,39 @@ const Dashboard = () => {
                     className="w-[138px] h-[138px] rounded-full mt-10 object-cover mb-5"
                   />
                 ) : (
-                  <div className="w-[138px] h-[138px] bg-[#eeeeee] rounded-full mt-10 mb-5 flex items-center justify-center text-center">
-                    Profile Image
+                  <div className="flex flex-col items-center relative mb-2">
+                    <div className="w-[138px] h-[138px] bg-[#eeeeee] rounded-full mt-10 mb-5 flex items-center justify-center text-center text-sm relative">
+                      {file ? file.name : "Profile Image"}
+                      <label
+                        htmlFor="file"
+                        className="bg-black absolute bottom-0 right-3 rounded-full"
+                      >
+                        <img
+                          src={add}
+                          className="w-5 h-5 bg-[#FD6602] cursor-pointer"
+                        />
+                      </label>
+                    </div>
+
+                    {file && (
+                      <div
+                        onClick={setImg}
+                        className="w-max p-1 bg-[#FD6602] rounded-md text-white font-sans text-sm"
+                      >
+                        {imageUploadLoading ? "Processing..." : "Upload Image"}
+                      </div>
+                    )}
+
+                    <input
+                      type="file"
+                      id="file"
+                      onChange={(e) => {
+                        const { files } = e.target;
+                        setFile(files[0]);
+                      }}
+                      name="file"
+                      className="hidden opacity-0 cursor-pointer p-2 appearance-none "
+                    />
                   </div>
                 )}
               </div>
@@ -424,8 +646,11 @@ const Dashboard = () => {
               </p>
 
               <div className="w-full flex gap-4 items-center">
-                <div className="bg-[rgb(253,102,2)] w-full h-[20px] py-[15px] px-[15px] rounded-[5px] flex items-center justify-center my-7 text-white">
-                  Get a loan
+                <div
+                  onClick={() => dispatch(checkEligibility())}
+                  className="bg-[rgb(253,102,2)] w-full h-[20px] py-[15px] px-[15px] rounded-[5px] flex items-center justify-center my-7 text-white"
+                >
+                  {loanEligibleLoading ? "Processing..." : "Get a loan"}
                 </div>
                 <div
                   onClick={() => setPayModal(true)}
@@ -434,7 +659,7 @@ const Dashboard = () => {
                   Pay
                 </div>
               </div>
-              {/* PROFILE SECTION ENDS HEREm*/}
+              {/* PROFILE SECTION ENDS HERE*/}
 
               {/* ONLINE STORE DISPLAY STARTS HERE */}
               <div className="lg:w-[280px] w-full h-[231px] bg-no-repeat bg-center shop-banner object-cover rounded-[10px] mb-20 px-5">
@@ -484,7 +709,7 @@ const Dashboard = () => {
 
           {payModal && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10 p-4">
-              <div className="bg-white flex flex-col gap-7 font-sans items-center lg:p-8 p-4 rounded-lg h-[40%] w-[550px] relative ">
+              <div className="bg-white flex flex-col gap-9 font-sans items-center lg:p-8 p-4 rounded-lg h-[50%] w-[550px] relative ">
                 <div
                   onClick={() => setPayModal(false)}
                   className="absolute -top-3 flex items-center justify-center lg:-right-2 right-2 h-[30px] w-[30px] rounded-full p-1 bg-black text-white cursor-pointer"
@@ -675,6 +900,53 @@ const Dashboard = () => {
             </div>
           )}
 
+          {infoModal1 && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10 p-4">
+              <div className="bg-white flex flex-col gap-20 font-sans items-center lg:p-8 p-4 rounded-lg h-[40%] w-[500px] relative ">
+                <div
+                  onClick={() => setInfoModal1(false)}
+                  className="absolute -top-3 flex items-center justify-center lg:-right-2 right-2 h-[30px] w-[30px] rounded-full p-1 bg-black text-white cursor-pointer"
+                >
+                  <h1 className="text-sm font-bold">X</h1>
+                </div>
+
+                <div className="flex items-center justify-between w-full">
+                  <div>
+                    <p className="text-black/50 ">Annual Return</p>
+                    <h1 className="text-xl">
+                      {formatNumber(investmentData?.annualReturn)}
+                    </h1>
+                  </div>
+                  {/* <div>
+                    <p className="text-black/50 ">Duration</p>
+                    <h1 className="text-xl">
+                      {investmentData.investSpread > 1
+                        ? investmentData.investSpread + " Years"
+                        : investmentData.investSpread + " year"}
+                    </h1>
+                  </div> */}
+                </div>
+
+                <div className="w-full flex items-center justify-between">
+                  {/* <div>
+                    <p className="text-black/50 ">Monthly ROI</p>
+                    <h1 className="text-xl">
+                      {investmentData &&
+                        "N" + formatNumber(investmentData.monthlyRoi)}
+                    </h1>
+                  </div> */}
+
+                  <div
+                    onClick={handlePayment}
+                    className="w-max p-3 rounded-md px-[30px] bg-[#FD6602] text-white font-bold font-sans "
+                  >
+                    {paymentLoading ? "Processing" : "Continue"}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
           {calculateShareLoading && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-30 p-4">
               <div className="bg-transparent lg:p-8 p-4 rounded-lg h-max w-[300px] relative overflow-y-auto">
@@ -687,7 +959,18 @@ const Dashboard = () => {
               </div>
             </div>
           )}
-
+          {calculateInvestmentLoading && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-30 p-4">
+              <div className="bg-transparent lg:p-8 p-4 rounded-lg h-max w-[300px] relative overflow-y-auto">
+                <Lottie
+                  animationData={load}
+                  width={200}
+                  height={200}
+                  loop={true}
+                />
+              </div>
+            </div>
+          )}
           {noImg && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10 p-4">
               <div className="bg-white flex flex-col gap-16 font-sans items-center lg:p-8 p-4 rounded-lg h-[40%] w-[500px] relative ">
@@ -705,6 +988,153 @@ const Dashboard = () => {
                   Your Profile Image is required to Validate your payments and
                   identity
                 </p>
+              </div>
+            </div>
+          )}
+
+          {investModal && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10 p-4">
+              <div className="bg-white flex flex-col gap-20 font-sans items-center lg:p-8 p-4 rounded-lg h-[30%] w-[500px] relative ">
+                <div
+                  onClick={() => setInvestModal(false)}
+                  className="absolute -top-3 flex items-center justify-center lg:-right-2 right-2 h-[30px] w-[30px] rounded-full p-1 bg-black text-white cursor-pointer"
+                >
+                  <h1 className="text-sm font-bold">X</h1>
+                </div>
+
+                <div className="w-full h-full overflow-y-auto flex flex-col gap-7">
+                  <Input
+                    label={"Investment Amount"}
+                    placeholder={"e.g 1000000"}
+                    name={"amount"}
+                    value={investBody.amount}
+                    type={"number"}
+                    onChange={(e) =>
+                      setInvestBody({
+                        ...investBody,
+                        amount: e.target.value,
+                      })
+                    }
+                  />
+
+                  <div
+                    onClick={nextStepInvest}
+                    className="w-max p-3 rounded-md px-[30px] bg-[#FD6602] place-self-center text-white font-bold font-sans "
+                  >
+                    Continue
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {investModal1 && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10 p-4">
+              <div className="bg-white flex flex-col gap-20 font-sans items-center lg:p-8 p-4 rounded-lg h-[50%] w-[500px] relative ">
+                <div
+                  onClick={() => setInvestModal1(false)}
+                  className="absolute -top-3 flex items-center justify-center lg:-right-2 right-2 h-[30px] w-[30px] rounded-full p-1 bg-black text-white cursor-pointer"
+                >
+                  <h1 className="text-sm font-bold">X</h1>
+                </div>
+
+                <div className="w-full h-full overflow-y-auto flex flex-col gap-3">
+                  {investSpread.map((item, index) => (
+                    <p
+                      onClick={() =>
+                        setInvestBody({
+                          ...investBody,
+                          spread: item,
+                        })
+                      }
+                      className={`p-2 w-full text-center ${
+                        investBody.spread === item && "bg-[#FD6602] text-white"
+                      } font-sans hover:bg-[#fd66029e] hover:text-white`}
+                      key={index}
+                    >
+                      {item} {item < 2 ? "Year" : "Years"}
+                    </p>
+                  ))}
+
+                  <div
+                    onClick={getinvetsment}
+                    className="w-max p-3 rounded-md px-[30px] bg-[#FD6602] place-self-center text-white font-bold font-sans "
+                  >
+                    Continue
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {savingsModal && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10 p-4">
+              <div className="bg-white flex flex-col gap-20 font-sans items-center lg:p-8 p-4 rounded-lg h-[30%] w-[500px] relative ">
+                <div
+                  onClick={() => setSavingsModal(false)}
+                  className="absolute -top-3 flex items-center justify-center lg:-right-2 right-2 h-[30px] w-[30px] rounded-full p-1 bg-black text-white cursor-pointer"
+                >
+                  <h1 className="text-sm font-bold">X</h1>
+                </div>
+
+                <div className="w-full h-full overflow-y-auto flex flex-col gap-7">
+                  <Input
+                    label={"Savings Amount"}
+                    placeholder={"e.g 1000000"}
+                    name={"amount"}
+                    value={savingsBody.amount}
+                    type={"number"}
+                    onChange={(e) =>
+                      setSavingsBody({
+                        ...savingsBody,
+                        amount: e.target.value,
+                      })
+                    }
+                  />
+
+                  <div
+                    onClick={() => {
+                      console.log("wetin dey sup");
+                      handleSelect("savings");
+                      handlePayment();
+                    }}
+                    className="w-max p-3 rounded-md px-[30px] bg-[#FD6602] place-self-center text-white font-bold font-sans "
+                  >
+                    Continue
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {monthlyModal && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10 p-4">
+              <div className="bg-white flex flex-col gap-28 font-sans items-center lg:p-8 p-4 rounded-lg h-[40%] w-[250px] relative ">
+                <div
+                  onClick={() => setMonthlyModal(false)}
+                  className="absolute -top-3 flex items-center justify-center lg:-right-2 right-2 h-[30px] w-[30px] rounded-full p-1 bg-black text-white cursor-pointer"
+                >
+                  <h1 className="text-sm font-bold">X</h1>
+                </div>
+
+                <div className="w-full flex flex-col gap-2">
+                  <p className="text-center font-medium font-sans">
+                    Monthly House Payment
+                  </p>
+
+                  <p className="font-semibold text-3xl text-center">
+                    N{formatNumber(userDetails?.userData?.monthlyHousePayment)}
+                  </p>
+                </div>
+
+                {/* CONTINUE BUTTON STARTS HERE */}
+                <div
+                  onClick={handlePayment}
+                  className="w-max p-3 rounded-md px-[30px] bg-[#FD6602] text-white font-bold font-sans "
+                >
+                  {paymentLoading ? "Processing" : "Continue"}
+                </div>
+                {/* CONTINUE BUTTON ENDS HERE  */}
               </div>
             </div>
           )}

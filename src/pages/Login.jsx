@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import login1 from "../assets/login1.png";
+import welcom from "../assets/welcom.jpeg";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
