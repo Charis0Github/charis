@@ -19,8 +19,8 @@ import add from "../assets/add.svg";
 import { Form1, Form2, Form3, Form4 } from "./Forms/Forms";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { resetPayment } from "../Redux/Features/paymentSlice";
-import { resetFormData } from "../Redux/Features/formSlice";
+// import { resetPayment } from "../Redux/Features/paymentSlice";
+// import { resetFormData } from "../Redux/Features/formSlice";
 
 const Home = () => {
   const [active, setActive] = useState(0);

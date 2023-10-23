@@ -409,7 +409,7 @@ export const Form4 = ({ handleStep }) => {
     ) {
       const reqBody = {
         amount: "25000",
-        redirect: "http://localhost:5173/verify",
+        redirect: "https://charis-eight.vercel.app/verify",
         tag: "reg",
       };
       dispatch(createPaymentLink(reqBody));

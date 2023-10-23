@@ -183,7 +183,7 @@ const Dashboard = () => {
     if (selected === "house") {
       const reqBody = {
         amount: "50000",
-        redirect: "http://localhost:5173/verify",
+        redirect: "https://charis-eight.vercel.app/verify",
         tag: selected,
       };
       dispatch(createPaymentLink(reqBody));
@@ -192,7 +192,7 @@ const Dashboard = () => {
     if (selected === "share") {
       const reqBody = {
         amount: shareCapital.shareCapital,
-        redirect: "http://localhost:5173/verify",
+        redirect: "https://charis-eight.vercel.app/verify",
         tag: selected,
       };
       dispatch(createPaymentLink(reqBody));
@@ -201,7 +201,7 @@ const Dashboard = () => {
     if (selected === "invest") {
       const reqBody = {
         amount: investmentData.investmentAmount,
-        redirect: "http://localhost:5173/verify",
+        redirect: "https://charis-eight.vercel.app/verify",
         tag: selected,
       };
       dispatch(createPaymentLink(reqBody));
@@ -210,7 +210,7 @@ const Dashboard = () => {
     if (selected === "savings") {
       const reqBody = {
         amount: savingsBody.amount,
-        redirect: "http://localhost:5173/verify",
+        redirect: "https://charis-eight.vercel.app/verify",
         tag: selected,
       };
       dispatch(createPaymentLink(reqBody));
@@ -218,7 +218,7 @@ const Dashboard = () => {
     if (selected === "monthly") {
       const reqBody = {
         amount: userDetails?.userData?.monthlyHousePayment,
-        redirect: "http://localhost:5173/verify",
+        redirect: "https://charis-eight.vercel.app/verify",
         tag: selected,
       };
       dispatch(createPaymentLink(reqBody));
