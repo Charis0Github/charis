@@ -80,20 +80,14 @@ const Blog = () => {
           STEP 1-JOIN THE HOUSING COOPERATIVE
         </h1>
         <p className="mt-3 text-[#1111117f] w-full">
-          <li className="list-disc text-[#1111117f]">Entrance Fee - N25,000</li>
-          <li className="list-disc text-[#1111117f]">
-            Share Capital - Minimum of N100,000 subject to value of house or
-            expected ROI
-          </li>
-          <li className="list-disc text-[#1111117f]">
-            Monthly Contribution - N10,000 or more.
-          </li>
+          <li className="list-disc text-[#1111117f]">Entrance Fee</li>
+          <li className="list-disc text-[#1111117f]">Share Capital</li>
+          <li className="list-disc text-[#1111117f]">Monthly Contribution.</li>
           <li className="list-disc text-[#1111117f]">
             Attend Monthly online co-op meetings.
           </li>
           <li className="list-disc text-[#1111117f]">
-            Make Monthly Purchase from Co-op Shop - minimum of N30,000 subject
-            to value of house or expected ROI
+            Make Monthly Purchase from Co-op Shop
           </li>
         </p>
 
@@ -101,9 +95,7 @@ const Blog = () => {
           STEP 2-APPLY FOR HOUSE OF CHOICE
         </h1>
         <p className="mt-3 text-[#1111117f] w-full">
-          <li className="list-disc text-[#1111117f]">
-            Apply for house - N50,000
-          </li>
+          <li className="list-disc text-[#1111117f]">Apply for house</li>
           <li className="list-disc text-[#1111117f]">Fill Application Form</li>
           <li className="list-disc text-[#1111117f]">
             Submit 6 months’ Pay slips or account statement or thrift statement.
@@ -115,7 +107,7 @@ const Blog = () => {
             Offer Letter (Allocation Letter)
           </li>
           <li className="list-disc text-[#1111117f]">
-            Account opening (Current Account) of N10,000 with THE PMI.
+            Account opening (Current Account) with THE PMI.
           </li>
           <li className="list-disc text-[#1111117f]">
             NHF contribution Passbook (at least 6 months contribution)
@@ -135,16 +127,12 @@ const Blog = () => {
           STEP 3-FULFIL CO_OPERATIVE MEMBERSHIP{" "}
         </h1>
         <p className="mt-3 text-[#1111117f] w-full">
-          <li className="list-disc text-[#1111117f]">
-            Monthly Contribution (1% or more of house value) + ( 0.2% Insurance
-            premium) + (0.1% management fees)
-          </li>
+          <li className="list-disc text-[#1111117f]">Monthly Contribution</li>
           <li className="list-disc text-[#1111117f]">
             Attend Monthly online co-op meetings
           </li>
           <li className="list-disc text-[#1111117f]">
-            Make Monthly Purchase from Co-op Shop - minimum of N30,000 subject
-            to value of house or expected ROI.
+            Make Monthly Purchase from Co-op Shop
           </li>
           <li className="list-disc text-[#1111117f]">
             Take full possession of the property.

@@ -36,7 +36,7 @@ function App() {
         <Route path="event" element={<Event />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="property" element={<Property />} />
-        <Route path="list-property" element={<SingleProperty />} />
+        <Route path="list-property/:id" element={<SingleProperty />} />
       </Route>
       <Route path="/login" element={<Login />} />
       <Route path="/referralLogin/:referralCode" element={<ReferralLogin />} />

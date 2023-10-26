@@ -382,6 +382,8 @@ export const Form4 = ({ handleStep }) => {
 
   // };
 
+  const localRedirect = "http://localhost:5173/verify";
+  const vercelRedirect = "https://charis-eight.vercel.app/verify";
   const makePayment = () => {
     if (
       title &&
@@ -409,7 +411,7 @@ export const Form4 = ({ handleStep }) => {
     ) {
       const reqBody = {
         amount: "25000",
-        redirect: "https://charis-eight.vercel.app/verify",
+        redirect: localRedirect,
         tag: "reg",
       };
       dispatch(createPaymentLink(reqBody));

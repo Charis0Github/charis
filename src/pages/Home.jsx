@@ -19,6 +19,8 @@ import add from "../assets/add.svg";
 import { Form1, Form2, Form3, Form4 } from "./Forms/Forms";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
+import { createProperty, resetProperty } from "../Redux/Features/propertySlice";
 // import { resetPayment } from "../Redux/Features/paymentSlice";
 // import { resetFormData } from "../Redux/Features/formSlice";
 
@@ -28,6 +30,7 @@ const Home = () => {
   const [steps, setSteps] = useState(0);
   const [prompt, setPrompt] = useState(false);
   const [file, setFile] = useState(null);
+  const [menu, setMenu] = useState(false);
 
   const navigate = useNavigate();
   const { user, userDetails } = useSelector((state) => state.auth);
@@ -49,7 +52,6 @@ const Home = () => {
     sqft: "",
     roomNumber: "",
     type: "",
-    status: "available",
     name: "",
     file: "",
   });
@@ -74,7 +76,15 @@ const Home = () => {
     }
   };
 
-  const handleChange = (event) => {
+  // const handleChange = (event) => {
+  //   const { name, value, files } = event.target;
+  //   setPropertyForm({
+  //     ...propertyForm,
+  //     [name]: name === "file" ? files[0] : value,
+  //   });
+  // };
+
+  const handlePropertyChange = (event) => {
     const { name, value, files } = event.target;
     setPropertyForm({
       ...propertyForm,
@@ -121,6 +131,24 @@ const Home = () => {
     setIsOpen(false);
   };
 
+  function formatNumber(number) {
+    // Check if the input is a valid number
+    if (isNaN(number)) {
+      return "Invalid Number";
+    }
+
+    // Convert the number to a string
+    const numberString = number.toString();
+
+    // Format the integer part by adding thousands separators
+    const formattedIntegerPart = numberString.replace(
+      /\B(?=(\d{3})+(?!\d))/g,
+      ","
+    );
+
+    return formattedIntegerPart;
+  }
+
   const handleForm = () => {
     if (user) {
       if (userDetails?.userData?.status === "paid") {
@@ -149,6 +177,26 @@ const Home = () => {
     }
   };
 
+  const handleGetStarted = () => {
+    if (user) {
+      setMenu(!menu);
+    } else {
+      navigate("/login");
+    }
+  };
+
+  useEffect(() => {
+    if (propertySuccess) {
+      toast.success("Property Listed Successfully");
+      setIsListing(false);
+      dispatch(resetProperty());
+    }
+    if (propertyError) {
+      toast.error(propertyMessage);
+      dispatch(resetProperty());
+    }
+  }, [propertySuccess, propertyError, propertyMessage]);
+
   useEffect(() => {
     if (paymentStatus) {
       window.location.href = paymentStatus.response.data.link;
@@ -166,12 +214,13 @@ const Home = () => {
 
   // useEffect(() => {
   //   return () => {
-  //     // dispatch(resetPayment());
+  //     dispatch(resetPayment());
   //   };
   // }, []);
 
   return (
     <>
+      <ToastContainer position="top-center" hideProgressBar />
       {/* HERO SECTION STARTS */}
       <div className="pt-[5px] lg:px-[70px] px-5 w-full h-full lg:flex items-center justify-center">
         <div className="lg:flex items-center justify-center w-full space-y-3 lg:space-y-0 lg:w-[95%] h-full lg:h-[600px] lg:mt-[1rem]">
@@ -194,15 +243,47 @@ const Home = () => {
               <span className="text-[#FF6700]"> 5% interest rate.</span>
             </p>
 
-            <div className="flex items-center  gap-5 lg:w-max w-[300px]  mt-12 flex-wrap">
+            <div className=" relative flex items-center  gap-5 lg:w-max w-[300px]  mt-12 flex-wrap">
               <button
-                onClick={handleHomeOwnership}
-                className="flex items-center space-x-3 justify-between  text-lg bg-black py-2 px-4 lg:px-6  lg:py-4 rounded-md w-auto font-bold text-white"
+                onClick={handleGetStarted}
+                // onClick={handleHomeOwnership}
+                className="flex items-center space-x-3 justify-center text-xl bg-black py-2 px-4 lg:px-6  lg:py-3 rounded-md w-[220px] font-bold text-white"
               >
-                <p className="font-bold text-sm">Get Started</p>
+                <p className="font-bold text-lg text-center">Get Started</p>
               </button>
 
-              <div
+              {menu && (
+                <ul className="absolute top-[64px] flex flex-col gap-4 items-start justify-start left-0 h-max py-4 px-4 w-[180px] bg-[#000000] z-30 rounded-md text-white">
+                  <li
+                    onClick={handleForm}
+                    className="text-sm p-2 cursor-pointer hover:bg-[#FF6700] w-full px-2 flex items-center justify-start gap-3"
+                  >
+                    {/* <img width={15} height={15} src={profile} alt="user icon" /> */}
+                    Become a Member
+                  </li>
+
+                  <li
+                    onClick={handleAffiliate}
+                    className="text-sm p-2 cursor-pointer hover:bg-[#FF6700] w-full px-2 flex items-center justify-start gap-3"
+                  >
+                    {/* <img width={15} height={15} src={profile} alt="user icon" /> */}
+                    Become an affiliate
+                  </li>
+
+                  <li
+                    onClick={() => {
+                      setMenu(!menu);
+                      setIsListing(true);
+                    }}
+                    className="text-sm p-2 cursor pointer hover:bg-[#FF6700] w-full px-2 flex items-center justify-start gap-3"
+                  >
+                    {/* <img width={15} height={15} src={profile} alt="user icon" /> */}
+                    List Property
+                  </li>
+                </ul>
+              )}
+
+              {/* <div
                 onClick={handleAffiliate}
                 className="text-black bg-white border-[1px] border-black w-auto join p-2 rounded-lg text-sm px-6 py-3 font-bold cursor-pointer"
               >
@@ -214,7 +295,7 @@ const Home = () => {
                 className="text-black bg-white border-[1px] border-black w-auto join p-2 rounded-lg text-sm px-6 py-3 font-bold cursor-pointer"
               >
                 List Property
-              </div>
+              </div> */}
             </div>
           </div>
 
@@ -540,7 +621,7 @@ const Home = () => {
             </div>
 
             <form
-              // onSubmit={handlePropertySubmit}
+              onSubmit={handlePropertySubmit}
               className="flex flex-col w-full gap-7"
             >
               <Input
@@ -549,7 +630,7 @@ const Home = () => {
                 placeholder={"Type in name of Property"}
                 label={"Name"}
                 value={propertyForm.name}
-                onChange={handleChange}
+                onChange={handlePropertyChange}
               />
               <Input
                 type={"text"}
@@ -557,7 +638,7 @@ const Home = () => {
                 placeholder={"Type in price of Property E.g 200000000"}
                 label={"Price"}
                 value={propertyForm.price}
-                onChange={handleChange}
+                onChange={handlePropertyChange}
               />
 
               <Input
@@ -566,7 +647,7 @@ const Home = () => {
                 placeholder={"Type of Property E.g Duplex"}
                 label={"Type"}
                 value={propertyForm.type}
-                onChange={handleChange}
+                onChange={handlePropertyChange}
               />
               <Input
                 type={"text"}
@@ -574,7 +655,7 @@ const Home = () => {
                 placeholder={"Type in a short description of the property"}
                 label={"Description"}
                 value={propertyForm.description}
-                onChange={handleChange}
+                onChange={handlePropertyChange}
               />
 
               <Input
@@ -583,7 +664,7 @@ const Home = () => {
                 placeholder={"Type location of property"}
                 label={"Location"}
                 value={propertyForm.location}
-                onChange={handleChange}
+                onChange={handlePropertyChange}
               />
 
               <Input
@@ -592,7 +673,7 @@ const Home = () => {
                 placeholder={"Type in Dimension of Property (sqft)"}
                 label={"Dimension"}
                 value={propertyForm.sqft}
-                onChange={handleChange}
+                onChange={handlePropertyChange}
               />
 
               <Input
@@ -601,7 +682,7 @@ const Home = () => {
                 placeholder={"Type in number of bedrooms"}
                 label={"Bedroom"}
                 value={propertyForm.roomNumber}
-                onChange={handleChange}
+                onChange={handlePropertyChange}
               />
 
               <div>
@@ -618,7 +699,7 @@ const Home = () => {
                     <input
                       type="file"
                       id="file"
-                      onChange={handleChange}
+                      onChange={handlePropertyChange}
                       name="file"
                       className="absolute opacity-0 cursor-pointer p-2 appearance-none "
                     />
@@ -633,10 +714,10 @@ const Home = () => {
               </div>
 
               <button
-                // type="submit"
+                type="submit"
                 className="w-max px-5 py-1 bg-black flex items-center justify-center text-white font-sans rounded-lg"
               >
-                {propertyLoading ? "creating property" : "Add property"}
+                {propertyLoading ? "creating property..." : "Add property"}
               </button>
             </form>
           </div>

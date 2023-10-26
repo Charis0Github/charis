@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import login1 from "../assets/login1.png";
 import welcom from "../assets/welcom.jpeg";
+import eye from "../assets/eye-open.svg";
+import closeEye from "../assets/eye-close.svg";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -9,10 +11,18 @@ import {
   reset,
   getUserDetails,
 } from "../Redux/Features/authSlice";
+import { resetPayment } from "../Redux/Features/paymentSlice";
 
 const Login = () => {
   const pageState = localStorage.getItem("pageState");
   const [register, setRegister] = useState(pageState);
+  const [info, setInfo] = useState("");
+  const [passwordView, setPasswordView] = useState({
+    pass: false,
+    confirmP: false,
+  });
+
+  const [loginPass, setLoginPass] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -37,6 +47,24 @@ const Login = () => {
     email: "",
     password: "",
   });
+
+  const handlePassView = (view) => {
+    if (view === "pass") {
+      if (passwordView.pass === true) {
+        setPasswordView({ pass: false });
+      } else {
+        setPasswordView({ pass: true });
+      }
+    } else if (view === "other") {
+      if (passwordView.confirmP === true) {
+        setPasswordView({ confirmP: false });
+      } else {
+        setPasswordView({ confirmP: true });
+      }
+    } else {
+      console.log("error with eye Icon");
+    }
+  };
 
   const handleRegisterChange = (event) => {
     const { name, value } = event.target;
@@ -129,6 +157,10 @@ const Login = () => {
   //   dispatch(reset());
   // },[])
 
+  // useEffect(() => {
+  //   dispatch(resetPayment());
+  // }, []);
+
   return (
     <div className="w-full h-screen lg:flex items-center">
       <div className="w-full h-full flex flex-col items-center justify-center">
@@ -156,6 +188,17 @@ const Login = () => {
                   } text-center`}
                 >
                   {message}
+                </p>
+              )}
+              {info && (
+                <p
+                  className={`${
+                    isSuccess
+                      ? "text-white font-semibold bg-green-400 px-3 py-1 text-base"
+                      : "text-red-400 text-base"
+                  } text-center`}
+                >
+                  {info}
                 </p>
               )}
 
@@ -204,34 +247,74 @@ const Login = () => {
                 />
               </div>
 
-              <div>
+              <div className="relative">
                 <label htmlFor="password" className="text-sm">
                   Password
                 </label>
+
                 <input
                   id="password"
                   name="password"
-                  type="password"
+                  type={passwordView.pass === true ? "text" : "password"}
                   required
                   onChange={handleRegisterChange}
                   className="relative block w-full appearance-none rounded-lg border border-[#D9D9D9] mb-[20px] px-3 py-3 text-gray-900 placeholder-[#11111195] focus:border-[#D9D9D9] focus:outline-none sm:text-sm"
                   placeholder="Enter your Password"
                 />
+                {passwordView.pass === true ? (
+                  <img
+                    onClick={() => handlePassView("pass")}
+                    className="absolute right-3 top-9 cursor-pointer"
+                    width={20}
+                    height={20}
+                    src={closeEye}
+                    alt="user icon"
+                  />
+                ) : (
+                  <img
+                    onClick={() => handlePassView("pass")}
+                    className="absolute right-3 top-9 cursor-pointer"
+                    width={20}
+                    height={20}
+                    src={eye}
+                    alt="user icon"
+                  />
+                )}
               </div>
 
-              <div>
+              <div className="relative">
                 <label htmlFor="passwordConfirm" className="text-sm">
                   Confirm Password
                 </label>
                 <input
                   id="passwordConfirm"
                   name="passwordConfirm"
-                  type="password"
+                  type={passwordView.confirmP === true ? "text" : "password"}
                   required
                   onChange={handleRegisterChange}
                   className="relative block w-full appearance-none rounded-lg border border-[#D9D9D9] mb-[20px] px-3 py-3 text-gray-900 placeholder-[#11111195] focus:border-[#D9D9D9] focus:outline-none sm:text-sm"
                   placeholder="Enter your Password"
                 />
+
+                {passwordView.confirmP === true ? (
+                  <img
+                    onClick={() => handlePassView("other")}
+                    className="absolute right-3 top-9 cursor-pointer"
+                    width={20}
+                    height={20}
+                    src={closeEye}
+                    alt="user icon"
+                  />
+                ) : (
+                  <img
+                    onClick={() => handlePassView("other")}
+                    className="absolute right-3 top-9 cursor-pointer"
+                    width={20}
+                    height={20}
+                    src={eye}
+                    alt="user icon"
+                  />
+                )}
               </div>
 
               <button
@@ -284,22 +367,42 @@ const Login = () => {
                 />
               </div>
 
-              <div>
+              <div className="relative">
                 <label htmlFor="password" className="text-sm">
                   Password
                 </label>
                 <input
                   id="password"
                   name="password"
-                  type="password"
+                  type={loginPass ? "text" : "password"}
                   onChange={handleLoginChange}
                   className="relative block w-full appearance-none rounded-lg border border-[#D9D9D9] mb-[20px] px-3 py-3 text-gray-900 placeholder-[#11111195] focus:border-[#D9D9D9] focus:outline-none sm:text-sm"
                   placeholder="Enter your Password"
                 />
+
+                {loginPass ? (
+                  <img
+                    onClick={() => setLoginPass(!loginPass)}
+                    className="absolute right-3 top-9 cursor-pointer"
+                    width={20}
+                    height={20}
+                    src={closeEye}
+                    alt="user icon"
+                  />
+                ) : (
+                  <img
+                    onClick={() => setLoginPass(!loginPass)}
+                    className="absolute right-3 top-9 cursor-pointer"
+                    width={20}
+                    height={20}
+                    src={eye}
+                    alt="user icon"
+                  />
+                )}
               </div>
 
               <div className="flex items-center justify-between">
-                <div className="flex items-center">
+                {/* <div className="flex items-center">
                   <input
                     id="remember-me"
                     name="remember-me"
@@ -312,7 +415,7 @@ const Login = () => {
                   >
                     Remember me
                   </label>
-                </div>
+                </div> */}
 
                 <div className="text-sm">
                   <a href="#" className="font-medium text-[#FF6700]">

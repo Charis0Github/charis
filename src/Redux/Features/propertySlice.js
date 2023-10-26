@@ -17,7 +17,7 @@ export const getProperty = createAsyncThunk(
   "property/fetch",
   async (thunkAPI) => {
     try {
-      const response = await axios.get(BASE_URL + "/property");
+      const response = await axios.get(BASE_URL + "/property/all/approved");
       if (response.status === 200) {
         return response.data;
       }

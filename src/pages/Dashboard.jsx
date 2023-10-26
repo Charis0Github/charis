@@ -48,6 +48,7 @@ const Dashboard = () => {
   const [investModal1, setInvestModal1] = useState(false);
   const [savingsModal, setSavingsModal] = useState(false);
   const [monthlyModal, setMonthlyModal] = useState(false);
+  const [wdrawal, setWdrawal] = useState(false);
   const [noImg, setNoImg] = useState(false);
   const [selected, setSelected] = useState("");
   const {
@@ -179,11 +180,14 @@ const Dashboard = () => {
     }
   };
 
+  const localRedirect = "http://localhost:5173/verify";
+  const vercelRedirect = "https://charis-eight.vercel.app/verify";
+
   const handlePayment = () => {
     if (selected === "house") {
       const reqBody = {
         amount: "50000",
-        redirect: "https://charis-eight.vercel.app/verify",
+        redirect: localRedirect,
         tag: selected,
       };
       dispatch(createPaymentLink(reqBody));
@@ -192,7 +196,7 @@ const Dashboard = () => {
     if (selected === "share") {
       const reqBody = {
         amount: shareCapital.shareCapital,
-        redirect: "https://charis-eight.vercel.app/verify",
+        redirect: localRedirect,
         tag: selected,
       };
       dispatch(createPaymentLink(reqBody));
@@ -201,7 +205,7 @@ const Dashboard = () => {
     if (selected === "invest") {
       const reqBody = {
         amount: investmentData.investmentAmount,
-        redirect: "https://charis-eight.vercel.app/verify",
+        redirect: localRedirect,
         tag: selected,
       };
       dispatch(createPaymentLink(reqBody));
@@ -210,7 +214,7 @@ const Dashboard = () => {
     if (selected === "savings") {
       const reqBody = {
         amount: savingsBody.amount,
-        redirect: "https://charis-eight.vercel.app/verify",
+        redirect: localRedirect,
         tag: selected,
       };
       dispatch(createPaymentLink(reqBody));
@@ -218,7 +222,7 @@ const Dashboard = () => {
     if (selected === "monthly") {
       const reqBody = {
         amount: userDetails?.userData?.monthlyHousePayment,
-        redirect: "https://charis-eight.vercel.app/verify",
+        redirect: localRedirect,
         tag: selected,
       };
       dispatch(createPaymentLink(reqBody));
@@ -314,7 +318,7 @@ const Dashboard = () => {
     }
     if (loanEligibleError) {
       toast.error(
-        "To qualify for a loan you need to have been part of the co-operative for at least 3 months"
+        "To qualify for a loan you need to have been part of the co-operative for at least 6 months"
       );
       dispatch(resetEigibility());
     }
@@ -382,6 +386,10 @@ const Dashboard = () => {
     singlePaymentMessage,
   ]);
 
+  // useEffect(() => {
+  //   dispatch(resetPayment());
+  // }, []);
+
   const investSpread = [1, 2, 3, 4, 5];
 
   return (
@@ -407,7 +415,9 @@ const Dashboard = () => {
               </div>
             </div>
             {/* CARD SECTION STARTS HERE */}
-            <div className="w-full lg:flex gap-6 h-max mt-3 flex-wrap">
+
+            <div className="w-full lg:flex gap-6 h-max flex-wrap">
+              {/* SAVINGS CARD STARTS HERE */}
               <div className="h-[185px] w-full lg:w-[285px] bg-white shadow-md shadow-black/30 pt-2 px-3 rounded-[5px]">
                 {/* TOP CARD SECTION */}
                 <div className="w-full flex items-center justify-between">
@@ -423,11 +433,14 @@ const Dashboard = () => {
                 </p>
 
                 {/* BOTTOM CARD SECTION*/}
+
                 <div className="flex items-center justify-between text-xs mt-14">
-                  <p className="w-[200px]">
-                    Note: Next payment coming up{" "}
-                    {formatDate(userDetails?.userData?.savingsDueDate)}
-                  </p>
+                  {userDetails?.userData?.savingsDueDate && (
+                    <p className="w-[200px]">
+                      Note: Next payment coming up{" "}
+                      {formatDate(userDetails?.userData?.savingsDueDate)}
+                    </p>
+                  )}
                   <div
                     onClick={() => setSavingsModal(true)}
                     className="bg-black px-2 py-1 rounded-[5px] text-white text-center text-xs w-max"
@@ -436,54 +449,93 @@ const Dashboard = () => {
                   </div>
                 </div>
               </div>
+              {/* SAVINGS CARD ENDS HERE */}
 
-              <div className="h-[185px] w-full lg:w-[285px] bg-white shadow-md shadow-black/30 pt-2 px-3 rounded-[5px] mt-9 lg:mt-0">
+              {/* SHARE CAPITAL STARTS HERE */}
+              <div className="h-[185px] w-full lg:w-[285px] bg-white shadow-md mt-9 lg:mt-0 shadow-black/30 pt-2 px-3 rounded-[5px]">
                 {/* TOP CARD SECTION */}
                 <div className="w-full flex items-center justify-between">
-                  <p className="text-sm text-black/50">House Payment</p>
-                  <img src={target} className="bg-[#FD6602] p-1" />
+                  <p className="text-sm text-black/50">Share Capital</p>
+                  <img src={money} className="bg-[#FD6602] p-1" />
                 </div>
 
                 {/* MIDDLE CARD SECTION*/}
                 <p className="font-bold font-sans text-black text-2xl tracking-widest ">
                   {userDetails
-                    ? "N" + userDetails?.userData?.housePayment
+                    ? "N" + formatNumber(userDetails?.userData?.housePayment)
                     : "N0.00"}
                 </p>
 
-                <div className="flex items-center justify-between text-xs mt-14">
-                  <p className="w-[200px]">
-                    Note: Next payment coming up{" "}
-                    {formatDate(userDetails?.userData?.dueDate)}
-                  </p>
+                {/* BOTTOM CARD SECTION*/}
+
+                {/* <div className="flex items-center justify-between text-xs mt-14">
+                  {userDetails?.userData?.savingsDueDate && (
+                    <p className="w-[200px]">
+                      Note: Next payment coming up{" "}
+                      {formatDate(userDetails?.userData?.savingsDueDate)}
+                    </p>
+                  )}
                   <div
-                    onClick={() => {
-                      handleSelect("monthly");
-                      setMonthlyModal(true);
-                    }}
+                    onClick={() => setSavingsModal(true)}
                     className="bg-black px-2 py-1 rounded-[5px] text-white text-center text-xs w-max"
                   >
                     pay now
                   </div>
-                </div>
+                </div> */}
               </div>
+              {/* SHARE CAPITAL ENDS HERE */}
 
               <div className="h-[185px] w-full lg:w-[285px] bg-white shadow-md shadow-black/30 pt-2 px-3 rounded-[5px] mt-9 lg:mt-0">
                 {/* TOP CARD SECTION */}
                 <div className="w-full flex items-center justify-between">
-                  <p className="text-sm text-black/50">House Target</p>
+                  <p className="text-sm text-black/50 capitalize">
+                    Monthly Insurance Payment
+                  </p>
                   <img src={target} className="bg-[#FD6602] p-1" />
                 </div>
 
                 {/* MIDDLE CARD SECTION*/}
                 <p className="font-bold font-sans text-black text-2xl tracking-widest ">
                   {userDetails
-                    ? "N" + formatNumber(userDetails?.userData?.houseTarget)
+                    ? "N" +
+                      formatNumber(userDetails?.userData?.monthlyHousePayment)
+                    : "N0.00"}
+                </p>
+                {userDetails?.userData?.dueDate && (
+                  <div className="flex items-center justify-between text-xs mt-14">
+                    <p className="w-[200px]">
+                      Note: Next payment coming up{" "}
+                      {formatDate(userDetails?.userData?.dueDate)}
+                    </p>
+                    <div
+                      onClick={() => {
+                        handleSelect("monthly");
+                        setMonthlyModal(true);
+                      }}
+                      className="bg-black px-2 py-1 rounded-[5px] text-white text-center text-xs w-max"
+                    >
+                      pay now
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className="h-[185px] w-full lg:w-[285px] bg-white shadow-md shadow-black/30 pt-2 px-3 rounded-[5px] mt-9 lg:mt-0">
+                {/* TOP CARD SECTION */}
+                <div className="w-full flex items-center justify-between">
+                  <p className="text-sm text-black/50">House Value</p>
+                  <img src={target} className="bg-[#FD6602] p-1" />
+                </div>
+
+                {/* MIDDLE CARD SECTION*/}
+                <p className="font-bold font-sans text-black text-2xl tracking-widest ">
+                  {userDetails
+                    ? "N" + formatNumber(userDetails?.userData?.houseAmount)
                     : "N0.00"}
                 </p>
               </div>
 
-              <div className="h-[185px] w-full lg:w-[285px] bg-white shadow-md shadow-black/30 pt-2 px-3 rounded-[5px] mt-9 lg:mt-0">
+              <div className="h-[185px] w-full lg:w-[285px] bg-white shadow-md shadow-black/30 pt-2 px-3 rounded-[5px] mt-9  lg:mt-0">
                 {/* TOP CARD SECTION */}
                 <div className="w-full flex items-center justify-between">
                   <p className="text-sm text-black/50">Investment</p>
@@ -508,9 +560,15 @@ const Dashboard = () => {
                       {userDetails ? "N" + userDetails?.userData?.roi : "N0.00"}
                     </p>
                   </div>
-                  <div className="bg-black px-2 py-1 rounded-[5px] text-white text-center text-xs w-max">
-                    Withdraw
-                  </div>
+
+                  {userDetails?.userData?.roi ? (
+                    <div
+                      onClick={() => setWdrawal(true)}
+                      className="bg-black px-2 py-1 cursor-pointer rounded-[5px] text-white text-center text-xs w-max"
+                    >
+                      Withdraw
+                    </div>
+                  ) : null}
                 </div>
               </div>
             </div>
@@ -664,7 +722,12 @@ const Dashboard = () => {
               {/* ONLINE STORE DISPLAY STARTS HERE */}
               <div className="lg:w-[280px] w-full h-[231px] bg-no-repeat bg-center shop-banner object-cover rounded-[10px] mb-20 px-5">
                 <div className="w-[92px] h-[24px] bg-white rounded-[10px] mt-4 flex items-center justify-center">
-                  <p className="text-xs text-center">Shop Online</p>
+                  <a
+                    href="https://www.calgint.com/"
+                    className="text-xs text-center"
+                  >
+                    Shop Online
+                  </a>
                 </div>
 
                 <p className="text-sm mt-3 text-white">
@@ -699,9 +762,7 @@ const Dashboard = () => {
                 <p className="text-white/70 font-extralight mt-2 text-xs">
                   12/25
                 </p>
-                <p className="text-white/70 font-bold mt-3 text-sm">
-                  Umoru Emmanuel
-                </p>
+                <p className="text-white/70 font-bold mt-3 text-sm">John Doe</p>
               </div>
               {/* CARD DISPLAY ENDS HERE */}
             </div>
@@ -798,7 +859,7 @@ const Dashboard = () => {
                   <h1 className="text-sm font-bold">X</h1>
                 </div>
 
-                <div className="w-full h-full overflow-y-auto flex flex-col gap-2">
+                <div className="w-full h-[70%] overflow-y-auto flex flex-col gap-2">
                   {numbers.map((number) => (
                     <li
                       onClick={() => sharedBodyAmount(number)}
@@ -808,6 +869,13 @@ const Dashboard = () => {
                       {number + " Million Naira"}
                     </li>
                   ))}
+                </div>
+
+                <div
+                  onClick={() => navigate("/property")}
+                  className="w-max p-3 cursor-pointer rounded-md px-[30px] bg-[#FD6602] text-white font-bold font-sans "
+                >
+                  View Properties
                 </div>
               </div>
             </div>
@@ -987,6 +1055,26 @@ const Dashboard = () => {
                 <p className="text-center text-lg">
                   Your Profile Image is required to Validate your payments and
                   identity
+                </p>
+              </div>
+            </div>
+          )}
+
+          {wdrawal && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10 p-4">
+              <div className="bg-white flex flex-col gap-16 font-sans items-center lg:p-8 p-4 rounded-lg h-[40%] w-[500px] relative ">
+                <div
+                  onClick={() => setWdrawal(false)}
+                  className="absolute -top-3 flex items-center justify-center lg:-right-2 right-2 h-[30px] w-[30px] rounded-full p-1 bg-black text-white cursor-pointer"
+                >
+                  <h1 className="text-sm font-bold">X</h1>
+                </div>
+                <h1 className="text-2xl font-semibold font-sans text-[rgb(253,102,2)]">
+                  Withdrawal Update
+                </h1>
+
+                <p className="text-center text-lg">
+                  You will be able to withdraw at the end of our investment year
                 </p>
               </div>
             </div>

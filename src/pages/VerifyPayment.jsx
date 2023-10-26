@@ -310,7 +310,7 @@ const VerifyPayment = () => {
         </div>
       )}
 
-      {verifyMessage === "U" && (
+      {verifyMessage === "u" && (
         <div className="lg:w-[45%] lg:h-[55%] w-full h-full bg-white shadow-md shadow-black/50 rounded-md flex flex-col items-center justify-center p-5 lg:p-10">
           <img
             src={failed}
