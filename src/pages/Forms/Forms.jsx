@@ -411,7 +411,7 @@ export const Form4 = ({ handleStep }) => {
     ) {
       const reqBody = {
         amount: "25000",
-        redirect: localRedirect,
+        redirect: vercelRedirect,
         tag: "reg",
       };
       dispatch(createPaymentLink(reqBody));

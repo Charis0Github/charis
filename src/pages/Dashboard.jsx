@@ -187,7 +187,7 @@ const Dashboard = () => {
     if (selected === "house") {
       const reqBody = {
         amount: "50000",
-        redirect: localRedirect,
+        redirect: vercelRedirect,
         tag: selected,
       };
       dispatch(createPaymentLink(reqBody));
@@ -196,7 +196,7 @@ const Dashboard = () => {
     if (selected === "share") {
       const reqBody = {
         amount: shareCapital.shareCapital,
-        redirect: localRedirect,
+        redirect: vercelRedirect,
         tag: selected,
       };
       dispatch(createPaymentLink(reqBody));
@@ -205,7 +205,7 @@ const Dashboard = () => {
     if (selected === "invest") {
       const reqBody = {
         amount: investmentData.investmentAmount,
-        redirect: localRedirect,
+        redirect: vercelRedirect,
         tag: selected,
       };
       dispatch(createPaymentLink(reqBody));
@@ -214,7 +214,7 @@ const Dashboard = () => {
     if (selected === "savings") {
       const reqBody = {
         amount: savingsBody.amount,
-        redirect: localRedirect,
+        redirect: vercelRedirect,
         tag: selected,
       };
       dispatch(createPaymentLink(reqBody));
@@ -222,7 +222,7 @@ const Dashboard = () => {
     if (selected === "monthly") {
       const reqBody = {
         amount: userDetails?.userData?.monthlyHousePayment,
-        redirect: localRedirect,
+        redirect: vercelRedirect,
         tag: selected,
       };
       dispatch(createPaymentLink(reqBody));
