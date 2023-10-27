@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { resetPayment, verifyPayment } from "../Redux/Features/paymentSlice";
+import {
+  resetPayment,
+  resetPaymentMini,
+  resetVerifyPayment,
+  verifyPayment,
+} from "../Redux/Features/paymentSlice";
 import { useParams, useNavigate } from "react-router-dom";
 import Lottie from "lottie-react";
 import verify from "../assets/verify.json";
@@ -63,6 +68,8 @@ const VerifyPayment = () => {
 
   const backHandle = () => {
     dispatch(resetPayment());
+    dispatch(resetVerifyPayment());
+    dispatch(resetPaymentMini());
     dispatch(resetFormData());
     dispatch(resetCorporativeRegister());
     if (paymentStatus.tag === "reg") {
@@ -92,18 +99,9 @@ const VerifyPayment = () => {
     const urlParams = new URLSearchParams(currentUrl);
     // Get the values of the query parameters
     const txRef = urlParams.get("tx_ref");
-    const annualReturn = urlParams.get("annualReturn");
-    const monthlyRoi = urlParams.get("monthlyRoi");
-    const investSpread = urlParams.get("investSpread");
-    const transactionId = urlParams.get("transaction_id");
 
-    const paramKeys = urlParams.getAll("");
-    const paramHas = urlParams.has("tx_ref");
-
-    console.log("Keys ;" + paramKeys, "Has" + paramHas);
-    setStatus(paramKeys);
     setTxRef(txRef);
-    setTransactionID(transactionId);
+
     const reqBody = {
       transactionId: txRef,
       tag: paymentStatus.tag,

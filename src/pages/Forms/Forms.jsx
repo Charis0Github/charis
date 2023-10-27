@@ -382,7 +382,7 @@ export const Form4 = ({ handleStep }) => {
 
   // };
 
-  const localRedirect = "http://localhost:5173/verify";
+  // const localRedirect = "http://localhost:5173/verify";
   const vercelRedirect = "https://charis-eight.vercel.app/verify";
   const makePayment = () => {
     if (

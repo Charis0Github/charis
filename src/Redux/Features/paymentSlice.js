@@ -88,11 +88,16 @@ const paymentSlice = createSlice({
   reducers: {
     resetPayment: (state) => {
       state.paymentStatus = "";
+    },
+
+    resetPaymentMini: (state) => {
       state.paymentLoading = false;
       state.paymentSuccess = false;
       state.paymentError = false;
       state.paymentMessage = "";
+    },
 
+    resetVerifyPayment: (state) => {
       state.verifyStatus = null;
       state.verifyLoading = false;
       state.verifySuccess = false;
@@ -136,5 +141,6 @@ const paymentSlice = createSlice({
   },
 });
 
-export const { resetPayment } = paymentSlice.actions;
+export const { resetPayment, resetPaymentMini, resetVerifyPayment } =
+  paymentSlice.actions;
 export default paymentSlice.reducer;

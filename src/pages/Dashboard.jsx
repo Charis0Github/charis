@@ -12,7 +12,10 @@ import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector, useDispatch } from "react-redux";
-import { createPaymentLink } from "../Redux/Features/paymentSlice";
+import {
+  createPaymentLink,
+  resetPaymentMini,
+} from "../Redux/Features/paymentSlice";
 import {
   getShareCapital,
   resetShareCapital,
@@ -120,7 +123,7 @@ const Dashboard = () => {
   };
 
   const { user, userDetails } = useSelector((state) => state.auth);
-  const { paymentStatus, paymentLoading } = useSelector(
+  const { paymentStatus, paymentLoading, paymentSuccess } = useSelector(
     (state) => state.payment
   );
 
@@ -173,6 +176,21 @@ const Dashboard = () => {
     if (selected === "share") {
       setPayModal(false);
       setShareModal(true);
+      // if (
+      //   userDetails?.userData?.houseMembershipStatus === "paid" &&
+      //   userDetails?.userData?.shareCapitalStatus !== "paid"
+      // ) {
+      //   setPayModal(false);
+      //   setShareModal(true);
+      // } else if (
+      //   userDetails?.userData?.houseMembershipStatus !== "paid" &&
+      //   userDetails?.userData?.shareCapitalStatus !== "paid"
+      // ) {
+      //   // console.log(userDetails?.userData?.houseMembershipStatus);
+      //   toast.error("You need to Pay your house application fee first!");
+      // } else {
+      //   toast.error("Share capital payment has already been made!");
+      // }
     }
     if (selected === "invest") {
       setPayModal(false);
@@ -288,10 +306,11 @@ const Dashboard = () => {
   const months = Array.from({ length: 30 }, (_, index) => index + 1);
 
   useEffect(() => {
-    if (paymentStatus) {
+    if (paymentSuccess) {
       window.location.href = paymentStatus.response.data.link;
+      dispatch(resetPaymentMini());
     }
-  }, [paymentStatus]);
+  }, [paymentSuccess]);
 
   // useEffect(() => {
   //   dispatch(getSinglePayment());
@@ -309,6 +328,10 @@ const Dashboard = () => {
       console.log(noImg);
       setNoImg(true);
     }
+    return () => {
+      console.log("This should work");
+      dispatch(resetPaymentMini());
+    };
   }, []);
 
   useEffect(() => {
@@ -462,7 +485,8 @@ const Dashboard = () => {
                 {/* MIDDLE CARD SECTION*/}
                 <p className="font-bold font-sans text-black text-2xl tracking-widest ">
                   {userDetails
-                    ? "N" + formatNumber(userDetails?.userData?.housePayment)
+                    ? "N" +
+                      formatNumber(userDetails?.userData?.shareCapitalAmount)
                     : "N0.00"}
                 </p>
 
@@ -495,14 +519,20 @@ const Dashboard = () => {
                 </div>
 
                 {/* MIDDLE CARD SECTION*/}
-                <p className="font-bold font-sans text-black text-2xl tracking-widest ">
+                <p className="font-bold flex flex-col gap-2 font-sans text-black text-2xl tracking-widest ">
                   {userDetails
                     ? "N" +
                       formatNumber(userDetails?.userData?.monthlyHousePayment)
                     : "N0.00"}
+                  <span className="text-sm">
+                    {userDetails
+                      ? "Amount paid so far: N" +
+                        formatNumber(userDetails?.userData?.monthlyPaymentSoFar)
+                      : "N0.00"}
+                  </span>
                 </p>
                 {userDetails?.userData?.dueDate && (
-                  <div className="flex items-center justify-between text-xs mt-14">
+                  <div className="flex items-center justify-between text-xs mt-12">
                     <p className="w-[200px]">
                       Note: Next payment coming up{" "}
                       {formatDate(userDetails?.userData?.dueDate)}
@@ -530,7 +560,7 @@ const Dashboard = () => {
                 {/* MIDDLE CARD SECTION*/}
                 <p className="font-bold font-sans text-black text-2xl tracking-widest ">
                   {userDetails
-                    ? "N" + formatNumber(userDetails?.userData?.houseAmount)
+                    ? "N" + userDetails?.userData?.houseAmount
                     : "N0.00"}
                 </p>
               </div>

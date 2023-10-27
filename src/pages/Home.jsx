@@ -21,6 +21,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import { createProperty, resetProperty } from "../Redux/Features/propertySlice";
+import { resetPaymentMini } from "../Redux/Features/paymentSlice";
 // import { resetPayment } from "../Redux/Features/paymentSlice";
 // import { resetFormData } from "../Redux/Features/formSlice";
 
@@ -34,7 +35,9 @@ const Home = () => {
 
   const navigate = useNavigate();
   const { user, userDetails } = useSelector((state) => state.auth);
-  const { paymentStatus } = useSelector((state) => state.payment);
+  const { paymentStatus, paymentSuccess } = useSelector(
+    (state) => state.payment
+  );
   const {
     property,
     propertySuccess,
@@ -133,9 +136,9 @@ const Home = () => {
 
   function formatNumber(number) {
     // Check if the input is a valid number
-    if (isNaN(number)) {
-      return "Invalid Number";
-    }
+    // if (isNaN(number)) {
+    //   return "Invalid Number";
+    // }
 
     // Convert the number to a string
     const numberString = number.toString();
@@ -198,10 +201,11 @@ const Home = () => {
   }, [propertySuccess, propertyError, propertyMessage]);
 
   useEffect(() => {
-    if (paymentStatus) {
+    if (paymentSuccess) {
       window.location.href = paymentStatus.response.data.link;
+      dispatch(resetPaymentMini());
     }
-  }, [paymentStatus]);
+  }, [paymentSuccess]);
 
   // useEffect(() => {
   //   dispatch(resetPayment());
