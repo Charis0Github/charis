@@ -174,24 +174,26 @@ const Dashboard = () => {
       setHouseModal(true);
     }
     if (selected === "share") {
-      // setPayModal(false);
-      // setShareModal(true);
       if (
         userDetails?.userData?.houseMembershipStatus === "paid" &&
         userDetails?.userData?.shareCapitalStatus !== "paid"
       ) {
         setPayModal(false);
         setShareModal(true);
-      } else if (
+      }
+
+      if (
         userDetails?.userData?.houseMembershipStatus !== "paid" &&
         userDetails?.userData?.shareCapitalStatus !== "paid"
       ) {
-        // console.log(userDetails?.userData?.houseMembershipStatus);
         toast.error("You need to Pay your house application fee first!");
-      } else {
+      }
+
+      if (userDetails?.userData?.shareCapitalStatus === "paid") {
         toast.error("Share capital payment has already been made!");
       }
     }
+
     if (selected === "invest") {
       setPayModal(false);
       setInvestModal(true);
