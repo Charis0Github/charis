@@ -170,8 +170,12 @@ const Dashboard = () => {
 
   const nextStep = () => {
     if (selected === "house") {
-      setPayModal(false);
-      setHouseModal(true);
+      if (userDetails?.userData?.houseMembershipStatus === "paid") {
+        toast.error("House application payment has already been made!");
+      } else {
+        setPayModal(false);
+        setHouseModal(true);
+      }
     }
     if (selected === "share") {
       if (
