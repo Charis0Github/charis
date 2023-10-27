@@ -174,23 +174,23 @@ const Dashboard = () => {
       setHouseModal(true);
     }
     if (selected === "share") {
-      setPayModal(false);
-      setShareModal(true);
-      // if (
-      //   userDetails?.userData?.houseMembershipStatus === "paid" &&
-      //   userDetails?.userData?.shareCapitalStatus !== "paid"
-      // ) {
-      //   setPayModal(false);
-      //   setShareModal(true);
-      // } else if (
-      //   userDetails?.userData?.houseMembershipStatus !== "paid" &&
-      //   userDetails?.userData?.shareCapitalStatus !== "paid"
-      // ) {
-      //   // console.log(userDetails?.userData?.houseMembershipStatus);
-      //   toast.error("You need to Pay your house application fee first!");
-      // } else {
-      //   toast.error("Share capital payment has already been made!");
-      // }
+      // setPayModal(false);
+      // setShareModal(true);
+      if (
+        userDetails?.userData?.houseMembershipStatus === "paid" &&
+        userDetails?.userData?.shareCapitalStatus !== "paid"
+      ) {
+        setPayModal(false);
+        setShareModal(true);
+      } else if (
+        userDetails?.userData?.houseMembershipStatus !== "paid" &&
+        userDetails?.userData?.shareCapitalStatus !== "paid"
+      ) {
+        // console.log(userDetails?.userData?.houseMembershipStatus);
+        toast.error("You need to Pay your house application fee first!");
+      } else {
+        toast.error("Share capital payment has already been made!");
+      }
     }
     if (selected === "invest") {
       setPayModal(false);
