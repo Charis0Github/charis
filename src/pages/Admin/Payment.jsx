@@ -78,7 +78,7 @@ const Payment = () => {
 
           <tbody>
             {allUserPayment.payments
-              ? allUserPayment?.payments
+              ? allUserPayment.payments
                   .slice(firstIndex, firstIndex + itemsPerPage)
                   .map((item) => (
                     <tr>
