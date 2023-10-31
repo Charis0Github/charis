@@ -15,6 +15,7 @@ import {
   getProperty,
   resetProperty,
   deleteProperty,
+  getPendingProperty,
 } from "../../Redux/Features/propertySlice";
 
 const AdminProperty = () => {
@@ -52,6 +53,7 @@ const AdminProperty = () => {
 
   const dispatch = useDispatch();
   const {
+    adminProperty,
     property,
     propertySuccess,
     propertyLoading,
@@ -106,10 +108,10 @@ const AdminProperty = () => {
   }, [propertySuccess, propertyError, propertyMessage]);
 
   useEffect(() => {
-    if (property) {
+    if (adminProperty) {
       return;
     } else {
-      dispatch(getProperty());
+      dispatch(getPendingProperty());
     }
   }, []);
 
@@ -148,8 +150,8 @@ const AdminProperty = () => {
 
       {/* PROPERTY DISPLAY SECTION STARTS */}
       <div className="w-full lg:flex-wrap flex lg:flex-row flex-col h-max items-center justify-start gap-[4rem] py-10 px-5 lg:px-0">
-        {property
-          ? property?.properties?.map((item) => (
+        {adminProperty
+          ? adminProperty?.properties?.map((item) => (
               <div key={item._id} className="card1 shadow-md shadow-black/50 ">
                 <div className="flex flex-col w-full h-full ">
                   <img
@@ -204,7 +206,7 @@ const AdminProperty = () => {
                       className="flex items-center justify-center h-[40px] gap-3 w-full bg-black text-white rounded-lg px-3"
                     >
                       <MdEdit color="white" className="w-6 h-6" />
-                      Edit
+                      Approve
                     </div>
                     <div
                       onClick={() => dispatch(deleteProperty(item._id))}

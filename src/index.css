@@ -11,6 +11,12 @@
   list-style: none;
   text-decoration: none;
   font-family: 'PT Sans', sans-serif; 
+  
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  display: none;
 }
 
 .login{

@@ -74,31 +74,34 @@ const Payment = () => {
           </thead>
 
           <tbody>
-            {allUserPayment &&
-              allUserPayment?.payments
-                .slice(firstIndex, firstIndex + itemsPerPage)
-                .map((item) => (
-                  <tr>
-                    <td className="text-clip pr-3 pb-4">
-                      {item.name && item.name}
-                    </td>
-                    <td className=" pr-3 pb-4">{formatDate(item.datePaid)}</td>
-                    <td className=" pr-3 pb-4">N {item.amount}</td>
-                    <td className=" pr-3 pb-4">{item.tag}</td>
-                    <td className=" pr-3 pb-4">
-                      <div className="flex items-center gap-1">
-                        <p>{item.phoneNumber && item.phoneNumber}</p>
-                        <img src={copy} />
-                      </div>
-                    </td>
-                    <td className=" pr-3 pb-4">
-                      <div className="flex items-center gap-1">
-                        <p>{item.email && item.email}</p>
-                        <img src={copy} />
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+            {allUserPayment
+              ? allUserPayment?.payments
+                  .slice(firstIndex, firstIndex + itemsPerPage)
+                  .map((item) => (
+                    <tr>
+                      <td className="text-clip pr-3 pb-4">
+                        {item.userName && item.userName}
+                      </td>
+                      <td className=" pr-3 pb-4">
+                        {formatDate(item.datePaid)}
+                      </td>
+                      <td className=" pr-3 pb-4">N {item.amount}</td>
+                      <td className=" pr-3 pb-4">{item.tag}</td>
+                      <td className=" pr-3 pb-4">
+                        <div className="flex items-center gap-1">
+                          <p>{item.phoneNumber && item.phoneNumber}</p>
+                          <img src={copy} />
+                        </div>
+                      </td>
+                      <td className=" pr-3 pb-4">
+                        <div className="flex items-center gap-1">
+                          <p>{item.email && item.email}</p>
+                          <img src={copy} />
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+              : null}
           </tbody>
         </table>
       </div>

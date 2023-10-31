@@ -6,6 +6,7 @@ const BASE_URL = "https://motionless-pig-top-hat.cyclic.app/api/v1";
 
 //INITIAL STATE FOR THE AUTH
 const initialState = {
+  adminProperty: null,
   property: null,
   propertyError: false,
   propertySuccess: false,
@@ -18,6 +19,33 @@ export const getProperty = createAsyncThunk(
   async (thunkAPI) => {
     try {
       const response = await axios.get(BASE_URL + "/property/all/approved");
+      if (response.status === 200) {
+        return response.data;
+      }
+    } catch (error) {
+      if (error.response) {
+        const obj = error.response.data;
+        const objKey = Object.keys(obj)[0];
+        let err = obj[objKey];
+        // console.log(err)
+        return thunkAPI.rejectWithValue(err);
+      } else if (error.request) {
+        return thunkAPI.rejectWithValue("something went terribly wrong");
+      } else {
+        const obj = error.response.data;
+        const objKey = Object.keys(obj)[0];
+        let err = obj[objKey];
+        return thunkAPI.rejectWithValue(err);
+      }
+    }
+  }
+);
+
+export const getPendingProperty = createAsyncThunk(
+  "Adminproperty/fetch",
+  async (thunkAPI) => {
+    try {
+      const response = await axios.get(BASE_URL + "/property");
       if (response.status === 200) {
         return response.data;
       }
@@ -158,6 +186,22 @@ export const propertySlice = createSlice({
         state.propertyMessage = action.payload;
       })
       .addCase(deleteProperty.rejected, (state, action) => {
+        state.propertyLoading = false;
+        state.propertyError = true;
+        state.propertySuccess = false;
+        state.propertyMessage = action.payload;
+      })
+
+      .addCase(getPendingProperty.pending, (state) => {
+        state.propertyLoading = true;
+      })
+      .addCase(getPendingProperty.fulfilled, (state, action) => {
+        state.propertyLoading = false;
+        state.propertyError = false;
+        state.propertySuccess = true;
+        state.adminProperty = action.payload;
+      })
+      .addCase(getPendingProperty.rejected, (state, action) => {
         state.propertyLoading = false;
         state.propertyError = true;
         state.propertySuccess = false;

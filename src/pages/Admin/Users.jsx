@@ -14,11 +14,20 @@ import {
   getAdminUserPayment,
   resetAdminUserPayment,
 } from "../../Redux/Features/adminUserPayment";
+import { withdrawalDetailsUpdate } from "../../Redux/Features/WithdrawalDetailsSlice";
+import {
+  resetShoppingPoints,
+  uploadPoints,
+} from "../../Redux/Features/addShoppingPointsSlice";
 
 const Users = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [display, setDisplay] = useState("bio");
   const [selected, setSelected] = useState("");
+  const [sp, setSp] = useState({
+    shoppingPoints: "",
+    uid: "",
+  });
   const { allUsers, usersError, usersLoading, usersMessage, usersSuccess } =
     useSelector((state) => state.users);
 
@@ -29,6 +38,13 @@ const Users = () => {
     adminUserPaymentMessage,
     adminUserPaymentLoading,
   } = useSelector((state) => state.adminUserPayment);
+
+  const {
+    shoppingPointsLoading,
+    shoppingPointsSuccess,
+    shoppingPointsError,
+    shoppingPointsMessage,
+  } = useSelector((state) => state.shoppingPoints);
 
   function formatDate(inputDate) {
     const date = new Date(inputDate);
@@ -330,6 +346,26 @@ const Users = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if (shoppingPointsSuccess) {
+      console.log(shoppingPointsMessage);
+      setSp({ ...sp, shoppingPoints: "", uid: "" });
+      dispatch(getUsers());
+
+      setTimeout(() => {
+        dispatch(resetShoppingPoints());
+      }, 2000);
+    }
+
+    if (shoppingPointsError) {
+      console.log(shoppingPointsMessage);
+      setSp({ ...sp, shoppingPoints: "", uid: "" });
+      setTimeout(() => {
+        dispatch(resetShoppingPoints());
+      }, 2000);
+    }
+  }, [shoppingPointsSuccess, shoppingPointsError, shoppingPointsMessage]);
+
+  useEffect(() => {
     if (usersSuccess) {
       setTimeout(() => {
         dispatch(usersReset());
@@ -364,11 +400,27 @@ const Users = () => {
 
   useEffect(() => {
     if (allUsers.length > 0) {
+      console.log(allUsers.map((user) => user.shoppingPoints));
+    }
+  }, [allUsers]);
+
+  useEffect(() => {
+    if (allUsers.length > 0) {
       return;
     } else {
       dispatch(getUsers());
     }
   }, []);
+
+  const addPoints = (points) => {
+    if (sp.shoppingPoints) {
+      const reqBody = {
+        shoppingPoints: sp.shoppingPoints,
+        uid: points,
+      };
+      dispatch(uploadPoints(reqBody));
+    }
+  };
 
   return (
     <div className="flex flex-col w-full px-10 h-screen py-8 overflow-y-auto">
@@ -431,12 +483,28 @@ const Users = () => {
                         </div>
                       </td>
 
-                      <td className="flex items-center gap-2 w-full py-2 pr-3">
-                        <p className="text-black text-lg ">1</p>
-                        <div className="text-white px-5 text-2xl h-max rounded-md bg-black flex items-center gap-5">
-                          <p>-</p>
-                          <p>+</p>
+                      <td className="flex items-center gap-1 w-full py-2 pr-3">
+                        <p className="text-black text-lg ">
+                          {item.shoppingPoints}
+                        </p>
+                        <div className=" px-2 text-2xl h-max w-max rounded-md flex items-center justify-center">
+                          <input
+                            type="number"
+                            max={3}
+                            className="font-sans w-10 h-9 rounded-md flex items-center justify-center border appearance-none text-sm text-center border-gray-400"
+                            placeholder="add"
+                            value={sp.shoppingPoints}
+                            onChange={(e) =>
+                              setSp({ ...sp, shoppingPoints: e.target.value })
+                            }
+                          />
                         </div>
+                        <p
+                          className="cursor-pointer font-bold "
+                          onClick={() => addPoints(item._id)}
+                        >
+                          {shoppingPointsLoading ? "Update" : "Add"}
+                        </p>
                       </td>
 
                       <td className=" ">

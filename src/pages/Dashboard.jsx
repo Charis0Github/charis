@@ -199,8 +199,12 @@ const Dashboard = () => {
     }
 
     if (selected === "invest") {
-      setPayModal(false);
-      setInvestModal(true);
+      if (userDetails?.userData?.houseMembershipStatus === "paid") {
+        toast.error("House application payment has already been made!");
+      } else {
+        setPayModal(false);
+        setInvestModal(true);
+      }
     }
   };
 
