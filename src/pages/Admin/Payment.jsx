@@ -17,6 +17,7 @@ const Payment = () => {
   } = useSelector((state) => state.allPayment);
   const dispatch = useDispatch();
   const [pageNumber, setPageNumber] = useState(0);
+  const [pays, setPays] = useState([]);
 
   const itemsPerPage = 14;
   const firstIndex = pageNumber * itemsPerPage;
@@ -37,7 +38,7 @@ const Payment = () => {
   }
 
   useEffect(() => {
-    if (allUserPayment) {
+    if (allUserPayment.payments) {
       return;
     } else {
       dispatch(getAllPayment());
@@ -46,6 +47,8 @@ const Payment = () => {
 
   useEffect(() => {
     if (allUserPaymentSuccess) {
+      // console.log(allUserPayment.payments);
+      // const doe = allUserPayment?.payments;
       setTimeout(() => {
         dispatch(resetAllUserPayment());
       }, 2000);
@@ -74,9 +77,9 @@ const Payment = () => {
           </thead>
 
           <tbody>
-            {allUserPayment
+            {allUserPayment.payments
               ? allUserPayment?.payments
-                  ?.slice(firstIndex, firstIndex + itemsPerPage)
+                  .slice(firstIndex, firstIndex + itemsPerPage)
                   .map((item) => (
                     <tr>
                       <td className="text-clip pr-3 pb-4">

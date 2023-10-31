@@ -493,7 +493,6 @@ const Users = () => {
                             max={3}
                             className="font-sans w-10 h-9 rounded-md flex items-center justify-center border appearance-none text-sm text-center border-gray-400"
                             placeholder="add"
-                            value={sp.shoppingPoints}
                             onChange={(e) =>
                               setSp({ ...sp, shoppingPoints: e.target.value })
                             }
