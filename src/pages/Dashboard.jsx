@@ -46,6 +46,7 @@ const Dashboard = () => {
   const [infoModal1, setInfoModal1] = useState(false);
   const [shareModal, setShareModal] = useState(false);
   const [shareModal1, setShareModal1] = useState(false);
+  const [partShareModal, setPartShareModal] = useState(false);
 
   const [investModal, setInvestModal] = useState(false);
   const [investModal1, setInvestModal1] = useState(false);
@@ -177,13 +178,22 @@ const Dashboard = () => {
         setHouseModal(true);
       }
     }
+
     if (selected === "share") {
       if (
         userDetails?.userData?.houseMembershipStatus === "paid" &&
-        userDetails?.userData?.shareCapitalStatus !== "paid"
+        userDetails?.userData?.shareCapitalStatus === "not-paid"
       ) {
         setPayModal(false);
         setShareModal(true);
+      }
+
+      if (
+        userDetails?.userData?.houseMembershipStatus === "paid" &&
+        userDetails?.userData?.shareCapitalStatus === "part-paid"
+      ) {
+        setPayModal(false);
+        setPartShareModal(true);
       }
 
       if (
@@ -208,7 +218,7 @@ const Dashboard = () => {
     }
   };
 
-  const localRedirect = "http://localhost:5173/verify";
+  // const localRedirect = "http://localhost:5173/verify";
   const vercelRedirect = "https://charis-eight.vercel.app/verify";
 
   const handlePayment = () => {
@@ -222,12 +232,21 @@ const Dashboard = () => {
     }
 
     if (selected === "share") {
-      const reqBody = {
-        amount: shareCapital.shareCapital,
-        redirect: vercelRedirect,
-        tag: selected,
-      };
-      dispatch(createPaymentLink(reqBody));
+      if (userDetails?.userData?.shareCapitalLeft > 499000) {
+        const reqBody = {
+          amount: 490000,
+          redirect: vercelRedirect,
+          tag: selected,
+        };
+        dispatch(createPaymentLink(reqBody));
+      } else {
+        const reqBody = {
+          amount: userDetails?.userData?.shareCapitalLeft,
+          redirect: vercelRedirect,
+          tag: selected,
+        };
+        dispatch(createPaymentLink(reqBody));
+      }
     }
 
     if (selected === "invest") {
@@ -359,6 +378,7 @@ const Dashboard = () => {
   useEffect(() => {
     if (calculateShareSuccess) {
       setInfoModal(true);
+      dispatch(getUserDetails());
       dispatch(resetShareCapital());
     }
     if (calculateShareError) {
@@ -885,6 +905,38 @@ const Dashboard = () => {
                   {paymentLoading ? "Processing" : "Continue"}
                 </div>
                 {/* CONTINUE BUTTON ENDS HERE  */}
+              </div>
+            </div>
+          )}
+
+          {partShareModal && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10 p-4">
+              <div className="bg-white flex flex-col gap-14 font-sans items-center lg:p-8 p-4 rounded-lg h-[35%] w-[500px] relative ">
+                <div
+                  onClick={() => setPartShareModal(false)}
+                  className="absolute -top-3 flex items-center justify-center lg:-right-2 right-2 h-[30px] w-[30px] rounded-full p-1 bg-black text-white cursor-pointer"
+                >
+                  <h1 className="text-sm font-bold">X</h1>
+                </div>
+
+                <div className="w-full h-max flex flex-col items-center justify-center gap-7">
+                  <h1 className="text-[#FD6602] text-2xl font-sans font-semibold">
+                    Continue Share Capital Payment
+                  </h1>
+                  <p className="font-sans font-semibold text-xl">
+                    N{" "}
+                    {formatNumber(
+                      userDetails && userDetails?.userData?.shareCapitalLeft
+                    )}
+                  </p>
+                </div>
+
+                <div
+                  onClick={handlePayment}
+                  className="w-max p-3 rounded-md px-[30px] bg-[#FD6602] text-white font-bold font-sans "
+                >
+                  {paymentLoading ? "Processing" : "Continue"}
+                </div>
               </div>
             </div>
           )}

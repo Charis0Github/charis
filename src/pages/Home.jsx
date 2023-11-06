@@ -32,6 +32,7 @@ const Home = () => {
   const [prompt, setPrompt] = useState(false);
   const [file, setFile] = useState(null);
   const [menu, setMenu] = useState(false);
+  const [errorHandle, setErrorHandle] = useState(false);
 
   const navigate = useNavigate();
   const { user, userDetails } = useSelector((state) => state.auth);
@@ -134,6 +135,10 @@ const Home = () => {
     setIsOpen(false);
   };
 
+  const setter = () => {
+    setErrorHandle(true);
+  };
+
   function formatNumber(number) {
     // Check if the input is a valid number
     // if (isNaN(number)) {
@@ -170,13 +175,15 @@ const Home = () => {
 
   const renderForm = () => {
     if (steps === 0) {
-      return <Form1 close={close} handleStep={handleStep} />;
+      return (
+        <Form1 close={close} errorHandle={setter} handleStep={handleStep} />
+      );
     } else if (steps === 1) {
-      return <Form2 handleStep={handleStep} />;
+      return <Form2 errorHandle={setter} handleStep={handleStep} />;
     } else if (steps === 2) {
-      return <Form3 handleStep={handleStep} />;
+      return <Form3 errorHandle={setter} handleStep={handleStep} />;
     } else {
-      return <Form4 handleStep={handleStep} />;
+      return <Form4 errorHandle={setter} handleStep={handleStep} />;
     }
   };
 
@@ -743,6 +750,26 @@ const Home = () => {
 
             <p className="text-center text-lg">
               You are already an active member
+            </p>
+          </div>
+        </div>
+      )}
+
+      {errorHandle && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10 p-4">
+          <div className="bg-white flex flex-col gap-16 font-sans items-center lg:p-8 p-4 rounded-lg h-[30%] w-[300px] relative ">
+            <div
+              onClick={() => setErrorHandle(false)}
+              className="absolute -top-3 flex items-center justify-center lg:-right-2 right-2 h-[30px] w-[30px] rounded-full p-1 bg-black text-white cursor-pointer"
+            >
+              <h1 className="text-sm font-bold">X</h1>
+            </div>
+            <h1 className="text-2xl font-semibold font-sans text-[rgb(253,102,2)]">
+              Empty Fields
+            </h1>
+
+            <p className="text-center text-lg">
+              Please fill all required fields
             </p>
           </div>
         </div>

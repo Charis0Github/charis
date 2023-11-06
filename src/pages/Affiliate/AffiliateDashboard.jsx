@@ -375,7 +375,9 @@ const AffiliateDashboard = () => {
                       })
                     }
                   />
-                  <p className="text-[#FD6602] font-sans">John Doe Emmanuel</p>
+                  <p className="text-[#FD6602] font-sans">
+                    {userDetails && userDetails?.userData?.name}
+                  </p>
                 </div>
 
                 <Input

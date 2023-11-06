@@ -11,7 +11,7 @@ import {
 } from "../../Redux/Features/formSlice";
 import { createPaymentLink } from "../../Redux/Features/paymentSlice";
 
-export const Form1 = ({ close, handleStep }) => {
+export const Form1 = ({ close, handleStep, errorHandle }) => {
   const dispatch = useDispatch();
   const formData = useSelector((state) => state.formData);
 
@@ -22,7 +22,7 @@ export const Form1 = ({ close, handleStep }) => {
   };
 
   return (
-    <form className="w-full flex flex-col gap-5">
+    <div className="w-full flex flex-col gap-5">
       <Input
         type={"text"}
         name={"title"}
@@ -85,32 +85,33 @@ export const Form1 = ({ close, handleStep }) => {
           Cancel
         </button>
         <button
-          onClick={() => handleStep(1)}
+          onClick={() => {
+            if (
+              formData.title &&
+              formData.nationality &&
+              formData.address &&
+              formData.gender &&
+              formData.dob &&
+              formData.lga
+            ) {
+              handleStep(1);
+            } else {
+              errorHandle();
+            }
+          }}
           className="px-4 py-2 w-max bg-black rounded-md text-white"
         >
-          {" "}
-          Next{" "}
+          Next
         </button>
       </div>
-    </form>
+    </div>
   );
 };
 
-export const Form2 = ({ handleStep }) => {
+export const Form2 = ({ handleStep, errorHandle }) => {
   const dispatch = useDispatch();
   const formData = useSelector((state) => state.formData);
-  const options = [
-    "Architect",
-    "Engineer",
-    "Medical Doctor",
-    "Nurse",
-    "Lecturer",
-    "Teacher",
-    "Accountant",
-    "Lawyer",
-    "Trader",
-    "Carpenter",
-  ];
+  const options = ["Engineer", "Medical Doctor", "Teacher", "Trader", "Farmer"];
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -118,7 +119,7 @@ export const Form2 = ({ handleStep }) => {
     console.log(name, value);
   };
   return (
-    <form className="w-full flex flex-col gap-5">
+    <div className="w-full flex flex-col gap-5">
       <h1>Profession</h1>
       {options.map((option) => (
         <label key={option} className="flex items-center gap-3 cursor-pointer">
@@ -131,14 +132,14 @@ export const Form2 = ({ handleStep }) => {
           {option}
         </label>
       ))}
-      <input
+      {/* <input
         type="text"
         onChange={handleChange}
         value={formData.profession}
         name="profession"
         placeholder="other"
         className="w-full h-[46.291px] -mt-2  mb-3 appearance-none border-[1px] border-black rounded-[10px] focus:outline-none p-2"
-      />
+      /> */}
 
       <Input
         type={"text"}
@@ -193,18 +194,30 @@ export const Form2 = ({ handleStep }) => {
           Back
         </button>
         <button
-          onClick={() => handleStep(2)}
+          onClick={() => {
+            if (
+              formData.profession &&
+              formData.officeAddress &&
+              formData.statusRank &&
+              formData.monthlyIncome &&
+              formData.yearsOfService &&
+              formData.retirementAge
+            ) {
+              handleStep(2);
+            } else {
+              errorHandle();
+            }
+          }}
           className="px-4 py-2 w-max bg-black rounded-md text-white"
         >
-          {" "}
-          Next{" "}
+          Next
         </button>
       </div>
-    </form>
+    </div>
   );
 };
 
-export const Form3 = ({ handleStep }) => {
+export const Form3 = ({ handleStep, errorHandle }) => {
   const dispatch = useDispatch();
   const formData = useSelector((state) => state.formData);
   const options = [
@@ -221,7 +234,7 @@ export const Form3 = ({ handleStep }) => {
   };
 
   return (
-    <form className="w-full flex flex-col gap-5">
+    <div className="w-full flex flex-col gap-5">
       <h1>Educational Qualification</h1>
       {options.map((option) => (
         <label key={option} className="flex items-center gap-3 cursor-pointer">
@@ -298,17 +311,30 @@ export const Form3 = ({ handleStep }) => {
           Back
         </button>
         <button
-          onClick={() => handleStep(3)}
+          onClick={() => {
+            if (
+              formData.educationalQualification &&
+              formData.nextOfKinName &&
+              formData.nextOfKinAddress &&
+              formData.relationship &&
+              formData.nextOfKinPhoneNumber &&
+              formData.nextOfKinEmail
+            ) {
+              handleStep(3);
+            } else {
+              errorHandle();
+            }
+          }}
           className="px-4 py-2 w-max bg-black rounded-md text-white"
         >
           Next
         </button>
       </div>
-    </form>
+    </div>
   );
 };
 
-export const Form4 = ({ handleStep }) => {
+export const Form4 = ({ handleStep, errorHandle }) => {
   // const [previewImageUrl, setPreviewImageUrl] = useState("");
   // const [picture, setPicture] = useState("");
   const dispatch = useDispatch();
@@ -415,6 +441,8 @@ export const Form4 = ({ handleStep }) => {
         tag: "reg",
       };
       dispatch(createPaymentLink(reqBody));
+    } else {
+      errorHandle();
     }
   };
 
