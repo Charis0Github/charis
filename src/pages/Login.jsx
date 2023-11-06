@@ -39,6 +39,7 @@ const Login = () => {
     name: "",
     email: "",
     phone: "",
+    referralCode: "",
     password: "",
     passwordConfirm: "",
   });
@@ -95,6 +96,7 @@ const Login = () => {
         name: registerForm.name,
         email: registerForm.email,
         phoneNumber: registerForm.phone,
+        referralCode: registerForm.referralCode,
         password: registerForm.password,
       };
       dispatch(createUser(formData));
@@ -244,6 +246,21 @@ const Login = () => {
                   onChange={handleRegisterChange}
                   className="relative block w-full appearance-none rounded-lg border border-[#D9D9D9] mb-[20px] px-3 py-3 text-gray-900 placeholder-[#11111195] focus:border-[#D9D9D9] focus:outline-none sm:text-sm"
                   placeholder="Enter your Phone Number"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="referral" className="text-sm">
+                  Referral Code
+                </label>
+                <input
+                  id="referral"
+                  name="referralCode"
+                  type="text"
+                  required
+                  onChange={handleRegisterChange}
+                  className="relative block w-full appearance-none rounded-lg border border-[#D9D9D9] mb-[20px] px-3 py-3 text-gray-900 placeholder-[#11111195] focus:border-[#D9D9D9] focus:outline-none sm:text-sm"
+                  placeholder="Enter your Referral Code"
                 />
               </div>
 
