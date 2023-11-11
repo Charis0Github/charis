@@ -96,7 +96,7 @@ const AdminProperty = () => {
 
         {/* PROPERTY DISPLAY SECTION STARTS */}
         <div className="w-full lg:flex-wrap flex lg:flex-row flex-col h-max items-center justify-start gap-[4rem] py-10 px-5 lg:px-0">
-          {searchResults1 &&
+          {searchResults1.length > 0 &&
             searchResults1.map((item) => (
               <div key={item._id} className="card1 shadow-md shadow-black/50 ">
                 <div className="flex flex-col w-full h-full ">
@@ -190,7 +190,7 @@ const AdminProperty = () => {
 
         {/* PROPERTY DISPLAY SECTION STARTS */}
         <div className="w-full lg:flex-wrap flex lg:flex-row flex-col h-max items-center justify-start gap-[4rem] py-10 px-5 lg:px-0">
-          {searchResults &&
+          {searchResults.length > 0 &&
             searchResults.map((item) => (
               <div key={item._id} className="card1 shadow-md shadow-black/50 ">
                 <div className="flex flex-col w-full h-full ">
