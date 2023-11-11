@@ -82,7 +82,7 @@ const Payment = () => {
           </thead>
 
           <tbody>
-            {allUserPayment.payments ? (
+            {allUserPayment.payments &&
               allUserPayment?.payments
                 ?.slice(firstIndex, firstIndex + itemsPerPage)
                 .map((item) => (
@@ -112,12 +112,7 @@ const Payment = () => {
                       </div>
                     </td>
                   </tr>
-                ))
-            ) : (
-              <div>
-                <p>No Payments Found</p>
-              </div>
-            )}
+                ))}
           </tbody>
         </table>
       </div>

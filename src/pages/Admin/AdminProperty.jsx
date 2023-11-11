@@ -96,79 +96,75 @@ const AdminProperty = () => {
 
         {/* PROPERTY DISPLAY SECTION STARTS */}
         <div className="w-full lg:flex-wrap flex lg:flex-row flex-col h-max items-center justify-start gap-[4rem] py-10 px-5 lg:px-0">
-          {searchResults1
-            ? searchResults1.map((item) => (
-                <div
-                  key={item._id}
-                  className="card1 shadow-md shadow-black/50 "
-                >
-                  <div className="flex flex-col w-full h-full ">
-                    <img
-                      src={item.imageLink}
-                      className=" h-[200px] w-full object-cover rounded-t-lg"
-                    />
+          {searchResults1 &&
+            searchResults1.map((item) => (
+              <div key={item._id} className="card1 shadow-md shadow-black/50 ">
+                <div className="flex flex-col w-full h-full ">
+                  <img
+                    src={item.imageLink}
+                    className=" h-[200px] w-full object-cover rounded-t-lg"
+                  />
 
-                    <div className="w-full  p-3 rounded-b-lg flex flex-col gap-5 py-2 mb-2">
-                      <h1 className="w-full text-2xl font-semibold h-[70px]">
-                        {item.name} ({item.type})
-                      </h1>
-                      <h1 className="w-full text-lg font-medium text-[#FD6602]">
-                        Price:
-                        <span className="text-lg font-medium text-black">
-                          N{formatNumber(item.price)}
-                        </span>
-                      </h1>
-                      <p className="w-full text-ellipsis h-[60px] overflow-y-auto">
-                        {item.description}
-                      </p>
+                  <div className="w-full  p-3 rounded-b-lg flex flex-col gap-5 py-2 mb-2">
+                    <h1 className="w-full text-2xl font-semibold h-[70px]">
+                      {item.name} ({item.type})
+                    </h1>
+                    <h1 className="w-full text-lg font-medium text-[#FD6602]">
+                      Price:
+                      <span className="text-lg font-medium text-black">
+                        N{formatNumber(item.price)}
+                      </span>
+                    </h1>
+                    <p className="w-full text-ellipsis h-[60px] overflow-y-auto">
+                      {item.description}
+                    </p>
 
-                      <div className="w-full flex  items-center gap-3 mt-2">
-                        <img
-                          src={location}
-                          className=" h-5 w-5 object-cover rounded-t-lg"
-                        />
-                        <p>{item.location}</p>
-                      </div>
-
-                      <div className="w-full flex items-center justify-between">
-                        <div className="w-full flex items-center gap-3">
-                          <img
-                            src={sqft}
-                            className=" h-5 w-5 object-cover rounded-t-lg"
-                          />
-                          <p>4000 sqft</p>
-                        </div>
-
-                        <div className="w-full flex items-center justify-center gap-3">
-                          <img
-                            src={room}
-                            className=" h-5 w-5 object-cover rounded-t-lg"
-                          />
-                          <p className="">4 Bedroom</p>
-                        </div>
-                      </div>
+                    <div className="w-full flex  items-center gap-3 mt-2">
+                      <img
+                        src={location}
+                        className=" h-5 w-5 object-cover rounded-t-lg"
+                      />
+                      <p>{item.location}</p>
                     </div>
 
-                    <div className="flex items-center justify-between w-full  px-3 gap-5">
-                      {/* <div
+                    <div className="w-full flex items-center justify-between">
+                      <div className="w-full flex items-center gap-3">
+                        <img
+                          src={sqft}
+                          className=" h-5 w-5 object-cover rounded-t-lg"
+                        />
+                        <p>4000 sqft</p>
+                      </div>
+
+                      <div className="w-full flex items-center justify-center gap-3">
+                        <img
+                          src={room}
+                          className=" h-5 w-5 object-cover rounded-t-lg"
+                        />
+                        <p className="">4 Bedroom</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between w-full  px-3 gap-5">
+                    {/* <div
                         onClick={() => dispatch(editProperty(item._id))}
                         className="flex items-center justify-center cursor-pointer h-[40px] gap-3 w-full bg-black text-white rounded-lg px-3"
                       >
                         <MdEdit color="white" className="w-6 h-6" />
                         Approve
                       </div> */}
-                      <div
-                        onClick={() => dispatch(deleteProperty(item._id))}
-                        className="bg-[#FF1313] cursor-pointer w-full  justify-center h-[40px] rounded-lg flex items-center gap-3 px-3 text-white font-sans"
-                      >
-                        <FaTrash color="white" className="w-5 h-5" />
-                        Unlist
-                      </div>
+                    <div
+                      onClick={() => dispatch(deleteProperty(item._id))}
+                      className="bg-[#FF1313] cursor-pointer w-full  justify-center h-[40px] rounded-lg flex items-center gap-3 px-3 text-white font-sans"
+                    >
+                      <FaTrash color="white" className="w-5 h-5" />
+                      Unlist
                     </div>
                   </div>
                 </div>
-              ))
-            : null}
+              </div>
+            ))}
         </div>
         {/* PROPERTY DISPLAY SECTION ENDS */}
       </>
@@ -194,7 +190,7 @@ const AdminProperty = () => {
 
         {/* PROPERTY DISPLAY SECTION STARTS */}
         <div className="w-full lg:flex-wrap flex lg:flex-row flex-col h-max items-center justify-start gap-[4rem] py-10 px-5 lg:px-0">
-          {searchResults ? (
+          {searchResults &&
             searchResults.map((item) => (
               <div key={item._id} className="card1 shadow-md shadow-black/50 ">
                 <div className="flex flex-col w-full h-full ">
@@ -262,10 +258,7 @@ const AdminProperty = () => {
                   </div>
                 </div>
               </div>
-            ))
-          ) : (
-            <p> No Pending Properties Found</p>
-          )}
+            ))}
         </div>
         {/* PROPERTY DISPLAY SECTION ENDS */}
       </>
