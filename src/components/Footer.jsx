@@ -2,8 +2,10 @@ import React from "react";
 import facebook from "../assets/facebook.svg";
 import twitter from "../assets/twitter.svg";
 import instagram from "../assets/instagram.svg";
+import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
+  const navigate = useNavigate();
   return (
     <div className="w-full lg:h-[176px] h-max bg-black  px-5 rounded-t-3xl lg:py-[1rem] py-[2rem]">
       {/* RIGHT SECTION FOOTER STARTS */}
@@ -35,8 +37,9 @@ const Footer = () => {
       <hr />
       {/* RIGHT SECTION FOOTER STARTS */}
 
-      <div className="text-white text-xs lg:px-[64px] lg:py-5 py-3">
+      <div className="text-white text-xs lg:px-[64px] lg:py-5 py-3 flex items-center justify-between">
         <p>Copyright &copy; 2022 Charis Advantage life-Group International.</p>
+        <p onClick={() => navigate("/terms")}>Terms and Conditions</p>
       </div>
     </div>
   );

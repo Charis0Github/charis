@@ -7,6 +7,7 @@ import {
   getAllPayment,
   resetAllUserPayment,
 } from "../../Redux/Features/allUserPaymentSlice";
+import { ToastContainer, toast } from "react-toastify";
 
 const Payment = () => {
   const {
@@ -37,6 +38,11 @@ const Payment = () => {
     return formattedDate;
   }
 
+  const copyLink = (text) => {
+    navigator.clipboard.writeText(text);
+    toast.success("Copied");
+  };
+
   useEffect(() => {
     if (allUserPayment.payments) {
       return;
@@ -47,8 +53,6 @@ const Payment = () => {
 
   useEffect(() => {
     if (allUserPaymentSuccess) {
-      // console.log(allUserPayment.payments);
-      // const doe = allUserPayment?.payments;
       setTimeout(() => {
         dispatch(resetAllUserPayment());
       }, 2000);
@@ -63,6 +67,7 @@ const Payment = () => {
 
   return (
     <div className="flex flex-col w-full px-10 h-screen py-8 overflow-y-auto">
+      <ToastContainer position="top-center" hideProgressBar />
       <div className="w-full overflow-x-auto">
         <table className="mt-10 w-full table-auto">
           <thead>
@@ -77,34 +82,42 @@ const Payment = () => {
           </thead>
 
           <tbody>
-            {allUserPayment.payments
-              ? allUserPayment.payments
-                  .slice(firstIndex, firstIndex + itemsPerPage)
-                  .map((item) => (
-                    <tr>
-                      <td className="text-clip pr-3 pb-4">
-                        {item.userName && item.userName}
-                      </td>
-                      <td className=" pr-3 pb-4">
-                        {formatDate(item.datePaid)}
-                      </td>
-                      <td className=" pr-3 pb-4">N {item.amount}</td>
-                      <td className=" pr-3 pb-4">{item.tag}</td>
-                      <td className=" pr-3 pb-4">
-                        <div className="flex items-center gap-1">
-                          <p>{item.phoneNumber && item.phoneNumber}</p>
-                          <img src={copy} />
-                        </div>
-                      </td>
-                      <td className=" pr-3 pb-4">
-                        <div className="flex items-center gap-1">
-                          <p>{item.email && item.email}</p>
-                          <img src={copy} />
-                        </div>
-                      </td>
-                    </tr>
-                  ))
-              : null}
+            {allUserPayment.payments ? (
+              allUserPayment.payments
+                .slice(firstIndex, firstIndex + itemsPerPage)
+                .map((item) => (
+                  <tr key={item._id}>
+                    <td className="text-clip pr-3 pb-4">
+                      {item.userName && item.userName}
+                    </td>
+                    <td className=" pr-3 pb-4">{formatDate(item.datePaid)}</td>
+                    <td className=" pr-3 pb-4">N {item.amount}</td>
+                    <td className=" pr-3 pb-4">{item.tag}</td>
+                    <td className=" pr-3 pb-4">
+                      <div
+                        onClick={() => copyLink(item.phoneNumber)}
+                        className="flex items-center gap-1 cursor-pointer"
+                      >
+                        <p>{item.phoneNumber && item.phoneNumber}</p>
+                        <img src={copy} />
+                      </div>
+                    </td>
+                    <td className=" pr-3 pb-4">
+                      <div
+                        onClick={() => copyLink(item.email)}
+                        className="flex items-center gap-1 cursor-pointer"
+                      >
+                        <p>{item.email && item.email}</p>
+                        <img src={copy} />
+                      </div>
+                    </td>
+                  </tr>
+                ))
+            ) : (
+              <div>
+                <p>No Payments Found</p>
+              </div>
+            )}
           </tbody>
         </table>
       </div>

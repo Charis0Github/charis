@@ -40,12 +40,6 @@ const Sidebar = () => {
       icon: affiliate_icon,
       ic: affiliate_icon_inactive,
     },
-    {
-      name: "Settings",
-      path: "settings",
-      icon: settings_icon_inactive,
-      ic: settings_icon_inactive,
-    },
   ];
 
   const findIndex = (index) => {

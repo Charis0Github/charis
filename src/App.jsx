@@ -23,6 +23,7 @@ import Settings from "./pages/Admin/Settings";
 import VerifyPayment from "./pages/VerifyPayment";
 import ReferralLogin from "./pages/ReferralLogin";
 import SingleProperty from "./pages/PropertyDetails";
+import Terms from "./pages/Terms";
 
 function App() {
   const user = useSelector((state) => state.auth.user);
@@ -34,6 +35,7 @@ function App() {
         <Route path="contact" element={<Contact />} />
         <Route path="blog" element={<Blog />} />
         <Route path="event" element={<Event />} />
+        <Route path="terms" element={<Terms />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="property" element={<Property />} />
         <Route path="list-property/:id" element={<SingleProperty />} />

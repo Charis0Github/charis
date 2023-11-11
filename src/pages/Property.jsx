@@ -13,6 +13,8 @@ import { ToastContainer, toast } from "react-toastify";
 const Property = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
   const [newProperty, setNewProperty] = useState([]);
 
   const {
@@ -24,11 +26,12 @@ const Property = () => {
   } = useSelector((state) => state.property);
 
   useEffect(() => {
-    if (property) {
-      return;
-    } else {
-      dispatch(getProperty());
-    }
+    dispatch(getProperty());
+    // if (property) {
+    //   return;
+    // } else {
+    //   dispatch(getProperty());
+    // }
   }, []);
 
   function formatNumber(number) {
@@ -49,6 +52,15 @@ const Property = () => {
     return formattedIntegerPart;
   }
 
+  const handleSearch = (e) => {
+    const term = e.target.value;
+    setSearchTerm(term);
+    const results = property?.properties.filter((property) =>
+      property.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setSearchResults(results);
+  };
+
   useEffect(() => {
     if (propertySuccess) {
       toast.success("Property Retrieved Successfully");
@@ -61,6 +73,12 @@ const Property = () => {
       dispatch(resetProperty());
     }
   }, [propertySuccess, propertyError, propertyMessage]);
+
+  useEffect(() => {
+    if (searchTerm === "") {
+      setSearchResults(property.properties);
+    }
+  }, [searchTerm]);
 
   // useEffect(() => {
   //   dispatch(getProperty());
@@ -75,7 +93,11 @@ const Property = () => {
           Find The Best <br /> Property
         </h1>
         <div className="flex items-center gap-2 w-full">
-          <input className="w-full focus:outline-none h-10 appearance-none border-[1px] border-black/25 px-3 py-2 rounded-lg" />
+          <input
+            value={searchTerm}
+            onChange={handleSearch}
+            className="w-full focus:outline-none h-10 appearance-none border-[1px] border-black/25 px-3 py-2 rounded-lg"
+          />
           <button className="w-max px-3 py-2 rounded-lg h-10 bg-black text-sm text-white">
             Search
           </button>
@@ -108,63 +130,67 @@ const Property = () => {
 
       {/* PROPERTY DISPLAY SECTION STARTS */}
       <div className="w-full lg:flex-wrap flex lg:flex-row flex-col h-max items-center justify-start gap-[6.79rem] py-10 px-5 lg:px-0">
-        {property
-          ? property?.properties?.map((item) => (
-              <div
-                onClick={() => navigate(`/list-property/${item._id}`)}
-                key={item._id}
-                className="card shadow-md shadow-black/50 cursor-pointer "
-              >
-                <div className="flex flex-col w-full h-full ">
-                  <img
-                    src={item.imageLink}
-                    className=" h-[300px] w-full object-cover rounded-t-lg"
-                  />
-                  <div className="w-full  p-3 rounded-b-lg flex flex-col gap-5 py-2 mb-2">
-                    <h1 className="w-full text-2xl font-semibold h-max">
-                      {item.name} ({item.type})
-                    </h1>
-                    <h1 className="w-full text-lg font-medium">
-                      Price: N{formatNumber(item.price)}
-                    </h1>
-                    <p className="w-full text-ellipsis h-max overflow-y-auto">
-                      {item.description.slice(0, 50)}...
-                    </p>
+        {searchResults ? (
+          searchResults.map((item) => (
+            <div
+              onClick={() => navigate(`/list-property/${item._id}`)}
+              key={item._id}
+              className="card shadow-md shadow-black/50 cursor-pointer "
+            >
+              <div className="flex flex-col w-full h-full ">
+                <img
+                  src={item.imageLink}
+                  className=" h-[300px] w-full object-cover rounded-t-lg"
+                />
+                <div className="w-full  p-3 rounded-b-lg flex flex-col gap-5 py-2 mb-2">
+                  <h1 className="w-full text-2xl font-semibold h-max">
+                    {item.name} ({item.type})
+                  </h1>
+                  <h1 className="w-full text-lg font-medium">
+                    Price: N{formatNumber(item.price)}
+                  </h1>
+                  <p className="w-full text-ellipsis h-max overflow-y-auto">
+                    {item.description.slice(0, 50)}...
+                  </p>
 
-                    <div className="w-full flex  items-center gap-3 mt-2">
-                      <img
-                        src={location}
-                        className=" h-5 w-5 object-cover rounded-t-lg"
-                      />
-                      <p>{item.location}</p>
-                    </div>
-
-                    <div className="w-full flex items-center justify-between">
-                      <div className="w-full flex items-center gap-3">
-                        <img
-                          src={sqft}
-                          className=" h-5 w-5 object-cover rounded-t-lg"
-                        />
-                        <p>4000 sqft</p>
-                      </div>
-
-                      <div className="w-full flex items-center justify-center gap-3">
-                        <img
-                          src={room}
-                          className=" h-5 w-5 object-cover rounded-t-lg"
-                        />
-                        <p className="">4 Bedroom</p>
-                      </div>
-                    </div>
+                  <div className="w-full flex  items-center gap-3 mt-2">
+                    <img
+                      src={location}
+                      className=" h-5 w-5 object-cover rounded-t-lg"
+                    />
+                    <p>{item.location}</p>
                   </div>
 
-                  <p className="p-3 mb-2 text-sm text-[#FD6602]">
-                    Click card to View property
-                  </p>
+                  <div className="w-full flex items-center justify-between">
+                    <div className="w-full flex items-center gap-3">
+                      <img
+                        src={sqft}
+                        className=" h-5 w-5 object-cover rounded-t-lg"
+                      />
+                      <p>4000 sqft</p>
+                    </div>
+
+                    <div className="w-full flex items-center justify-center gap-3">
+                      <img
+                        src={room}
+                        className=" h-5 w-5 object-cover rounded-t-lg"
+                      />
+                      <p className="">4 Bedroom</p>
+                    </div>
+                  </div>
                 </div>
+
+                <p className="p-3 mb-2 text-sm text-[#FD6602]">
+                  Click card to View property
+                </p>
               </div>
-            ))
-          : null}
+            </div>
+          ))
+        ) : (
+          <div>
+            <p>No Properties Were Found</p>
+          </div>
+        )}
       </div>
       {/* PROPERTY DISPLAY SECTION ENDS */}
 

@@ -1,10 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPendingWithdrawal } from "../../Redux/Features/pendingWithdrawal";
-import { getApprovedWithdrawal } from "../../Redux/Features/approvedWithdrawal";
+import {
+  approveWithdrawal,
+  getApprovedWithdrawal,
+  resetApprovedWithdrawal,
+} from "../../Redux/Features/approvedWithdrawal";
+import { ToastContainer, toast } from "react-toastify";
+import load from "../../assets/loading.json";
+import Lottie from "lottie-react";
 
 const RequestView = () => {
   const { pendingWithdrawal } = useSelector((state) => state.pendingWithdrawal);
+
+  const {
+    approvedWithdrawalSuccess,
+    approvedWithdrawalMessage,
+    approvedWithdrawalError,
+    approvingWithdrawalLoading,
+  } = useSelector((state) => state.approvedWithdrawal);
+
+  const dispatch = useDispatch();
 
   function formatDate(inputDate) {
     const date = new Date(inputDate);
@@ -13,6 +29,27 @@ const RequestView = () => {
 
     return formattedDate;
   }
+
+  useEffect(() => {
+    if (approvedWithdrawalSuccess) {
+      dispatch(getPendingWithdrawal());
+      dispatch(getApprovedWithdrawal());
+      toast.success(approvedWithdrawalMessage);
+      setTimeout(() => {
+        dispatch(resetApprovedWithdrawal());
+      }, 1500);
+    }
+    if (approvedWithdrawalError) {
+      toast.error(approvedWithdrawalMessage);
+      setTimeout(() => {
+        dispatch(resetApprovedWithdrawal());
+      }, 1500);
+    }
+  }, [
+    approvedWithdrawalSuccess,
+    approvedWithdrawalMessage,
+    approvedWithdrawalError,
+  ]);
 
   return (
     <div className="w-full overflow-x-auto">
@@ -35,7 +72,10 @@ const RequestView = () => {
                   <td className=" pr-3 pb-4">{item.amount}</td>
                   <td className=" pr-3 pb-4">{formatDate(item.createdAt)}</td>
                   <td className=" pr-3 pb-4">
-                    <div className="w-[143px] h-[42px] bg-black rounded-md text-white flex items-center justify-center">
+                    <div
+                      onClick={() => dispatch(approveWithdrawal(item._id))}
+                      className="w-[143px] h-[42px] cursor-pointer bg-black rounded-md text-white flex items-center justify-center"
+                    >
                       Make Payment
                     </div>
                   </td>
@@ -44,6 +84,14 @@ const RequestView = () => {
             })}
         </tbody>
       </table>
+
+      {approvingWithdrawalLoading && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-30 p-4">
+          <div className="bg-transparent lg:p-8 p-4 rounded-lg h-max w-[300px] relative overflow-y-auto">
+            <Lottie animationData={load} width={200} height={200} loop={true} />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -117,6 +165,7 @@ const Affiliates = () => {
 
   return (
     <div className="flex flex-col w-full px-10 h-screen py-8 overflow-y-auto">
+      <ToastContainer position="top-center" hideProgressBar />
       <div className="w-full flex items-center gap-8">
         <p
           className={`${

@@ -53,6 +53,10 @@ const allUserPaymentSlice = createSlice({
       state.allUserPaymentSuccess = false;
       state.allUserPaymentMessage = "";
     },
+
+    logOutAllUserPayment: (state) => {
+      state.allUserPayment = null;
+    },
   },
   extraReducers: (builder) => {
     builder

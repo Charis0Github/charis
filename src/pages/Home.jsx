@@ -5,11 +5,14 @@ import con2 from "../assets/con2.svg";
 import con3 from "../assets/con3.svg";
 import con4 from "../assets/con4.svg";
 import p1 from "../assets/p1.png";
-import p2 from "../assets/p2.png";
+import p2 from "../assets/par1.jpeg";
 import p3 from "../assets/pt1.jpeg";
 import p4 from "../assets/pt2.jpeg";
 import p5 from "../assets/pt3.jpeg";
-import p6 from "../assets/pt4.jpeg";
+// import p6 from "../assets/pt4.jpeg";
+import p7 from "../assets/par2.jpeg";
+import p8 from "../assets/par3.jpeg";
+import p9 from "../assets/par4.jpeg";
 import prop1 from "../assets/prop1.png";
 import prop2 from "../assets/prop2.png";
 import prop3 from "../assets/prop3.png";
@@ -475,13 +478,20 @@ const Home = () => {
         {/* {file && file} */}
       </h1>
 
-      <div className="images lg:flex items-center justify-center w-full flex flex-col lg:flex-row lg:space-x-5 lg:mt-[3rem] mt-20 space-y-5 lg:space-y-0 lg:mb-[10rem]">
-        <img src={p1} width={200} height={200} />
-        {/* <img src={p2} width={200} height={200} /> */}
-        <img src={p3} width={200} height={200} />
-        <img src={p4} width={200} height={200} />
-        <img src={p5} width={200} height={200} />
-        <img src={p6} width={200} height={200} />
+      <div className="images lg:flex items-center justify-center w-full flex flex-col lg:flex-wrap  lg:space-x-5 lg:mt-[3rem] mt-20 space-y-5 lg:space-y-5 lg:mb-[10rem]">
+        <div className="w-max lg:flex lg:flex-row items-center mb-7 flex flex-col gap-5">
+          <img src={p1} width={200} height={200} />
+          <img src={p2} width={200} height={200} />
+          <img src={p3} width={200} height={200} />
+          <img src={p4} width={200} height={200} />
+        </div>
+
+        <div className="w-max lg:flex lg:flex-row items-center mb-7 flex flex-col gap-5">
+          <img src={p5} width={200} height={200} />
+          <img src={p7} width={200} height={200} />
+          <img src={p8} width={200} height={200} />
+          <img src={p9} width={200} height={200} />
+        </div>
       </div>
       {/* PARTNERS SECTION ENDS */}
 

@@ -29,6 +29,7 @@ import calculateInvestmentReducer from "./Features/calculateInvestment";
 import uploadImageReducer from "./Features/uploadImageSlice";
 import eligibilityReducer from "./Features/eligibilitySlice";
 import addShoppingPointsReducer from "./Features/addShoppingPointsSlice";
+import usersStatusReducer from "./Features/UserStatusSlice";
 
 const reducers = combineReducers({
   formData: formReducer,
@@ -50,6 +51,7 @@ const reducers = combineReducers({
   imgUpload: uploadImageReducer,
   eligible: eligibilityReducer,
   shoppingPoints: addShoppingPointsReducer,
+  usersStat: usersStatusReducer,
 });
 
 const persistConfig = {

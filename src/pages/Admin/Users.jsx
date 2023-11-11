@@ -19,6 +19,11 @@ import {
   resetShoppingPoints,
   uploadPoints,
 } from "../../Redux/Features/addShoppingPointsSlice";
+import {
+  getUsersStatus,
+  resetUsersStatus,
+} from "../../Redux/Features/UserStatusSlice";
+import { ToastContainer, toast } from "react-toastify";
 
 const Users = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,6 +35,13 @@ const Users = () => {
   });
   const { allUsers, usersError, usersLoading, usersMessage, usersSuccess } =
     useSelector((state) => state.users);
+
+  const {
+    usersStatus,
+    usersStatusSuccess,
+    usersStatusError,
+    usersStatusMessage,
+  } = useSelector((state) => state.usersStat);
 
   const {
     adminUserPayment,
@@ -398,19 +410,38 @@ const Users = () => {
     adminUserPaymentLoading,
   ]);
 
-  useEffect(() => {
-    if (allUsers.length > 0) {
-      console.log(allUsers.map((user) => user.shoppingPoints));
-    }
-  }, [allUsers]);
+  // useEffect(() => {
+  //   if (allUsers.length > 0) {
+  //     console.log(allUsers.map((user) => user.shoppingPoints));
+  //   }
+  // }, [allUsers]);
 
   useEffect(() => {
+    dispatch(getUsersStatus());
     if (allUsers.length > 0) {
       return;
     } else {
       dispatch(getUsers());
     }
   }, []);
+
+  useEffect(() => {
+    dispatch(getUsersStatus());
+  }, []);
+
+  useEffect(() => {
+    if (usersStatusSuccess) {
+      setTimeout(() => {
+        dispatch(resetUsersStatus());
+      }, 2500);
+    }
+    if (usersStatusError) {
+      toast.error(usersStatusMessage);
+      setTimeout(() => {
+        dispatch(resetUsersStatus());
+      }, 2500);
+    }
+  }, [usersStatusSuccess, usersStatusError, usersStatusMessage]);
 
   const addPoints = (points) => {
     if (sp.shoppingPoints) {
@@ -424,11 +455,14 @@ const Users = () => {
 
   return (
     <div className="flex flex-col w-full px-10 h-screen py-8 overflow-y-auto">
+      <ToastContainer position="top-center" hideProgressBar />
       <div className="flex w-full items-start gap-14">
         <div className="h-[199px] w-[360px] px-4 py-4 rounded-lg user_card_banner bg-cover flex flex-col text-white  gap-10">
           <p>Active Users</p>
           <div className="flex w-full items-end gap-3 text-white">
-            <p className="text-7xl font-semibold">102</p>
+            <p className="text-7xl font-semibold">
+              {usersStatus && usersStatus.paidCount}
+            </p>
             <p>Users</p>
           </div>
         </div>
@@ -436,7 +470,9 @@ const Users = () => {
           <div className="h-[199px] w-[360px] px-4 py-4 rounded-lg user_card_banner bg-cover flex flex-col text-white  gap-10 ">
             <p>Non-Active Users</p>
             <div className="flex w-full items-end gap-3 text-white">
-              <p className="text-7xl font-semibold">96</p>
+              <p className="text-7xl font-semibold">
+                {usersStatus && usersStatus.notPaidCount}
+              </p>
               <p>Users</p>
             </div>
           </div>

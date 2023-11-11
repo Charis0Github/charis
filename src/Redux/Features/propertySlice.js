@@ -128,6 +128,36 @@ export const deleteProperty = createAsyncThunk(
   }
 );
 
+export const editProperty = createAsyncThunk(
+  "property/edit",
+  async (id, thunkAPI) => {
+    const body = { status: "approved" };
+    try {
+      const response = await axios.patch(BASE_URL + `/property/${id}`, body);
+      if (response.status === 200) {
+        // return "Property Approved";
+        console.log(JSON.stringify(response.data));
+        return response.data.msg;
+      }
+    } catch (error) {
+      if (error.response) {
+        const obj = error.response.data;
+        const objKey = Object.keys(obj)[0];
+        let err = obj[objKey];
+        console.log(err);
+        return thunkAPI.rejectWithValue(err);
+      } else if (error.request) {
+        return thunkAPI.rejectWithValue("something went terribly wrong");
+      } else {
+        const obj = error.response.data;
+        const objKey = Object.keys(obj)[0];
+        let err = obj[objKey];
+        return thunkAPI.rejectWithValue(err);
+      }
+    }
+  }
+);
+
 export const propertySlice = createSlice({
   name: "property",
   initialState,
@@ -140,6 +170,7 @@ export const propertySlice = createSlice({
     },
     logoutProperty: (state) => {
       state.property = null;
+      state.adminProperty = null;
     },
   },
   extraReducers: (builder) => {
@@ -186,6 +217,22 @@ export const propertySlice = createSlice({
         state.propertyMessage = action.payload;
       })
       .addCase(deleteProperty.rejected, (state, action) => {
+        state.propertyLoading = false;
+        state.propertyError = true;
+        state.propertySuccess = false;
+        state.propertyMessage = action.payload;
+      })
+
+      .addCase(editProperty.pending, (state) => {
+        state.propertyLoading = true;
+      })
+      .addCase(editProperty.fulfilled, (state, action) => {
+        state.propertyLoading = false;
+        state.propertyError = false;
+        state.propertySuccess = true;
+        state.propertyMessage = action.payload;
+      })
+      .addCase(editProperty.rejected, (state, action) => {
         state.propertyLoading = false;
         state.propertyError = true;
         state.propertySuccess = false;

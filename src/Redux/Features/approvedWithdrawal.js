@@ -7,10 +7,47 @@ const BASE_URL = "https://motionless-pig-top-hat.cyclic.app/api/v1";
 const initialState = {
   approvedWithdrawal: null,
   approvedWithdrawalLoading: false,
+  approvingWithdrawalLoading: false,
   approvedWithdrawalSuccess: false,
   approvedWithdrawalError: false,
   approvedWithdrawalMessage: "",
 };
+
+export const approveWithdrawal = createAsyncThunk(
+  "approvedWithdrawal/update",
+  async (id, thunkAPI) => {
+    const token = localStorage.getItem("token");
+    const body = { withdrawalStatus: "approved" };
+    try {
+      const response = await axios.patch(
+        BASE_URL + `/users/dashboard/withdrawal/${id}`,
+        body,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      //   console.log(JSON.stringify(response.data));
+      return response.data.msg;
+    } catch (error) {
+      if (error.response) {
+        const obj = error.response.data;
+        const objKey = Object.keys(obj)[0];
+        let err = obj[objKey];
+        console.log(err);
+        return thunkAPI.rejectWithValue(err);
+      } else if (error.request) {
+        return thunkAPI.rejectWithValue("something went terribly wrong");
+      } else {
+        const obj = error.response.data;
+        const objKey = Object.keys(obj)[0];
+        let err = obj[objKey];
+        return thunkAPI.rejectWithValue(err);
+      }
+    }
+  }
+);
 
 export const getApprovedWithdrawal = createAsyncThunk(
   "approvedWithdrawal/get",
@@ -50,8 +87,9 @@ const approvedWithdrawalSlice = createSlice({
   name: "approvedWithdrawal",
   initialState,
   reducers: {
-    resetPendingWithdrawal: (state) => {
+    resetApprovedWithdrawal: (state) => {
       state.approvedWithdrawalLoading = false;
+      state.approvingWithdrawalLoading = false;
       state.approvedWithdrawalSuccess = false;
       state.approvedWithdrawalError = false;
       state.approvedWithdrawalMessage = "";
@@ -69,6 +107,22 @@ const approvedWithdrawalSlice = createSlice({
         state.approvedWithdrawal = action.payload;
       })
       .addCase(getApprovedWithdrawal.rejected, (state, action) => {
+        state.approvedWithdrawalLoading = false;
+        state.approvedWithdrawalSuccess = false;
+        state.approvedWithdrawalError = true;
+        state.approvedWithdrawalMessage = action.payload;
+      })
+
+      .addCase(approveWithdrawal.pending, (state) => {
+        state.approvingWithdrawalLoading = true;
+      })
+      .addCase(approveWithdrawal.fulfilled, (state, action) => {
+        state.approvedWithdrawalLoading = false;
+        state.approvedWithdrawalSuccess = true;
+        state.approvedWithdrawalError = false;
+        state.approvedWithdrawalMessage = action.payload;
+      })
+      .addCase(approveWithdrawal.rejected, (state, action) => {
         state.approvedWithdrawalLoading = false;
         state.approvedWithdrawalSuccess = false;
         state.approvedWithdrawalError = true;

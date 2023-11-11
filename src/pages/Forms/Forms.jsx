@@ -10,6 +10,7 @@ import {
   corporativeRegister,
 } from "../../Redux/Features/formSlice";
 import { createPaymentLink } from "../../Redux/Features/paymentSlice";
+import { useNavigate } from "react-router-dom";
 
 export const Form1 = ({ close, handleStep, errorHandle }) => {
   const dispatch = useDispatch();
@@ -220,6 +221,8 @@ export const Form2 = ({ handleStep, errorHandle }) => {
 export const Form3 = ({ handleStep, errorHandle }) => {
   const dispatch = useDispatch();
   const formData = useSelector((state) => state.formData);
+  const [terms, setTerms] = useState(false);
+  const navigate = useNavigate();
   const options = [
     "SSCE or Equivalent",
     "Undergraduate",
@@ -227,10 +230,69 @@ export const Form3 = ({ handleStep, errorHandle }) => {
     "Post Graduate",
   ];
 
+  const {
+    title,
+    nationality,
+    address,
+    gender,
+    dob,
+    lga,
+    profession,
+    officeAddress,
+    statusRank,
+    monthlyIncome,
+    yearsOfService,
+    retirementAge,
+    educationalQualification,
+    nextOfKinName,
+    nextOfKinAddress,
+    relationship,
+    nextOfKinPhoneNumber,
+    nextOfKinEmail,
+  } = useSelector((state) => state.formData);
+
+  const { paymentStatus, paymentLoading } = useSelector(
+    (state) => state.payment
+  );
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     dispatch(updateFormData({ name, value }));
     console.log(name, value);
+  };
+
+  const vercelRedirect = "https://charis-eight.vercel.app/verify";
+  const makePayment = () => {
+    if (
+      title &&
+      nationality &&
+      address &&
+      gender &&
+      dob &&
+      lga &&
+      profession &&
+      officeAddress &&
+      statusRank &&
+      monthlyIncome &&
+      yearsOfService &&
+      retirementAge &&
+      educationalQualification &&
+      nextOfKinName &&
+      nextOfKinAddress &&
+      relationship &&
+      nextOfKinPhoneNumber &&
+      nextOfKinEmail &&
+      terms
+    ) {
+      const reqBody = {
+        amount: "25000",
+        redirect: vercelRedirect,
+        tag: "reg",
+      };
+      dispatch(createPaymentLink(reqBody));
+    } else {
+      errorHandle();
+    }
   };
 
   return (
@@ -303,6 +365,20 @@ export const Form3 = ({ handleStep, errorHandle }) => {
         onChange={handleChange}
       />
 
+      <div className="flex items-center gap-5">
+        <input
+          type="checkbox"
+          name="houseType"
+          value={terms}
+          onChange={() => setTerms(!terms)}
+        />
+        <label
+          onClick={() => navigate("/terms")}
+          className="flex items-center gap-3 cursor-pointer text-black/50"
+        >
+          Agree to terms and conditions
+        </label>
+      </div>
       <div className="mt-3 flex items-center  gap-3 w-full">
         <button
           onClick={() => handleStep(1)}
@@ -311,23 +387,10 @@ export const Form3 = ({ handleStep, errorHandle }) => {
           Back
         </button>
         <button
-          onClick={() => {
-            if (
-              formData.educationalQualification &&
-              formData.nextOfKinName &&
-              formData.nextOfKinAddress &&
-              formData.relationship &&
-              formData.nextOfKinPhoneNumber &&
-              formData.nextOfKinEmail
-            ) {
-              handleStep(3);
-            } else {
-              errorHandle();
-            }
-          }}
+          onClick={makePayment}
           className="px-4 py-2 w-max bg-black rounded-md text-white"
         >
-          Next
+          {paymentLoading ? "Processing Payment" : "Proceed to payment"}
         </button>
       </div>
     </div>
@@ -338,35 +401,6 @@ export const Form4 = ({ handleStep, errorHandle }) => {
   // const [previewImageUrl, setPreviewImageUrl] = useState("");
   // const [picture, setPicture] = useState("");
   const dispatch = useDispatch();
-  const {
-    title,
-    nationality,
-    address,
-    gender,
-    dob,
-    lga,
-    profession,
-    officeAddress,
-    statusRank,
-    monthlyIncome,
-    yearsOfService,
-    retirementAge,
-    educationalQualification,
-    nextOfKinName,
-    nextOfKinAddress,
-    relationship,
-    nextOfKinPhoneNumber,
-    nextOfKinEmail,
-    houseSize,
-    houseType,
-    preferredLocation,
-    paymentPlan,
-
-    corporativeLoading,
-    corporativeSuccess,
-    corporativeError,
-    corporativeMessage,
-  } = useSelector((state) => state.formData);
 
   const { paymentStatus, paymentLoading } = useSelector(
     (state) => state.payment
@@ -409,42 +443,6 @@ export const Form4 = ({ handleStep, errorHandle }) => {
   // };
 
   // const localRedirect = "http://localhost:5173/verify";
-  const vercelRedirect = "https://charis-eight.vercel.app/verify";
-  const makePayment = () => {
-    if (
-      title &&
-      nationality &&
-      address &&
-      gender &&
-      dob &&
-      lga &&
-      profession &&
-      officeAddress &&
-      statusRank &&
-      monthlyIncome &&
-      yearsOfService &&
-      retirementAge &&
-      educationalQualification &&
-      nextOfKinName &&
-      nextOfKinAddress &&
-      relationship &&
-      nextOfKinPhoneNumber &&
-      nextOfKinEmail &&
-      houseSize &&
-      houseType &&
-      preferredLocation &&
-      paymentPlan
-    ) {
-      const reqBody = {
-        amount: "25000",
-        redirect: vercelRedirect,
-        tag: "reg",
-      };
-      dispatch(createPaymentLink(reqBody));
-    } else {
-      errorHandle();
-    }
-  };
 
   // useEffect(() => {
   //   if (corporativeSuccess) {

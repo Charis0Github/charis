@@ -54,9 +54,7 @@ const AffiliateDashboard = () => {
   const dispatch = useDispatch();
 
   const copyLink = () => {
-    navigator.clipboard.writeText(
-      "http://localhost:5173/referralLogin/" + userDetails.userData.myRefCode
-    );
+    navigator.clipboard.writeText(userDetails.userData.myRefCode);
     toast.success("Copied");
   };
 
