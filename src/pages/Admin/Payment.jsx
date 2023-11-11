@@ -23,7 +23,9 @@ const Payment = () => {
   const itemsPerPage = 14;
   const firstIndex = pageNumber * itemsPerPage;
 
-  const pageCount = Math.ceil(allUserPayment?.payments.length / itemsPerPage);
+  const pageCount =
+    allUserPayment.payments &&
+    Math.ceil(allUserPayment?.payments.length / itemsPerPage);
 
   const changePage = (selected) => {
     setPageNumber(selected.selected);
@@ -53,6 +55,9 @@ const Payment = () => {
 
   useEffect(() => {
     if (allUserPaymentSuccess) {
+      if (allUserPayment.payments) {
+        setPays(allUserPayment.payments);
+      }
       setTimeout(() => {
         dispatch(resetAllUserPayment());
       }, 2000);
@@ -82,37 +87,35 @@ const Payment = () => {
           </thead>
 
           <tbody>
-            {allUserPayment.payments &&
-              allUserPayment?.payments
-                ?.slice(firstIndex, firstIndex + itemsPerPage)
-                .map((item) => (
-                  <tr key={item._id}>
-                    <td className="text-clip pr-3 pb-4">
-                      {item.userName && item.userName}
-                    </td>
-                    <td className=" pr-3 pb-4">{formatDate(item.datePaid)}</td>
-                    <td className=" pr-3 pb-4">N {item.amount}</td>
-                    <td className=" pr-3 pb-4">{item.tag}</td>
-                    <td className=" pr-3 pb-4">
-                      <div
-                        onClick={() => copyLink(item.phoneNumber)}
-                        className="flex items-center gap-1 cursor-pointer"
-                      >
-                        <p>{item.phoneNumber && item.phoneNumber}</p>
-                        <img src={copy} />
-                      </div>
-                    </td>
-                    <td className=" pr-3 pb-4">
-                      <div
-                        onClick={() => copyLink(item.email)}
-                        className="flex items-center gap-1 cursor-pointer"
-                      >
-                        <p>{item.email && item.email}</p>
-                        <img src={copy} />
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+            {pays.length > 0 &&
+              pays.slice(firstIndex, firstIndex + itemsPerPage).map((item) => (
+                <tr key={item._id}>
+                  <td className="text-clip pr-3 pb-4">
+                    {item.userName && item.userName}
+                  </td>
+                  <td className=" pr-3 pb-4">{formatDate(item.datePaid)}</td>
+                  <td className=" pr-3 pb-4">N {item.amount}</td>
+                  <td className=" pr-3 pb-4">{item.tag}</td>
+                  <td className=" pr-3 pb-4">
+                    <div
+                      onClick={() => copyLink(item.phoneNumber)}
+                      className="flex items-center gap-1 cursor-pointer"
+                    >
+                      <p>{item.phoneNumber && item.phoneNumber}</p>
+                      <img src={copy} />
+                    </div>
+                  </td>
+                  <td className=" pr-3 pb-4">
+                    <div
+                      onClick={() => copyLink(item.email)}
+                      className="flex items-center gap-1 cursor-pointer"
+                    >
+                      <p>{item.email && item.email}</p>
+                      <img src={copy} />
+                    </div>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
@@ -129,7 +132,7 @@ const Payment = () => {
         <div className="w-full flex flex-col items-end justify-center ">
           <p className="text-base text-[#FD6602] mt-[30px] mb-[7px] mr-6">
             showing {Math.floor(firstIndex + itemsPerPage)} of{" "}
-            {allUserPayment.payments.length} entries
+            {allUserPayment.payments && allUserPayment.payments.length} entries
           </p>
 
           <ReactPaginate

@@ -71,10 +71,12 @@ const AdminProperty = () => {
   const handleSearch1 = (e) => {
     const term = e.target.value;
     setSearchTerm1(term);
-    const results = property?.properties.filter((property) =>
-      property.name.toLowerCase().includes(searchTerm1.toLowerCase())
-    );
-    setSearchResults1(results);
+    if (property.properties) {
+      const results = property?.properties?.filter((property) =>
+        property.name.toLowerCase().includes(searchTerm1.toLowerCase())
+      );
+      setSearchResults1(results);
+    }
   };
 
   const displayApproved = () => {
@@ -300,10 +302,12 @@ const AdminProperty = () => {
   const handleSearch = (e) => {
     const term = e.target.value;
     setSearchTerm(term);
-    const results = adminProperty?.properties.filter((property) =>
-      property.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setSearchResults(results);
+    if (adminProperty.properties) {
+      const results = adminProperty?.properties.filter((property) =>
+        property.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setSearchResults(results);
+    }
   };
 
   useEffect(() => {
