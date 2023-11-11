@@ -83,8 +83,8 @@ const Payment = () => {
 
           <tbody>
             {allUserPayment.payments ? (
-              allUserPayment.payments
-                .slice(firstIndex, firstIndex + itemsPerPage)
+              allUserPayment?.payments
+                ?.slice(firstIndex, firstIndex + itemsPerPage)
                 .map((item) => (
                   <tr key={item._id}>
                     <td className="text-clip pr-3 pb-4">
