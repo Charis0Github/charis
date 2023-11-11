@@ -209,7 +209,7 @@ const Dashboard = () => {
     }
 
     if (selected === "invest") {
-      if (userDetails?.userData?.investmentAmount === 0) {
+      if (userDetails?.userData?.investmentAmount !== 0) {
         toast.error("House application payment has already been made!");
       } else {
         setPayModal(false);
