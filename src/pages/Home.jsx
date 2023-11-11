@@ -163,8 +163,10 @@ const Home = () => {
   const handleForm = () => {
     if (user) {
       if (userDetails?.userData?.status === "paid") {
+        setMenu(!menu);
         setPrompt(true);
       } else {
+        setMenu(!menu);
         setIsOpen(true);
       }
     } else {
