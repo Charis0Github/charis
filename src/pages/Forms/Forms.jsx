@@ -146,7 +146,7 @@ export const Form2 = ({ handleStep, errorHandle }) => {
         type={"text"}
         name={"officeAddress"}
         placeholder={"Enter your answer"}
-        label={"Office Address"}
+        label={"Home Address"}
         value={formData.officeAddress}
         onChange={handleChange}
       />

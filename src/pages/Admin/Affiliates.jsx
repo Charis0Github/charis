@@ -12,7 +12,8 @@ import Lottie from "lottie-react";
 
 const RequestView = () => {
   const { pendingWithdrawal } = useSelector((state) => state.pendingWithdrawal);
-
+  const [prompt, setPrompt] = useState(false);
+  const [selectedpayee, setSelectedPayee] = useState(null);
   const {
     approvedWithdrawalSuccess,
     approvedWithdrawalMessage,
@@ -29,6 +30,11 @@ const RequestView = () => {
 
     return formattedDate;
   }
+
+  const disclaimer = (item) => {
+    setSelectedPayee(item);
+    setPrompt(true);
+  };
 
   useEffect(() => {
     if (approvedWithdrawalSuccess) {
@@ -73,7 +79,7 @@ const RequestView = () => {
                   <td className=" pr-3 pb-4">{formatDate(item.createdAt)}</td>
                   <td className=" pr-3 pb-4">
                     <div
-                      onClick={() => dispatch(approveWithdrawal(item._id))}
+                      onClick={() => disclaimer(item)}
                       className="w-[143px] h-[42px] cursor-pointer bg-black rounded-md text-white flex items-center justify-center"
                     >
                       Make Payment
@@ -84,6 +90,64 @@ const RequestView = () => {
             })}
         </tbody>
       </table>
+
+      {prompt && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10 p-4">
+          <div className="bg-white flex flex-col gap-14 font-sans items-center lg:p-8 p-4 rounded-lg h-max w-[500px] relative ">
+            <div
+              onClick={() => setPrompt(false)}
+              className="absolute -top-3 flex items-center justify-center lg:-right-2 right-2 h-[40px] w-[30px] rounded-full p-1 bg-black text-white cursor-pointer"
+            >
+              <h1 className="text-sm font-bold">X</h1>
+            </div>
+
+            <div className="flex items-center justify-between w-full">
+              <div>
+                <p className="text-black/50 ">Account Name</p>
+                <h1 className="text-xl">
+                  {selectedpayee && selectedpayee.name}
+                </h1>
+              </div>
+              <div>
+                <p className="text-black/50 ">Account Number</p>
+                <h1 className="text-xl">
+                  {selectedpayee && selectedpayee.accountNumber}
+                </h1>
+              </div>
+            </div>
+
+            <div className="w-full flex items-center justify-between">
+              <div>
+                <p className="text-black/50 ">Bank Account</p>
+                <h1 className="text-xl">
+                  {selectedpayee && selectedpayee.bank}
+                </h1>
+              </div>
+
+              <div>
+                <p className="text-black/50 ">Amount</p>
+                <h1 className="text-xl">
+                  {selectedpayee && selectedpayee.amount}
+                </h1>
+              </div>
+            </div>
+
+            <div
+              onClick={() => {
+                setPrompt(false);
+                dispatch(approveWithdrawal(selectedpayee._id));
+              }}
+              className="w-max p-3 rounded-md px-[30px] bg-[#FD6602] text-white font-bold font-sans "
+            >
+              Done
+            </div>
+
+            <p className="text-sm font-bold my-3">
+              Only click 'DONE' when payment has been made
+            </p>
+          </div>
+        </div>
+      )}
 
       {approvingWithdrawalLoading && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-30 p-4">

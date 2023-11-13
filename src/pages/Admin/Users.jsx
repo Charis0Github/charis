@@ -139,7 +139,8 @@ const Users = () => {
                 <p>{selected?.phoneNumber}</p>
               </div>
               <div className="flex items-center gap-2">
-                <FaAddressBook color="#FD6602" />:<p>{selected?.address}</p>
+                <FaAddressBook color="#FD6602" />:
+                <p>{selected?.officeAddress}</p>
               </div>
             </div>
           </div>
@@ -217,8 +218,8 @@ const Users = () => {
               <p>Phone Number</p>
               <p>
                 :{" "}
-                {selected.nextOfKinphoneNumber
-                  ? selected.nextOfKinphoneNumber
+                {selected.nextOfKinPhoneNumber
+                  ? selected.nextOfKinPhoneNumber
                   : "N/A"}
               </p>
             </div>
@@ -232,7 +233,7 @@ const Users = () => {
           {/* COLUMN TWO ENDS HERE */}
 
           {/* COLUMN TWO STARTS HERE */}
-          <div className="w-full flex flex-col items-start justify-between gap-9">
+          {/* <div className="w-full flex flex-col items-start justify-between gap-9">
             <div className="w-full flex flex-col items-start gap-3">
               <h1 className="font-semibold text-lg">House Information</h1>
               <div className="w-full flex items-start justify-between">
@@ -259,7 +260,7 @@ const Users = () => {
                 <p>{selected.paymentPlan ? selected.paymentPlan : "N/A"}</p>
               </div>
             </div>
-          </div>
+          </div> */}
           {/* COLUMN TWO ENDS HERE */}
         </div>
         {/* BOTTOM SECTION STARTS HERE */}

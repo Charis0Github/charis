@@ -55,10 +55,12 @@ const Property = () => {
   const handleSearch = (e) => {
     const term = e.target.value;
     setSearchTerm(term);
-    const results = property?.properties.filter((property) =>
-      property.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setSearchResults(results);
+    if (property) {
+      const results = property?.properties.filter((property) =>
+        property.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setSearchResults(results);
+    }
   };
 
   useEffect(() => {

@@ -35,6 +35,7 @@ const Home = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [steps, setSteps] = useState(0);
   const [prompt, setPrompt] = useState(false);
+  const [prompt1, setPrompt1] = useState(false);
   const [file, setFile] = useState(null);
   const [menu, setMenu] = useState(false);
   const [errorHandle, setErrorHandle] = useState(false);
@@ -176,6 +177,17 @@ const Home = () => {
     }
   };
 
+  const handleMainDashboard = () => {
+    if (user) {
+      if (userDetails?.userData?.status === "paid") {
+        setMenu(!menu);
+        navigate("/dashboard");
+      } else {
+        setPrompt1(true);
+      }
+    }
+  };
+
   const handleStep = (step) => {
     setSteps(step);
   };
@@ -294,6 +306,13 @@ const Home = () => {
 
               {menu && (
                 <ul className="absolute top-[64px] flex flex-col gap-4 items-start justify-start left-0 h-max py-4 px-4 w-[180px] bg-[#000000] z-30 rounded-md text-white">
+                  <li
+                    onClick={handleMainDashboard}
+                    className="text-sm p-2 cursor-pointer hover:bg-[#FF6700] w-full px-2 flex items-center justify-start gap-3"
+                  >
+                    {/* <img width={15} height={15} src={profile} alt="user icon" /> */}
+                    Main Dashboard
+                  </li>
                   <li
                     onClick={handleForm}
                     className="text-sm p-2 cursor-pointer hover:bg-[#FF6700] w-full px-2 flex items-center justify-start gap-3"
@@ -520,6 +539,37 @@ const Home = () => {
         </div>
       </div>
       {/* PARTNERS SECTION ENDS */}
+
+      {/* PROPERTY LINK SECTION STARTS HERE */}
+      <div className="w-full  h-max lg:h-[500px] lg:px-[70px] mb-[10rem]">
+        <div className="w-full h-full flex flex-col gap-10 lg:gap-2 lg:flex-row lg:flex  bg-[#FF6700] items-center lg:px-[100px] px-5 py-10">
+          {/* LEFT IMAGES AREA STARTS */}
+          <div className="lg:w-[500px] shop-banner bg-contain bg-center w-full h-full flex items-center justify-center gap-5">
+            {/* <img src={prop3} width={200} height={200} /> */}
+          </div>
+          {/* LEFT IMAGES AREA ENDS */}
+
+          {/* RIGHT TEXT AREA */}
+          <div className="w-full h-full flex flex-col items-start justify-center gap-10 lg:px-[70px] px-5">
+            <h1 className="lg:text-5xl text-4xl font-bold">
+              View our Property Listings
+            </h1>
+            <p className="text-white font-lg">
+              Explore a variety of top-notch properties tailored to your
+              preferences. From cozy homes to elegant apartments and spacious
+              estates, our curated listings offer something for everyone. Begin
+              your search for the perfect property today.
+            </p>
+
+            <button className="flex items-center space-x-3 justify-between mt-8 text-lg bg-black py-2 px-4 lg:px-6  lg:py-2 rounded-md w-auto font-bold text-white">
+              <Link to="/property" className="font-bold text-sm">
+                View Properties
+              </Link>
+            </button>
+          </div>
+        </div>
+      </div>
+      {/* PROPERTY LINK SECTION ENDS HERE */}
 
       {/* NEWSLETTER SECTION STARTS */}
       <div className="w-full flex flex-col lg:flex-row lg:flex mb-[10rem] items-center h-max lg:h-[600px] news">
@@ -806,6 +856,27 @@ const Home = () => {
 
             <p className="text-center text-lg">
               Please fill all required fields
+            </p>
+          </div>
+        </div>
+      )}
+
+      {prompt1 && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10 p-4">
+          <div className="bg-white flex flex-col gap-16 font-sans items-center lg:p-8 p-4 rounded-lg h-[40%] w-[500px] relative ">
+            <div
+              onClick={() => setPrompt(false)}
+              className="absolute -top-3 flex items-center justify-center lg:-right-2 right-2 h-[30px] w-[30px] rounded-full p-1 bg-black text-white cursor-pointer"
+            >
+              <h1 className="text-sm font-bold">X</h1>
+            </div>
+            <h1 className="text-2xl font-semibold font-sans text-[rgb(253,102,2)]">
+              Not Eligible
+            </h1>
+
+            <p className="text-center text-lg">
+              You are not an active member yet! Please commplete the membership
+              registration process
             </p>
           </div>
         </div>

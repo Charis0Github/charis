@@ -44,7 +44,6 @@ export const corporativeRegister = createAsyncThunk(
       const response = await axios.patch(BASE_URL + `/users/${id}`, body, {
         headers: {
           Authorization: `Bearer ${token}`,
-          "content-type": "multipart/form-data",
         },
       });
       console.log(response.data);

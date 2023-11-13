@@ -522,20 +522,17 @@ const Dashboard = () => {
 
                 {/* BOTTOM CARD SECTION*/}
 
-                {/* <div className="flex items-center justify-between text-xs mt-14">
-                  {userDetails?.userData?.savingsDueDate && (
-                    <p className="w-[200px]">
-                      Note: Next payment coming up{" "}
-                      {formatDate(userDetails?.userData?.savingsDueDate)}
-                    </p>
+                <div className="flex items-center justify-between text-xs mt-14">
+                  {userDetails?.userData?.shareCapitalStatus ===
+                    "part-paid" && (
+                    <div
+                      onClick={() => setPartShareModal(true)}
+                      className="bg-[#FD6602] px-2 py-1 rounded-[5px] text-white text-center text-xs w-max"
+                    >
+                      Continue Payment
+                    </div>
                   )}
-                  <div
-                    onClick={() => setSavingsModal(true)}
-                    className="bg-black px-2 py-1 rounded-[5px] text-white text-center text-xs w-max"
-                  >
-                    pay now
-                  </div>
-                </div> */}
+                </div>
               </div>
               {/* SHARE CAPITAL ENDS HERE */}
 
@@ -1015,10 +1012,10 @@ const Dashboard = () => {
 
           {infoModal && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10 p-4">
-              <div className="bg-white flex flex-col gap-20 font-sans items-center lg:p-8 p-4 rounded-lg h-[40%] w-[500px] relative ">
+              <div className="bg-white flex flex-col gap-14 font-sans items-center lg:p-8 p-4 rounded-lg h-max w-[500px] relative ">
                 <div
                   onClick={() => setInfoModal(false)}
-                  className="absolute -top-3 flex items-center justify-center lg:-right-2 right-2 h-[30px] w-[30px] rounded-full p-1 bg-black text-white cursor-pointer"
+                  className="absolute -top-3 flex items-center justify-center lg:-right-2 right-2 h-[40px] w-[30px] rounded-full p-1 bg-black text-white cursor-pointer"
                 >
                   <h1 className="text-sm font-bold">X</h1>
                 </div>
@@ -1056,6 +1053,13 @@ const Dashboard = () => {
                     {paymentLoading ? "Processing" : "Continue"}
                   </div>
                 </div>
+
+                <p className="text-sm font-bold my-3">
+                  Due to the Payment Gateway's limit of #500,000 per
+                  transaction, all transactions above that amount will need to
+                  be paid in parts of #490,000 over a period of time.(You can
+                  continue making payments the next day. Thank you).
+                </p>
               </div>
             </div>
           )}
