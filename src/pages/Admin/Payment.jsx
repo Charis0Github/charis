@@ -47,6 +47,12 @@ const Payment = () => {
 
   useEffect(() => {
     if (allUserPayment.payments) {
+      pageCount = Math.ceil(allUserPayment.payments.length / itemsPerPage);
+    }
+  }, [allUserPayment.payments]);
+
+  useEffect(() => {
+    if (allUserPayment.payments) {
       return;
     } else {
       dispatch(getAllPayment());
