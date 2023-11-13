@@ -78,5 +78,6 @@ const allUserPaymentSlice = createSlice({
   },
 });
 
-export const { resetAllUserPayment } = allUserPaymentSlice.actions;
+export const { resetAllUserPayment, logOutAllUserPayment } =
+  allUserPaymentSlice.actions;
 export default allUserPaymentSlice.reducer;

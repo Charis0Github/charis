@@ -11,7 +11,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { logoutProperty, resetProperty } from "../Redux/Features/propertySlice";
 import { userLogout } from "../Redux/Features/userSlice";
 import { resetSingularPayment } from "../Redux/Features/SinglePaymentHistorySlice";
-import { resetAllUserPayment } from "../Redux/Features/allUserPaymentSlice";
+import {
+  logOutAllUserPayment,
+  resetAllUserPayment,
+} from "../Redux/Features/allUserPaymentSlice";
 
 const Navbar = () => {
   const links = [
@@ -93,7 +96,7 @@ const Navbar = () => {
     dispatch(userLogout());
     dispatch(logoutProperty());
     dispatch(resetSingularPayment());
-    dispatch(resetAllUserPayment());
+    dispatch(logOutAllUserPayment());
     dispatch(logOut());
   };
 
