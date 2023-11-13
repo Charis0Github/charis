@@ -314,8 +314,12 @@ const AdminProperty = () => {
     if (propertySuccess) {
       dispatch(getPendingProperty());
       dispatch(getProperty());
-      setSearchResults(adminProperty?.properties);
-      setSearchResults1(property?.properties);
+      if (adminProperty.properties) {
+        setSearchResults(adminProperty.properties);
+      }
+      if (propertySuccess.properties) {
+        setSearchResults1(property.properties);
+      }
       toast.success(propertyMessage);
       setTimeout(() => {
         dispatch(resetProperty());
