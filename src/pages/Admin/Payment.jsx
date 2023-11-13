@@ -47,12 +47,6 @@ const Payment = () => {
   };
 
   useEffect(() => {
-    if (allUserPayment.payments.length > 0) {
-      pageCount = Math.ceil(allUserPayment.payments.length / itemsPerPage);
-    }
-  }, [allUserPayment]);
-
-  useEffect(() => {
     if (allUserPayment) {
       return;
     } else {
@@ -71,6 +65,7 @@ const Payment = () => {
     if (allUserPayment) {
       console.log("It Actually exists");
       setPays(allUserPayment.payments);
+      pageCount = Math.ceil(allUserPayment.payments.length / itemsPerPage);
     }
 
     if (allUserPaymentError) {
