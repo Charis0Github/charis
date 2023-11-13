@@ -53,10 +53,6 @@ const VerifyPayment = () => {
     relationship,
     nextOfKinPhoneNumber,
     nextOfKinEmail,
-    houseSize,
-    houseType,
-    preferredLocation,
-    paymentPlan,
 
     corporativeLoading,
     corporativeSuccess,
@@ -165,10 +161,6 @@ const VerifyPayment = () => {
           relationship,
           nextOfKinPhoneNumber,
           nextOfKinEmail,
-          houseSize,
-          houseType,
-          preferredLocation,
-          paymentPlan,
         };
         dispatch(corporativeRegister(data));
       } else {
