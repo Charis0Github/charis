@@ -314,8 +314,8 @@ const AdminProperty = () => {
     if (propertySuccess) {
       dispatch(getPendingProperty());
       dispatch(getProperty());
-      setSearchResults(adminProperty.properties);
-      setSearchResults1(property.properties);
+      setSearchResults(adminProperty?.properties);
+      setSearchResults1(property?.properties);
       toast.success(propertyMessage);
       setTimeout(() => {
         dispatch(resetProperty());
@@ -332,7 +332,7 @@ const AdminProperty = () => {
 
   useEffect(() => {
     if (searchTerm === "") {
-      setSearchResults(adminProperty.properties);
+      setSearchResults(adminProperty?.properties);
     }
   }, [searchTerm]);
 
