@@ -317,7 +317,7 @@ const AdminProperty = () => {
       if (adminProperty.properties) {
         setSearchResults(adminProperty.properties);
       }
-      if (propertySuccess.properties) {
+      if (property.properties) {
         setSearchResults1(property.properties);
       }
       toast.success(propertyMessage);
