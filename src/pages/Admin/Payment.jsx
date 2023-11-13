@@ -23,10 +23,6 @@ const Payment = () => {
   const itemsPerPage = 14;
   const firstIndex = pageNumber * itemsPerPage;
 
-  const pageCount = allUserPayment.payments
-    ? Math.ceil(allUserPayment.payments.length / itemsPerPage)
-    : 0;
-
   const changePage = (selected) => {
     setPageNumber(selected.selected);
     // console.log("selected Number" + selected);
