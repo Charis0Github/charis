@@ -147,7 +147,7 @@ const Payment = () => {
         <div className="w-full flex flex-col items-end justify-center ">
           <p className="text-base text-[#FD6602] mt-[30px] mb-[7px] mr-6">
             showing {Math.floor(firstIndex + itemsPerPage)} of{" "}
-            {allUserPayment.payments && allUserPayment.payments.length} entries
+            {allUserPayment && allUserPayment.payments.length} entries
           </p>
 
           <ReactPaginate
