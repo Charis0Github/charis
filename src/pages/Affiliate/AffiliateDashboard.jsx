@@ -69,11 +69,13 @@ const AffiliateDashboard = () => {
   };
 
   const request = () => {
-    if (amount) {
+    if (amount && userDetails.userData.accountNumber) {
       const formBody = {
         amount,
       };
       dispatch(requestPayment(formBody));
+    } else {
+      alert("Please update your account details");
     }
   };
 

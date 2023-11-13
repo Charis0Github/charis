@@ -314,10 +314,10 @@ const AdminProperty = () => {
     if (propertySuccess) {
       dispatch(getPendingProperty());
       dispatch(getProperty());
-      if (adminProperty.properties.length > 0) {
+      if (adminProperty) {
         setSearchResults(adminProperty.properties);
       }
-      if (property.properties.length > 0) {
+      if (property) {
         setSearchResults1(property.properties);
       }
       toast.success(propertyMessage);

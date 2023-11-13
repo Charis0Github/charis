@@ -19,6 +19,8 @@ import prop3 from "../assets/prop3.png";
 import prop4 from "../assets/prop4.png";
 import Input from "../components/Input";
 import add from "../assets/add.svg";
+import profile from "../assets/user.svg";
+import arr from "../assets/dwnArr.svg";
 import { Form1, Form2, Form3, Form4 } from "./Forms/Forms";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -263,10 +265,32 @@ const Home = () => {
               <button
                 onClick={handleGetStarted}
                 // onClick={handleHomeOwnership}
-                className="flex items-center space-x-3 justify-center text-xl bg-black py-2 px-4 lg:px-6  lg:py-3 rounded-md w-[220px] font-bold text-white"
+                className={`items-center space-x-3 justify-center text-xl bg-black py-2 px-4 rounded-md w-[220px] font-bold text-white ${
+                  user ? "hidden lg:flex" : null
+                }`}
               >
                 <p className="font-bold text-lg text-center">Get Started</p>
               </button>
+
+              {user && (
+                <div
+                  onClick={handleGetStarted}
+                  className={`relative ${
+                    user ? "lg:hidden" : null
+                  } flex items-center justify-between p-2 px-4 lg:py-3 rounded-lg space-x-2 w-[220px] h-full text-white text-sm bg-[#FF6700] cursor-pointer`}
+                >
+                  <img width={15} height={15} src={profile} alt="user icon" />
+                  <p>
+                    {userDetails ? userDetails?.userData?.name : "Username"}
+                  </p>
+                  <img
+                    width={20}
+                    height={20}
+                    src={arr}
+                    alt="drop down arrow icon"
+                  />
+                </div>
+              )}
 
               {menu && (
                 <ul className="absolute top-[64px] flex flex-col gap-4 items-start justify-start left-0 h-max py-4 px-4 w-[180px] bg-[#000000] z-30 rounded-md text-white">
