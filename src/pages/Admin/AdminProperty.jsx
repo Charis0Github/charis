@@ -71,7 +71,7 @@ const AdminProperty = () => {
   const handleSearch1 = (e) => {
     const term = e.target.value;
     setSearchTerm1(term);
-    if (property.properties) {
+    if (property.properties.length > 0) {
       const results = property?.properties?.filter((property) =>
         property.name.toLowerCase().includes(searchTerm1.toLowerCase())
       );
@@ -302,7 +302,7 @@ const AdminProperty = () => {
   const handleSearch = (e) => {
     const term = e.target.value;
     setSearchTerm(term);
-    if (adminProperty.properties) {
+    if (adminProperty.properties.length > 0) {
       const results = adminProperty?.properties.filter((property) =>
         property.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
@@ -314,10 +314,10 @@ const AdminProperty = () => {
     if (propertySuccess) {
       dispatch(getPendingProperty());
       dispatch(getProperty());
-      if (adminProperty.properties) {
+      if (adminProperty.properties.length > 0) {
         setSearchResults(adminProperty.properties);
       }
-      if (property.properties) {
+      if (property.properties.length > 0) {
         setSearchResults1(property.properties);
       }
       toast.success(propertyMessage);

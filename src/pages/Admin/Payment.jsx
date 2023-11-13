@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import copy from "../../assets/copy.svg";
+import load from "../../assets/loading.json";
+import Lottie from "lottie-react";
 import { useDispatch, useSelector } from "react-redux";
 import ReactPaginate from "react-paginate";
 import { GrRefresh } from "react-icons/gr";
@@ -15,6 +17,7 @@ const Payment = () => {
     allUserPaymentSuccess,
     allUserPaymentError,
     allUserPaymentMessage,
+    allUserPaymentLoading,
   } = useSelector((state) => state.allPayment);
   const dispatch = useDispatch();
   const [pageNumber, setPageNumber] = useState(0);
@@ -27,6 +30,8 @@ const Payment = () => {
     setPageNumber(selected.selected);
     // console.log("selected Number" + selected);
   };
+
+  let pageCount;
 
   function formatDate(inputDate) {
     const date = new Date(inputDate);
@@ -42,13 +47,13 @@ const Payment = () => {
   };
 
   useEffect(() => {
-    if (allUserPayment.payments) {
+    if (allUserPayment.payments.length > 0) {
       pageCount = Math.ceil(allUserPayment.payments.length / itemsPerPage);
     }
-  }, [allUserPayment.payments]);
+  }, [allUserPayment]);
 
   useEffect(() => {
-    if (allUserPayment.payments) {
+    if (allUserPayment) {
       return;
     } else {
       dispatch(getAllPayment());
@@ -57,12 +62,15 @@ const Payment = () => {
 
   useEffect(() => {
     if (allUserPaymentSuccess) {
-      if (allUserPayment.payments) {
-        setPays(allUserPayment.payments);
-      }
+      toast.success("Payments retrieved successfully");
       setTimeout(() => {
         dispatch(resetAllUserPayment());
       }, 2000);
+    }
+
+    if (allUserPayment) {
+      console.log("It Actually exists");
+      setPays(allUserPayment.payments);
     }
 
     if (allUserPaymentError) {
@@ -70,7 +78,12 @@ const Payment = () => {
         dispatch(resetAllUserPayment());
       }, 2000);
     }
-  }, [allUserPaymentSuccess, allUserPaymentError, allUserPaymentMessage]);
+  }, [
+    allUserPaymentSuccess,
+    allUserPaymentError,
+    allUserPaymentMessage,
+    allUserPayment,
+  ]);
 
   return (
     <div className="flex flex-col w-full px-10 h-screen py-8 overflow-y-auto">
@@ -149,6 +162,14 @@ const Payment = () => {
           />
         </div>
       </div>
+
+      {allUserPaymentLoading && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-30 p-4">
+          <div className="bg-transparent lg:p-8 p-4 rounded-lg h-max w-[300px] relative overflow-y-auto">
+            <Lottie animationData={load} width={200} height={200} loop={true} />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
