@@ -262,6 +262,7 @@ export const Form3 = ({ handleStep, errorHandle }) => {
   };
 
   const vercelRedirect = "https://charis-eight.vercel.app/verify";
+  const liveRedirect = "https://calgi.org/verify";
   const makePayment = () => {
     if (
       title &&
@@ -286,7 +287,7 @@ export const Form3 = ({ handleStep, errorHandle }) => {
     ) {
       const reqBody = {
         amount: "25000",
-        redirect: vercelRedirect,
+        redirect: liveRedirect,
         tag: "reg",
       };
       dispatch(createPaymentLink(reqBody));

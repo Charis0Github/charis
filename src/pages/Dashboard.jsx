@@ -220,12 +220,13 @@ const Dashboard = () => {
 
   // const localRedirect = "http://localhost:5173/verify";
   const vercelRedirect = "https://charis-eight.vercel.app/verify";
+  const liveRedirect = "https://calgi.org/verify";
 
   const handlePayment = () => {
     if (selected === "house") {
       const reqBody = {
         amount: "50000",
-        redirect: vercelRedirect,
+        redirect: liveRedirect,
         tag: selected,
       };
       dispatch(createPaymentLink(reqBody));
@@ -235,14 +236,14 @@ const Dashboard = () => {
       if (userDetails?.userData?.shareCapitalLeft > 499000) {
         const reqBody = {
           amount: 490000,
-          redirect: vercelRedirect,
+          redirect: liveRedirect,
           tag: selected,
         };
         dispatch(createPaymentLink(reqBody));
       } else {
         const reqBody = {
           amount: userDetails?.userData?.shareCapitalLeft,
-          redirect: vercelRedirect,
+          redirect: liveRedirect,
           tag: selected,
         };
         dispatch(createPaymentLink(reqBody));
@@ -252,7 +253,7 @@ const Dashboard = () => {
     if (selected === "invest") {
       const reqBody = {
         amount: investmentData.investmentAmount,
-        redirect: vercelRedirect,
+        redirect: liveRedirect,
         tag: selected,
       };
       dispatch(createPaymentLink(reqBody));
@@ -261,7 +262,7 @@ const Dashboard = () => {
     if (selected === "savings") {
       const reqBody = {
         amount: savingsBody.amount,
-        redirect: vercelRedirect,
+        redirect: liveRedirect,
         tag: selected,
       };
       dispatch(createPaymentLink(reqBody));
@@ -269,7 +270,7 @@ const Dashboard = () => {
     if (selected === "monthly") {
       const reqBody = {
         amount: userDetails?.userData?.monthlyHousePayment,
-        redirect: vercelRedirect,
+        redirect: liveRedirect,
         tag: selected,
       };
       dispatch(createPaymentLink(reqBody));

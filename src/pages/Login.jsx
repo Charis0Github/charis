@@ -155,13 +155,6 @@ const Login = () => {
       return;
     }
   }, []);
-  // useEffect(() => {
-  //   dispatch(reset());
-  // },[])
-
-  // useEffect(() => {
-  //   dispatch(resetPayment());
-  // }, []);
 
   return (
     <div className="w-full h-screen lg:flex items-center">
@@ -474,7 +467,7 @@ const Login = () => {
           </p>
         )}
       </div>
-      <div className="w-full h-full login flex items-center justify-center relative">
+      <div className="w-full h-full hidden login lg:flex items-center justify-center relative">
         <div className="absolute w-full h-full bg-[#ffffff5a]"></div>
         <img className="z-10" src={login1} />
       </div>
