@@ -78,7 +78,7 @@ const Property = () => {
 
   useEffect(() => {
     if (searchTerm === "") {
-      setSearchResults(property.properties);
+      setSearchResults(property?.properties);
     }
   }, [searchTerm]);
 

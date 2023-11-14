@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@formspree/react": "^2.5.1",
     "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.2.2",
     "lottie-react": "^2.4.0",

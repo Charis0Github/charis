@@ -70,10 +70,14 @@ const AffiliateDashboard = () => {
 
   const request = () => {
     if (amount && userDetails.userData.accountNumber) {
-      const formBody = {
-        amount,
-      };
-      dispatch(requestPayment(formBody));
+      if (userDetails.userData.balance > amount) {
+        const formBody = {
+          amount,
+        };
+        dispatch(requestPayment(formBody));
+      } else {
+        toast.error("You do not have sufficient funds");
+      }
     } else {
       alert("Please update your account details");
     }
@@ -99,6 +103,8 @@ const AffiliateDashboard = () => {
 
     if (requestPaySuccess) {
       toast.success("Request made successfully");
+      dispatch(getUserDetails());
+      dispatch(getUserWithdrawal());
       dispatch(resetRequestPay());
       setWithdrawModal(false);
       setTimeout(() => {

@@ -3,8 +3,12 @@ import contact from "../assets/contact.png";
 import location from "../assets/location.svg";
 import whatsapp from "../assets/whatsapp.svg";
 import phone from "../assets/phone.svg";
+import sent from "../assets/sent.json";
+import Lottie from "lottie-react";
+import { useForm, ValidationError } from "@formspree/react";
 
 const Contact = () => {
+  const [state, handleSubmit] = useForm("xyyqazrj");
   return (
     <div className=" px-5 py-5 lg:px-0  w-full h-full mb-[5rem]">
       <div className="w-full lg:h-[600PX]">
@@ -55,67 +59,93 @@ const Contact = () => {
 
           {/* FORM SECTION STARTS */}
           <div className="w-full h-full">
-            <h1 className="text-2xl text-[#FD6602] lg:px-[10rem] lg:mb-10">
-              Send a message
-            </h1>
-            <form className="lg:px-[10rem] flex flex-col space-y-5 mt-[2rem] lg:mt-0">
-              <div className="flex flex-col mb-2">
-                <label htmlFor="name" className="text-sm my-1">
-                  {" "}
-                  Full name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  required
-                  className="w-full text-sm outline-none placeholder-[#00000084] bg-transparent p-3 mt-2 rounded-lg border-[1px] border-black"
-                  placeholder="Enter full name"
+            {state.succeeded ? (
+              <div className="flex flex-col gap-5">
+                <h1 className="text-3xl font-bold text-center text-[#FD6602]">
+                  Thanks For Reaching Out!
+                </h1>
+                <Lottie
+                  animationData={sent}
+                  width={1500}
+                  height={1500}
+                  loop={true}
                 />
               </div>
+            ) : (
+              <>
+                <h1 className="text-2xl text-[#FD6602] lg:px-[10rem] lg:mb-10">
+                  Send a message
+                </h1>
+                <form
+                  onSubmit={handleSubmit}
+                  className="lg:px-[10rem] flex flex-col space-y-5 mt-[2rem] lg:mt-0"
+                >
+                  <div className="flex flex-col mb-2">
+                    <label htmlFor="name" className="text-sm my-1">
+                      {" "}
+                      Full name
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="fullName"
+                      required
+                      className="w-full text-sm outline-none placeholder-[#00000084] bg-transparent p-3 mt-2 rounded-lg border-[1px] border-black"
+                      placeholder="Enter full name"
+                    />
+                  </div>
 
-              <div className="flex flex-col mb-2">
-                <label htmlFor="email" className="text-sm my-1">
-                  {" "}
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  className="w-full  text-sm outline-none placeholder-[#00000084] bg-transparent p-3 mt-2 rounded-lg border-[1px] border-black"
-                  placeholder="Enter E-mail"
-                />
-              </div>
+                  <div className="flex flex-col mb-2">
+                    <label htmlFor="email" className="text-sm my-1">
+                      {" "}
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      required
+                      className="w-full  text-sm outline-none placeholder-[#00000084] bg-transparent p-3 mt-2 rounded-lg border-[1px] border-black"
+                      placeholder="Enter E-mail"
+                    />
+                  </div>
 
-              <div className="flex flex-col mb-2">
-                <label htmlFor="phone" className="text-sm my-1">
-                  {" "}
-                  Phone number
-                </label>
-                <input
-                  type="tel"
-                  id="phone"
-                  className="w-full text-sm  outline-none placeholder-[#00000084] bg-transparent p-3 mt-2 rounded-lg border-[1px] border-black"
-                  placeholder="Enter phone number"
-                />
-              </div>
+                  <div className="flex flex-col mb-2">
+                    <label htmlFor="phone" className="text-sm my-1">
+                      {" "}
+                      Phone number
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      required
+                      name="phoneNumber"
+                      className="w-full text-sm  outline-none placeholder-[#00000084] bg-transparent p-3 mt-2 rounded-lg border-[1px] border-black"
+                      placeholder="Enter phone number"
+                    />
+                  </div>
 
-              <div className="flex flex-col mb-2">
-                <label className="mb-2 text-sm">Message</label>
-                <textarea
-                  rows="10"
-                  cols="70"
-                  placeholder="Type your message here"
-                  className="w-full bg-transparent text-sm p-3 mt-2 rounded-lg border-[1px] border-black outline-none"
-                ></textarea>
-              </div>
+                  <div className="flex flex-col mb-2">
+                    <label className="mb-2 text-sm">Message</label>
+                    <textarea
+                      rows="10"
+                      cols="70"
+                      name="message"
+                      required
+                      placeholder="Type your message here"
+                      className="w-full bg-transparent text-sm p-3 mt-2 rounded-lg border-[1px] border-black outline-none"
+                    ></textarea>
+                  </div>
 
-              <button
-                type="button"
-                className="bg-black text-white text-sm font-semibold mt-1 p-3 w-[6rem] h-auto px-3 rounded-lg"
-              >
-                send
-              </button>
-            </form>
+                  <button
+                    type="submit"
+                    className="bg-black text-white text-sm font-semibold mt-1 p-3 w-[6rem] h-auto px-3 rounded-lg"
+                  >
+                    {state.submitting ? " Sending" : "send"}
+                  </button>
+                </form>
+              </>
+            )}
           </div>
           {/* FORM SECTION ENDS */}
         </div>

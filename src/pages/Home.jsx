@@ -540,37 +540,6 @@ const Home = () => {
       </div>
       {/* PARTNERS SECTION ENDS */}
 
-      {/* PROPERTY LINK SECTION STARTS HERE */}
-      <div className="w-full  h-max lg:h-[500px] lg:px-[70px] mb-[10rem]">
-        <div className="w-full h-full flex flex-col gap-10 lg:gap-2 lg:flex-row lg:flex  bg-[#FF6700] items-center lg:px-[100px] px-5 py-10">
-          {/* LEFT IMAGES AREA STARTS */}
-          <div className="lg:w-[500px] shop-banner bg-contain bg-center w-full h-full flex items-center justify-center gap-5">
-            {/* <img src={prop3} width={200} height={200} /> */}
-          </div>
-          {/* LEFT IMAGES AREA ENDS */}
-
-          {/* RIGHT TEXT AREA */}
-          <div className="w-full h-full flex flex-col items-start justify-center gap-10 lg:px-[70px] px-5">
-            <h1 className="lg:text-5xl text-4xl font-bold">
-              View our Property Listings
-            </h1>
-            <p className="text-white font-lg">
-              Explore a variety of top-notch properties tailored to your
-              preferences. From cozy homes to elegant apartments and spacious
-              estates, our curated listings offer something for everyone. Begin
-              your search for the perfect property today.
-            </p>
-
-            <button className="flex items-center space-x-3 justify-between mt-8 text-lg bg-black py-2 px-4 lg:px-6  lg:py-2 rounded-md w-auto font-bold text-white">
-              <Link to="/property" className="font-bold text-sm">
-                View Properties
-              </Link>
-            </button>
-          </div>
-        </div>
-      </div>
-      {/* PROPERTY LINK SECTION ENDS HERE */}
-
       {/* NEWSLETTER SECTION STARTS */}
       <div className="w-full flex flex-col lg:flex-row lg:flex mb-[10rem] items-center h-max lg:h-[600px] news">
         {/* CHOOSE US SECTION BEGINS */}

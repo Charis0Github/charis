@@ -444,12 +444,15 @@ const Users = () => {
     }
   }, [usersStatusSuccess, usersStatusError, usersStatusMessage]);
 
-  const addPoints = (points) => {
+  const addPoints = (id, points) => {
     if (sp.shoppingPoints) {
+      const p = parseInt(sp.shoppingPoints) + parseInt(points);
+      // console.log(p);
       const reqBody = {
-        shoppingPoints: sp.shoppingPoints,
-        uid: points,
+        shoppingPoints: p,
+        uid: id,
       };
+      // console.log(reqBody.shoppingPoints);
       dispatch(uploadPoints(reqBody));
     }
   };
@@ -537,7 +540,9 @@ const Users = () => {
                         </div>
                         <p
                           className="cursor-pointer font-bold "
-                          onClick={() => addPoints(item._id)}
+                          onClick={() =>
+                            addPoints(item._id, item.shoppingPoints)
+                          }
                         >
                           {shoppingPointsLoading ? "Update" : "Add"}
                         </p>
