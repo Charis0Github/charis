@@ -172,7 +172,7 @@ const AffiliateDashboard = () => {
 
                 {/* MIDDLE CARD SECTION*/}
                 <p className="font-bold font-sans text-black text-2xl tracking-widest mt-8">
-                  N{userDetails ? userDetails?.userData?.balance : "balance"}
+                  {userDetails ? userDetails?.userData?.balance : "balance"}
                 </p>
               </div>
 
@@ -184,7 +184,6 @@ const AffiliateDashboard = () => {
 
                 {/* MIDDLE CARD SECTION*/}
                 <p className="font-bold font-sans text-black text-2xl tracking-widest mt-8">
-                  N
                   {userDetails
                     ? userDetails?.userData?.unpaidRefs
                     : "unpaidRefs"}
@@ -199,7 +198,7 @@ const AffiliateDashboard = () => {
 
                 {/* MIDDLE CARD SECTION*/}
                 <p className="font-bold font-sans text-black text-2xl tracking-widest mt-8">
-                  N{userDetails ? userDetails?.userData?.paidRefs : "paidRefs"}
+                  {userDetails ? userDetails?.userData?.paidRefs : "paidRefs"}
                 </p>
               </div>
 
@@ -211,7 +210,6 @@ const AffiliateDashboard = () => {
 
                 {/* MIDDLE CARD SECTION*/}
                 <p className="font-bold font-sans text-black text-2xl tracking-widest mt-8">
-                  N
                   {userDetails ? userDetails?.userData?.withdrawn : "Withdrawn"}
                 </p>
               </div>

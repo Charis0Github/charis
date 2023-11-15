@@ -14,6 +14,24 @@ const SingleProperty = () => {
   const params = useParams();
   const navigate = useNavigate();
 
+  function formatNumber(number) {
+    // Check if the input is a valid number
+    if (isNaN(number)) {
+      return "Invalid Number";
+    }
+
+    // Convert the number to a string
+    const numberString = number.toString();
+
+    // Format the integer part by adding thousands separators
+    const formattedIntegerPart = numberString.replace(
+      /\B(?=(\d{3})+(?!\d))/g,
+      ","
+    );
+
+    return formattedIntegerPart;
+  }
+
   useEffect(() => {
     if (property) {
       const filtered = property.properties.filter(
@@ -38,25 +56,18 @@ const SingleProperty = () => {
           </div>
 
           <div className="w-full h-max flex flex-col items-start">
-            <h1 className="w-full text-2xl font-semibold h-[20px] my-5">
-              {propt[0]?.name}{" "}
+            <h1 className="w-full text-2xl flex flex-wrap font-semibold h-max my-5">
+              {propt[0]?.name}
               <span className="text-[#FD6602]">({propt[0]?.type})</span>
             </h1>
 
             <h1 className="w-full text-xl font-semibold my-2">
-              <span className="text-[#FD6602]">Price:</span> N{propt[0]?.price}
+              <span className="text-[#FD6602]">Price:</span> N
+              {formatNumber(propt[0]?.price)}
             </h1>
 
-            <div className=" flex items-center justify-between lg:w-1/2  w-full my-3">
-              <div className="w-full flex items-center gap-3">
-                <img
-                  src={sqft}
-                  className=" h-5 w-5 object-cover rounded-t-lg"
-                />
-                <p>4000 sqft</p>
-              </div>
-
-              <div className="w-full flex items-center gap-3 mt-2">
+            <div className=" flex items-center  gap-4 lg:w-1/2  w-full my-3">
+              <div className="w-full flex items-center gap-2 mt-2">
                 <img
                   src={location}
                   className=" h-5 w-5 object-cover rounded-t-lg"
@@ -64,12 +75,33 @@ const SingleProperty = () => {
                 <p>{propt[0]?.location}</p>
               </div>
 
+              <div className="w-full flex items-center gap-3">
+                <img
+                  src={sqft}
+                  className=" h-5 w-5 object-cover rounded-t-lg"
+                />
+                <p>{propt[0]?.buildingFloorArea + " "}</p>
+              </div>
+
               <div className="w-full flex items-center justify-center gap-3">
+                <p className="bg-[#FD6602] p-1 text-white rounded-md">
+                  Plot size
+                </p>
+                <p>{propt[0]?.plotSize}</p>
+              </div>
+            </div>
+
+            <div className=" flex items-center justify-start lg:w-1/2  w-full my-3">
+              <div className="w-full flex items-center justify-start gap-3">
                 <img
                   src={room}
                   className=" h-5 w-5 object-cover rounded-t-lg"
                 />
-                <p className="">4 Bedroom</p>
+                <p className="">
+                  {propt[0]?.roomNumber > 1
+                    ? propt[0]?.roomNumber + " " + "bedrooms"
+                    : propt[0]?.roomNumber + " " + "bedroom"}
+                </p>
               </div>
             </div>
 
@@ -82,7 +114,7 @@ const SingleProperty = () => {
         {/* MAIN SECTION ENDS HERE */}
 
         {/* SIDE SECTION STARTS HERE */}
-        <div className="lg:w-[330px] flex flex-col gap-4 w-full h-full mt-10 lg:mt-0 px-5">
+        <div className="lg:w-[330px] flex flex-col gap-4 w-full h-max pb-7 mt-10 lg:mt-0 px-5">
           <div
             onClick={() => navigate("/property")}
             className="w-full h-[32px] flex bg-black items-center justify-center gap-5 rounded-[5px] cursor-pointer z-10"
@@ -104,7 +136,7 @@ const SingleProperty = () => {
             </svg>
           </div>
 
-          <div className="w-full h-[400px] shadow-md shadow-black/50 rounded-md ">
+          <div className="w-full h-[400px] shadow-md shadow-black/50 rounded-md px-3 ">
             <div className="w-full h-full flex flex-col">
               <h1 className="text-2xl text-center text-[#FD6602] lg:px-4 lg:my-5">
                 Contact Us
@@ -122,10 +154,10 @@ const SingleProperty = () => {
                   </p>
                 </div>
 
-                <div className="flex items-center gap-8 justify-start w-full">
+                {/* <div className="flex items-center gap-8 justify-start w-full">
                   <img src={phone} className="w-[20px] h-[25px] object-cover" />
                   <p>+234-813-873-5665</p>
-                </div>
+                </div> */}
 
                 <div className="flex items-center gap-8 justify-start w-full">
                   <img src={phone} className="w-[20px] h-[25px] object-cover" />

@@ -164,7 +164,7 @@ const Login = () => {
             {/* RESISTRATION FORM BEGINS HERE  */}
             <form
               onSubmit={handleRegisterSubmit}
-              className="w-full lg:px-24 p-6 py-6"
+              className="w-full h-max lg:px-24 p-6 py-6"
             >
               <h1 className="text-black text-[20px] font-sans font-bold mb-[15px]">
                 Welcome
@@ -341,7 +341,7 @@ const Login = () => {
             {/* LOGIN FORM BEGINS HERE */}
             <form
               onSubmit={handleLoginSubmit}
-              className="w-full lg:px-24 p-6 py-6"
+              className="w-full h-full lg:px-24 p-6 py-6"
             >
               <h1 className="text-black text-[20px] font-sans font-bold mb-[15px]">
                 Welcome

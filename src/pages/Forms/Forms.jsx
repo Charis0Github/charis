@@ -112,7 +112,21 @@ export const Form1 = ({ close, handleStep, errorHandle }) => {
 export const Form2 = ({ handleStep, errorHandle }) => {
   const dispatch = useDispatch();
   const formData = useSelector((state) => state.formData);
-  const options = ["Engineer", "Medical Doctor", "Teacher", "Trader", "Farmer"];
+  // const options = ["Engineer", "Medical Doctor", "Teacher", "Trader", "Farmer"];
+
+  const formatNumberWithCommas = (input) => {
+    // Convert the input string to a number
+    const number = parseFloat(input.replace(/,/g, ""));
+
+    // Check if the conversion is successful and it's a valid number
+    if (!isNaN(number)) {
+      // Use Number.toLocaleString() to format the number with commas
+      return number.toLocaleString();
+    } else {
+      // If the conversion fails, return the original input
+      return input;
+    }
+  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -122,7 +136,7 @@ export const Form2 = ({ handleStep, errorHandle }) => {
   return (
     <div className="w-full flex flex-col gap-5">
       <h1>Profession</h1>
-      {options.map((option) => (
+      {/* {options.map((option) => (
         <label key={option} className="flex items-center gap-3 cursor-pointer">
           <input
             type="radio"
@@ -132,15 +146,15 @@ export const Form2 = ({ handleStep, errorHandle }) => {
           />
           {option}
         </label>
-      ))}
-      {/* <input
+      ))} */}
+      <input
         type="text"
         onChange={handleChange}
         value={formData.profession}
         name="profession"
         placeholder="other"
         className="w-full h-[46.291px] -mt-2  mb-3 appearance-none border-[1px] border-black rounded-[10px] focus:outline-none p-2"
-      /> */}
+      />
 
       <Input
         type={"text"}
@@ -165,7 +179,7 @@ export const Form2 = ({ handleStep, errorHandle }) => {
         name={"monthlyIncome"}
         placeholder={"Enter your answer"}
         label={"Monthly Income"}
-        value={formData.monthlyIncome}
+        value={formatNumberWithCommas(formData.monthlyIncome)}
         onChange={handleChange}
       />
 

@@ -152,7 +152,7 @@ const VerifyPayment = () => {
           profession,
           officeAddress,
           statusRank,
-          monthlyIncome,
+          monthlyIncome: monthlyIncome.replace(/[^0-9]/g, ""),
           yearsOfService,
           retirementAge,
           educationalQualification,

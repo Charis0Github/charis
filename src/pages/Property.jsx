@@ -26,14 +26,6 @@ const Property = () => {
   } = useSelector((state) => state.property);
 
   const { user, userDetails } = useSelector((state) => state.auth);
-  useEffect(() => {
-    dispatch(getProperty());
-    // if (property) {
-    //   return;
-    // } else {
-    //   dispatch(getProperty());
-    // }
-  }, []);
 
   function formatNumber(number) {
     // Check if the input is a valid number
@@ -83,9 +75,14 @@ const Property = () => {
     }
   }, [searchTerm]);
 
-  // useEffect(() => {
-  //   dispatch(getProperty());
-  // }, [newProperty]);
+  useEffect(() => {
+    dispatch(getProperty());
+    if (property) {
+      setSearchResults(property?.properties);
+    } else {
+      dispatch(getProperty());
+    }
+  }, []);
 
   return (
     <div className="lg:px-[64px] w-full min-h-screen h-full px-5 ">
@@ -172,16 +169,31 @@ const Property = () => {
                         src={sqft}
                         className=" h-5 w-5 object-cover rounded-t-lg"
                       />
-                      <p>4000 sqft</p>
+                      <p>{item.buildingFloorArea + " "} sqm</p>
                     </div>
 
-                    <div className="w-full flex items-center justify-center gap-3">
-                      <img
-                        src={room}
+                    <div className="w-full flex items-center gap-3 place-self-start">
+                      {/* <img
+                        src={sqft}
                         className=" h-5 w-5 object-cover rounded-t-lg"
-                      />
-                      <p className="">4 Bedroom</p>
+                      /> */}
+                      <p className="bg-[#FD6602] p-1 text-white rounded-md">
+                        Plot size
+                      </p>
+                      <p>{item.plotSize}</p>
                     </div>
+                  </div>
+
+                  <div className="w-full flex items-center gap-3">
+                    <img
+                      src={room}
+                      className=" h-5 w-5 object-cover rounded-t-lg"
+                    />
+                    <p className="">
+                      {item.roomNumber > 1
+                        ? item.roomNumber + " " + "bedrooms"
+                        : item.roomNumber + " " + "bedroom"}
+                    </p>
                   </div>
                 </div>
 

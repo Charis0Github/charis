@@ -36,7 +36,7 @@ const Home = () => {
   const [steps, setSteps] = useState(0);
   const [prompt, setPrompt] = useState(false);
   const [prompt1, setPrompt1] = useState(false);
-  const [file, setFile] = useState(null);
+  // const [file, setFile] = useState(null);
   const [menu, setMenu] = useState(false);
   const [errorHandle, setErrorHandle] = useState(false);
 
@@ -59,12 +59,25 @@ const Home = () => {
     price: "",
     description: "",
     location: "",
-    sqft: "",
+    buildingFloorArea: "",
+    plotSize: "",
     roomNumber: "",
     type: "",
     name: "",
     file: "",
   });
+
+  const {
+    price,
+    description,
+    location,
+    buildingFloorArea,
+    plotSize,
+    roomNumber,
+    type,
+    name,
+    file,
+  } = propertyForm;
 
   const tabs = [
     { id: 1, text: "Get house allocation" },
@@ -81,18 +94,25 @@ const Home = () => {
   const handleAffiliate = () => {
     if (userDetails.userData.affiliateUserName) {
       navigate("/affiliate/dashboard");
+      setMenu(!menu);
     } else {
       navigate("/affiliate");
     }
   };
 
-  // const handleChange = (event) => {
-  //   const { name, value, files } = event.target;
-  //   setPropertyForm({
-  //     ...propertyForm,
-  //     [name]: name === "file" ? files[0] : value,
-  //   });
-  // };
+  const formatNumberWithCommas = (input) => {
+    // Convert the input string to a number
+    const number = parseFloat(input.replace(/,/g, ""));
+
+    // Check if the conversion is successful and it's a valid number
+    if (!isNaN(number)) {
+      // Use Number.toLocaleString() to format the number with commas
+      return number.toLocaleString();
+    } else {
+      // If the conversion fails, return the original input
+      return input;
+    }
+  };
 
   const handlePropertyChange = (event) => {
     const { name, value, files } = event.target;
@@ -118,12 +138,25 @@ const Home = () => {
       !propertyForm.name &&
       !propertyForm.price &&
       !propertyForm.roomNumber &&
-      !propertyForm.sqft &&
+      !propertyForm.buildingFloorArea &&
+      !propertyForm.plotSize &&
       !propertyForm.type
     ) {
       alert("Please enter all required fields");
     } else {
-      dispatch(createProperty(propertyForm));
+      const body = {
+        price: price.replace(/[^0-9]/g, ""),
+        description,
+        location,
+        buildingFloorArea,
+        plotSize,
+        roomNumber,
+        type,
+        name,
+        file,
+      };
+      // console.log(JSON.stringify(body));
+      dispatch(createProperty(body));
     }
   };
 
@@ -183,6 +216,7 @@ const Home = () => {
         setMenu(!menu);
         navigate("/dashboard");
       } else {
+        setMenu(!menu);
         setPrompt1(true);
       }
     }
@@ -703,7 +737,7 @@ const Home = () => {
                 name={"price"}
                 placeholder={"Type in price of Property E.g 200000000"}
                 label={"Price"}
-                value={propertyForm.price}
+                value={formatNumberWithCommas(propertyForm.price)}
                 onChange={handlePropertyChange}
               />
 
@@ -735,10 +769,17 @@ const Home = () => {
 
               <Input
                 type={"text"}
-                name={"sqft"}
-                placeholder={"Type in Dimension of Property (sqft)"}
-                label={"Dimension"}
-                value={propertyForm.sqft}
+                name={"buildingFloorArea"}
+                label={"Building Floor Area (sqm)"}
+                value={propertyForm.buildingFloorArea}
+                onChange={handlePropertyChange}
+              />
+
+              <Input
+                type={"text"}
+                name={"plotSize"}
+                label={"Plot Size (sqm)"}
+                value={propertyForm.plotSize}
                 onChange={handlePropertyChange}
               />
 
@@ -834,7 +875,7 @@ const Home = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10 p-4">
           <div className="bg-white flex flex-col gap-16 font-sans items-center lg:p-8 p-4 rounded-lg h-[40%] w-[500px] relative ">
             <div
-              onClick={() => setPrompt(false)}
+              onClick={() => setPrompt1(false)}
               className="absolute -top-3 flex items-center justify-center lg:-right-2 right-2 h-[30px] w-[30px] rounded-full p-1 bg-black text-white cursor-pointer"
             >
               <h1 className="text-sm font-bold">X</h1>
@@ -844,8 +885,18 @@ const Home = () => {
             </h1>
 
             <p className="text-center text-lg">
-              You are not an active member yet! Please commplete the membership
-              registration process
+              You are not an active member yet! Please complete the membership
+              registration process by clicking on
+              <span
+                className="bg-[rgb(253,102,2)] text-white p-1 rounded-md mx-1 cursor-pointer"
+                onClick={() => {
+                  setIsOpen(true);
+                  setPrompt1(false);
+                }}
+              >
+                "Become a Member"
+              </span>
+              to get started.
             </p>
           </div>
         </div>
