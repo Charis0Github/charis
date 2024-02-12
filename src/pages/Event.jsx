@@ -30,7 +30,7 @@ const Event = () => {
           solutions that serve our common interest.
         </p>
 
-        <a href="https://neighbourhoodturnkey.com/shelter-conference/">
+        <a href="https://forms.gle/xBNxgqcLDMzcL3MC8/">
           <button className="bg-[#FF6700] mt-5 w-max py-3 px-4 border border-[#000] rounded-md text-white text-sm ">
             Register your interest
           </button>
