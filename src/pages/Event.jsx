@@ -1,6 +1,6 @@
 import React from "react";
 import event from "../assets/events.png";
-import shelter from "../assets/WhatsApp Image 2024-02-12 at 08.04.41_92a91fc9";
+import shelter from "../assets/events.png";
 
 const Event = () => {
   return (

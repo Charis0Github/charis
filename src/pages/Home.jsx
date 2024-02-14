@@ -287,6 +287,16 @@ const Home = () => {
       <ToastContainer position="top-center" hideProgressBar />
       {/* HERO SECTION STARTS */}
       <div className="pt-[5px] lg:px-[70px] px-5 w-full h-full lg:flex items-center justify-center">
+      {
+                 <div id="simple-banner" class="simple-banner">
+                 <div class="simple-banner-text"><span>
+                   HOME OWNERSHIP QUESTIONAIRE: 
+                   Kindly fill out this questionnaire indicating your peculiar housing 
+                   circumstance and housing need.
+                 <a href="https://neighbourhoodturnkey.com/edo-state-housing-survey-form/" value="CLICK HERE..."></a></span></div>
+                <button aria-label="Close" id="simple-banner-close-button" class="simple-banner-button">✕</button>
+               </div>
+              }
         <div className="lg:flex items-center justify-center w-full space-y-3 lg:space-y-0 lg:w-[95%] h-full lg:h-[600px] lg:mt-[1rem]">
           <div className="w-full h-full">
             <h1 className="text-5xl font-semibold lg:mt-[4rem] leading-[4rem] w-full">
@@ -389,6 +399,7 @@ const Home = () => {
               >
                 List Property
               </div> */}
+
             </div>
           </div>
 
@@ -402,7 +413,6 @@ const Home = () => {
         </div>
       </div>
       {/* HERO SECTION ENDS */}
-
       {/* SERVICE SECTION STARTS */}
       <div className="grid lg:px-[70px] px-5 py-5  w-full h-auto lg:h-max service -mt-[5rem]">
         <div className="w-full h-full flex flex-col lg:py-32 items-center lg:pt-0 pt-28 justify-start">
