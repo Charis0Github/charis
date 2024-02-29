@@ -225,7 +225,7 @@ const Dashboard = () => {
   const handlePayment = () => {
     if (selected === "house") {
       const reqBody = {
-        amount: "50000",
+        amount: "100000",
         redirect: liveRedirect,
         tag: selected,
       };
