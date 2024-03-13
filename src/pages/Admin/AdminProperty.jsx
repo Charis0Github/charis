@@ -101,24 +101,21 @@ const AdminProperty = () => {
           {searchResults1.length > 0 &&
             searchResults1.map((item) => (
               <div key={item._id} className="card1 shadow-md shadow-black/50 ">
-                <div className="flex flex-col w-full h-full ">
+                <div className="flex flex-col w-full ">
                   <img
                     src={item.imageLink}
                     className=" h-[200px] w-full object-cover rounded-t-lg"
                   />
 
                   <div className="w-full  p-3 rounded-b-lg flex flex-col gap-5 py-2 mb-2">
-                    <h1 className="w-full text-2xl font-semibold h-[70px]">
+                    <h1 className="w-full text-2xl font-semibold h-max">
                       {item.name} ({item.type})
                     </h1>
-                    <h1 className="w-full text-lg font-medium text-[#FD6602]">
-                      Price:
-                      <span className="text-lg font-medium text-black">
-                        N{formatNumber(item.price)}
-                      </span>
+                    <h1 className="w-full text-lg font-medium">
+                      Price: N{formatNumber(item.price)}
                     </h1>
-                    <p className="w-full text-ellipsis h-[60px] overflow-y-auto">
-                      {item.description}
+                    <p className="w-full text-ellipsis h-max overflow-y-auto">
+                      {item.description.slice(0, 50)}...
                     </p>
 
                     <div className="w-full flex  items-center gap-3 mt-2">
@@ -131,20 +128,34 @@ const AdminProperty = () => {
 
                     <div className="w-full flex items-center justify-between">
                       <div className="w-full flex items-center gap-3">
-                        <img
-                          src={sqft}
-                          className=" h-5 w-5 object-cover rounded-t-lg"
-                        />
-                        <p>4000 sqft</p>
+                        <p className="bg-[#FD6602] p-1 text-white text-sm rounded-md">
+                          FA
+                        </p>
+                        <p>{item.buildingFloorArea + " "} sqm</p>
                       </div>
 
-                      <div className="w-full flex items-center justify-center gap-3">
-                        <img
-                          src={room}
-                          className=" h-5 w-5 object-cover rounded-t-lg"
-                        />
-                        <p className="">4 Bedroom</p>
+                      <div className="w-full flex items-center gap-3 place-self-start">
+                        {/* <img
+                        src={sqft}
+                        className=" h-5 w-5 object-cover rounded-t-lg"
+                      /> */}
+                        <p className="bg-[#FD6602] text-sm p-1 text-white rounded-md">
+                          PS
+                        </p>
+                        <p>{item.plotSize + " "} sqm</p>
                       </div>
+                    </div>
+
+                    <div className="w-full flex items-center gap-3">
+                      <img
+                        src={room}
+                        className=" h-5 w-5 object-cover rounded-t-lg"
+                      />
+                      <p className="">
+                        {item.roomNumber > 1
+                          ? item.roomNumber + " " + "bedrooms"
+                          : item.roomNumber + " " + "bedroom"}
+                      </p>
                     </div>
                   </div>
 
@@ -202,17 +213,14 @@ const AdminProperty = () => {
                   />
 
                   <div className="w-full  p-3 rounded-b-lg flex flex-col gap-5 py-2 mb-2">
-                    <h1 className="w-full text-2xl font-semibold h-[70px]">
+                    <h1 className="w-full text-2xl font-semibold h-max">
                       {item.name} ({item.type})
                     </h1>
-                    <h1 className="w-full text-lg font-medium text-[#FD6602]">
-                      Price:
-                      <span className="text-lg font-medium text-black">
-                        N{formatNumber(item.price)}
-                      </span>
+                    <h1 className="w-full text-lg font-medium">
+                      Price: N{formatNumber(item.price)}
                     </h1>
-                    <p className="w-full text-ellipsis h-[60px] overflow-y-auto">
-                      {item.description}
+                    <p className="w-full text-ellipsis h-max overflow-y-auto">
+                      {item.description.slice(0, 50)}...
                     </p>
 
                     <div className="w-full flex  items-center gap-3 mt-2">
@@ -225,20 +233,34 @@ const AdminProperty = () => {
 
                     <div className="w-full flex items-center justify-between">
                       <div className="w-full flex items-center gap-3">
-                        <img
-                          src={sqft}
-                          className=" h-5 w-5 object-cover rounded-t-lg"
-                        />
-                        <p>4000 sqft</p>
+                        <p className="bg-[#FD6602] p-1 text-white text-sm rounded-md">
+                          FA
+                        </p>
+                        <p>{item.buildingFloorArea + " "} sqm</p>
                       </div>
 
-                      <div className="w-full flex items-center justify-center gap-3">
-                        <img
-                          src={room}
-                          className=" h-5 w-5 object-cover rounded-t-lg"
-                        />
-                        <p className="">4 Bedroom</p>
+                      <div className="w-full flex items-center gap-3 place-self-start">
+                        {/* <img
+                        src={sqft}
+                        className=" h-5 w-5 object-cover rounded-t-lg"
+                      /> */}
+                        <p className="bg-[#FD6602] text-sm p-1 text-white rounded-md">
+                          PS
+                        </p>
+                        <p>{item.plotSize + " "} sqm</p>
                       </div>
+                    </div>
+
+                    <div className="w-full flex items-center gap-3">
+                      <img
+                        src={room}
+                        className=" h-5 w-5 object-cover rounded-t-lg"
+                      />
+                      <p className="">
+                        {item.roomNumber > 1
+                          ? item.roomNumber + " " + "bedrooms"
+                          : item.roomNumber + " " + "bedroom"}
+                      </p>
                     </div>
                   </div>
 

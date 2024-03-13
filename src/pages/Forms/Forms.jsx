@@ -272,7 +272,7 @@ export const Form3 = ({ handleStep, errorHandle }) => {
   const handleChange = (event) => {
     const { name, value } = event.target;
     dispatch(updateFormData({ name, value }));
-    console.log(name, value);
+    // console.log(name, value);
   };
 
   const vercelRedirect = "https://charis-eight.vercel.app/verify";

@@ -326,9 +326,7 @@ const Home = () => {
                   } flex items-center justify-between p-2 px-4 lg:py-3 rounded-lg space-x-2 w-[220px] h-full text-white text-sm bg-[#FF6700] cursor-pointer`}
                 >
                   <img width={15} height={15} src={profile} alt="user icon" />
-                  <p>
-                    {userDetails ? userDetails?.userData?.name : "Username"}
-                  </p>
+                  <p>{user ? userDetails?.userData?.name : "Username"}</p>
                   <img
                     width={20}
                     height={20}
@@ -340,27 +338,34 @@ const Home = () => {
 
               {menu && (
                 <ul className="absolute top-[64px] flex flex-col gap-4 items-start justify-start left-0 h-max py-4 px-4 w-[180px] bg-[#000000] z-30 rounded-md text-white">
-                  <li
-                    onClick={handleMainDashboard}
-                    className="text-sm p-2 cursor-pointer hover:bg-[#FF6700] w-full px-2 flex items-center justify-start gap-3"
-                  >
-                    {/* <img width={15} height={15} src={profile} alt="user icon" /> */}
-                    Main Dashboard
-                  </li>
-                  <li
-                    onClick={handleForm}
-                    className="text-sm p-2 cursor-pointer hover:bg-[#FF6700] w-full px-2 flex items-center justify-start gap-3"
-                  >
-                    {/* <img width={15} height={15} src={profile} alt="user icon" /> */}
-                    Become a Member
-                  </li>
+                  {userDetails?.userData?.status === "paid" && (
+                    <li
+                      onClick={handleMainDashboard}
+                      className="text-sm p-2 cursor-pointer hover:bg-[#FF6700] w-full px-2 flex items-center justify-start gap-3"
+                    >
+                      {/* <img width={15} height={15} src={profile} alt="user icon" /> */}
+                      Main Dashboard
+                    </li>
+                  )}
+
+                  {userDetails?.userData?.status === "not-paid" && (
+                    <li
+                      onClick={handleForm}
+                      className="text-sm p-2 cursor-pointer hover:bg-[#FF6700] w-full px-2 flex items-center justify-start gap-3"
+                    >
+                      {/* <img width={15} height={15} src={profile} alt="user icon" /> */}
+                      Become a Member
+                    </li>
+                  )}
 
                   <li
                     onClick={handleAffiliate}
                     className="text-sm p-2 cursor-pointer hover:bg-[#FF6700] w-full px-2 flex items-center justify-start gap-3"
                   >
                     {/* <img width={15} height={15} src={profile} alt="user icon" /> */}
-                    Become an affiliate
+                    {userDetails.userData.affiliateUserName
+                      ? "Affiliate Dashboard"
+                      : " Become an affiliate"}
                   </li>
 
                   <li
