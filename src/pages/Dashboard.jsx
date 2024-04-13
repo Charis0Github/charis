@@ -347,17 +347,17 @@ const Dashboard = () => {
   // }, [singlePaymentHistory]);
 
   useEffect(() => {
-    if (!singlePaymentHistory) {
-      dispatch(getSinglePayment());
-    }
+    // if (!singlePaymentHistory) {
+    //   dispatch(getSinglePayment());
+    // }
 
-    if ("imageLink" in userDetails.userData) {
-      setNoImg(false);
-      console.log(noImg);
-    } else {
-      console.log(noImg);
-      setNoImg(true);
-    }
+    // if ("imageLink" in userDetails.userData) {
+    //   setNoImg(false);
+    //   console.log(noImg);
+    // } else {
+    //   console.log(noImg);
+    //   setNoImg(true);
+    // }
     return () => {
       console.log("This should work");
       dispatch(resetPaymentMini());
@@ -376,6 +376,7 @@ const Dashboard = () => {
       dispatch(resetEigibility());
     }
   }, [loanEligibleSuccess, loanEligibleError, loanEligibleMessage]);
+
   useEffect(() => {
     if (calculateShareSuccess) {
       setInfoModal(true);
@@ -892,7 +893,7 @@ const Dashboard = () => {
                     House Application Fee
                   </p>
 
-                  <p className="font-semibold text-3xl text-center">N50,000</p>
+                  <p className="font-semibold text-3xl text-center">N100,000</p>
                 </div>
 
                 {/* CONTINUE BUTTON STARTS HERE */}

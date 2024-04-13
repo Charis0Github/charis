@@ -187,9 +187,10 @@ input::-webkit-inner-spin-button {
   flex:0 0 calc(29.33% - 20px);
   max-width: calc(29.33% - 20px);
   width: 100%;
-  height: 570px;
+  height: max-content;
   background-color: #f9f9f9;
   border-radius: 10px;
+  padding-bottom: 10px;
 }
 
 .containerStyles{

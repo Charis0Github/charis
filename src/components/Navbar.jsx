@@ -71,7 +71,7 @@ const Navbar = () => {
       setNav(!nav);
     }
     if (id === 7) {
-      if (userDetails.userData.status === "paid") {
+      if (!userDetails.userData.status === "paid") {
         navigate("dashboard");
         setNav(!nav);
       } else {
@@ -141,7 +141,7 @@ const Navbar = () => {
             className=" relative flex items-center justify-between p-2 px-4 lg:py-2 rounded-lg space-x-2 w-auto text-white text-sm bg-[#FF6700] cursor-pointer"
           >
             <img width={15} height={15} src={profile} alt="user icon" />
-            <p>{userDetails ? userDetails?.userData?.name : "Username"}</p>
+            <p>{user ? userDetails?.userData?.name : "Username"}</p>
             <img width={20} height={20} src={arr} alt="drop down arrow icon" />
             {menu && (
               <ul className="absolute top-[40px] flex flex-col gap-4 items-start justify-start right-0 h-max py-4 px-4 w-max bg-[#000000] z-30 rounded-md text-white">
@@ -296,7 +296,7 @@ const Navbar = () => {
             </h1>
 
             <p className="text-center text-lg">
-              You are not an active member yet! Please commplete the membership
+              You are not an active member yet! Please complete the membership
               registration process
             </p>
           </div>

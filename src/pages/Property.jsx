@@ -85,7 +85,7 @@ const Property = () => {
   }, []);
 
   return (
-    <div className="lg:px-[64px] w-full min-h-screen h-full px-5 ">
+    <div className="lg:px-[64px] w-full min-h-screen h-full px-2 ">
       <ToastContainer position="top-center" hideProgressBar />
       {/* TITLE AND SEARCH BAR SECTION STARTS */}
       <div className="flex lg:flex-row flex-col lg:items-center lg:justify-between lg:gap-0 gap-10 my-20">
@@ -165,10 +165,9 @@ const Property = () => {
 
                   <div className="w-full flex items-center justify-between">
                     <div className="w-full flex items-center gap-3">
-                      <img
-                        src={sqft}
-                        className=" h-5 w-5 object-cover rounded-t-lg"
-                      />
+                      <p className="bg-[#FD6602] p-1 text-white text-sm rounded-md">
+                        FA
+                      </p>
                       <p>{item.buildingFloorArea + " "} sqm</p>
                     </div>
 
@@ -177,10 +176,10 @@ const Property = () => {
                         src={sqft}
                         className=" h-5 w-5 object-cover rounded-t-lg"
                       /> */}
-                      <p className="bg-[#FD6602] p-1 text-white rounded-md">
-                        Plot size
+                      <p className="bg-[#FD6602] text-sm p-1 text-white rounded-md">
+                        PS
                       </p>
-                      <p>{item.plotSize}</p>
+                      <p>{item.plotSize + " "} sqm</p>
                     </div>
                   </div>
 

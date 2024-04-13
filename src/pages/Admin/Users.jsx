@@ -270,6 +270,18 @@ const Users = () => {
   };
 
   const payHistory = () => {
+    const totalAmount = () => {
+      if (adminUserPayment) {
+        const sum = adminUserPayment.payments.reduce(
+          (accumulator, currentValue) => {
+            return accumulator + currentValue.amount;
+          },
+          0
+        );
+        return sum;
+      }
+    };
+
     return (
       <div className="bg-white lg:p-4 p-4 rounded-lg h-[95%] w-[80%] relative">
         {/* CLOSE BUTTON STARTS */}
@@ -308,9 +320,9 @@ const Users = () => {
         <div className="w-full mt-8 flex flex-col gap-3 px-5 h-[90%] overflow-y-scroll">
           {/* CARD SECTION STARTS HERE */}
           <div className="h-[199px] w-[360px] px-4 py-4 rounded-lg user_card_banner bg-cover flex flex-col text-white  gap-10">
-            <p>Amount Raised</p>
+            <p onClick={totalAmount}>Amount Raised</p>
             <div className="flex w-full items-end gap-3 text-white">
-              <p className="text-4xl font-semibold">N1,000,000</p>
+              <p className="text-4xl font-semibold">{totalAmount()}</p>
             </div>
           </div>
           {/* CARD SECTION ENDS HERE */}
@@ -424,10 +436,6 @@ const Users = () => {
     } else {
       dispatch(getUsers());
     }
-  }, []);
-
-  useEffect(() => {
-    dispatch(getUsersStatus());
   }, []);
 
   useEffect(() => {
