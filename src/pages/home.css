@@ -17,7 +17,7 @@
 }
 
 .red {
-  border: 10px red solid;
+  /* border: 10px red solid; */
 }
 
 @media screen and (max-width: 602px) {
