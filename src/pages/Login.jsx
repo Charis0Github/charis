@@ -12,6 +12,7 @@ import {
   getUserDetails,
 } from "../Redux/Features/authSlice";
 import { resetPayment } from "../Redux/Features/paymentSlice";
+import { toast } from "react-hot-toast";
 
 const Login = () => {
   const pageState = localStorage.getItem("pageState");
@@ -101,6 +102,7 @@ const Login = () => {
       };
       dispatch(createUser(formData));
     } else {
+      toast.error("passwords do no match");
       setInfo("passwords do no match");
       setTimeout(() => {
         setInfo("");
@@ -157,8 +159,9 @@ const Login = () => {
   }, []);
 
   return (
-    <div className="w-full h-screen lg:flex items-center">
-      <div className="w-full h-full flex flex-col items-center justify-center">
+    <div className="w-full lg:flex login items-center pt-6 pb-12">
+      <div className="w-full h-full flex flex-col items-center justify-center max-w-2xl m-auto rounded-lg bg-[#ffffffc9]  pt-6 pb-6">
+        <img className="w-3/12" src={login1} />
         {register === "true" ? (
           <React.Fragment>
             {/* RESISTRATION FORM BEGINS HERE  */}
@@ -166,7 +169,7 @@ const Login = () => {
               onSubmit={handleRegisterSubmit}
               className="w-full h-max lg:px-24 p-6 py-6"
             >
-              <h1 className="text-black text-[20px] font-sans font-bold mb-[15px]">
+              <h1 className="text-black text-[35px] font-sans font-bold mb-[15px]">
                 Welcome
               </h1>
 
@@ -467,10 +470,10 @@ const Login = () => {
           </p>
         )}
       </div>
-      <div className="w-full h-full hidden login lg:flex items-center justify-center relative">
-        <div className="absolute w-full h-full bg-[#ffffff5a]"></div>
+      {/* <div className="w-full h-full hidden  lg:flex items-center justify-center relative">
+        <div className="fixed w-full h-screen"></div>
         <img className="z-10" src={login1} />
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -8,9 +8,7 @@ import Lottie from "lottie-react";
 import load from "../assets/loading.json";
 import ReactPaginate from "react-paginate";
 import { GrRefresh } from "react-icons/gr";
-import { toast } from "react-toastify";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-hot-toast";
 import { useSelector, useDispatch } from "react-redux";
 import {
   createPaymentLink,
@@ -449,7 +447,6 @@ const Dashboard = () => {
 
   return (
     <React.Fragment>
-      <ToastContainer position="top-center" hideProgressBar />
       {user ? (
         <div className="w-full h-full lg:flex gap-[60px] px-5 lg:px-[70px] mb-10 mt-10">
           <div className="lg:flex-1 w-full h-full">

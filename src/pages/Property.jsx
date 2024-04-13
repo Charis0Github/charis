@@ -8,7 +8,6 @@ import Lottie from "lottie-react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProperty, resetProperty } from "../Redux/Features/propertySlice";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
 
 const Property = () => {
   const dispatch = useDispatch();
@@ -86,7 +85,6 @@ const Property = () => {
 
   return (
     <div className="lg:px-[64px] w-full min-h-screen h-full px-2 ">
-      <ToastContainer position="top-center" hideProgressBar />
       {/* TITLE AND SEARCH BAR SECTION STARTS */}
       <div className="flex lg:flex-row flex-col lg:items-center lg:justify-between lg:gap-0 gap-10 my-20">
         <h1 className="w-full text-5xl font-semibold">

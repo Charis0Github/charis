@@ -1,9 +1,27 @@
 import React, { useEffect, useState } from "react";
+import { Splide, SplideSlide } from "@splidejs/react-splide";
 import hero from "../assets/hero.png";
 import con1 from "../assets/con1.svg";
 import con2 from "../assets/con2.svg";
 import con3 from "../assets/con3.svg";
 import con4 from "../assets/con4.svg";
+import slider1 from "../assets/carousel-images/carousel-image1.jpg";
+import slider2 from "../assets/carousel-images/carousel-image2.jpg";
+import slider3 from "../assets/carousel-images/carousel-image3.jpg";
+import slider4 from "../assets/carousel-images/carousel-image4.jpg";
+import slider5 from "../assets/carousel-images/carousel-image5.jpg";
+import slider6 from "../assets/carousel-images/carousel-image6.jpg";
+import slider7 from "../assets/carousel-images/carousel-image7.jpg";
+import slider8 from "../assets/carousel-images/carousel-image8.jpg";
+// Default theme
+import "@splidejs/react-splide/css";
+
+// or other themes
+import "@splidejs/react-splide/css/skyblue";
+import "@splidejs/react-splide/css/sea-green";
+
+// or only core styles
+import "@splidejs/react-splide/css/core";
 import p1 from "../assets/p1.png";
 import p2 from "../assets/par1.jpeg";
 import p3 from "../assets/pt1.jpeg";
@@ -24,7 +42,7 @@ import arr from "../assets/dwnArr.svg";
 import { Form1, Form2, Form3, Form4 } from "./Forms/Forms";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { createProperty, resetProperty } from "../Redux/Features/propertySlice";
 import { resetPaymentMini } from "../Redux/Features/paymentSlice";
 // import { resetPayment } from "../Redux/Features/paymentSlice";
@@ -42,6 +60,7 @@ const Home = () => {
 
   const navigate = useNavigate();
   const { user, userDetails } = useSelector((state) => state.auth);
+  console.log({ user, userDetails });
   const { paymentStatus, paymentSuccess } = useSelector(
     (state) => state.payment
   );
@@ -284,20 +303,18 @@ const Home = () => {
 
   return (
     <>
-      <ToastContainer position="top-center" hideProgressBar />
       {/* HERO SECTION STARTS */}
       <div className="pt-[5px] lg:px-[70px] px-5 w-full h-full lg:flex items-center justify-center">
         <div className="lg:flex items-center justify-center w-full space-y-3 lg:space-y-0 lg:w-[95%] h-full lg:h-[600px] lg:mt-[1rem]">
           <div className="w-full h-full">
             <h1 className="text-5xl font-semibold lg:mt-[4rem] leading-[4rem] w-full">
-              {" "}
               CALGI securely delivers <br /> your{" "}
-              <span className="bg-[#FD6602] p-1 rounded-lg text-white">
+              <span className="bg-[#FF6700] p-1 rounded-lg text-white">
                 needs.
               </span>
             </h1>
             <p className="mt-12 lg:w-[90%] text-lg font-extralight text-[#5A5A50] ">
-              Access basic neccessities at a cheaper rate.
+              Access basic necessities at a cheaper rate.
               <br />
               Own your home on a rent to own basis or an outright payment.
               <br />
@@ -363,7 +380,7 @@ const Home = () => {
                     className="text-sm p-2 cursor-pointer hover:bg-[#FF6700] w-full px-2 flex items-center justify-start gap-3"
                   >
                     {/* <img width={15} height={15} src={profile} alt="user icon" /> */}
-                    {userDetails.userData.affiliateUserName
+                    {userDetails.userData?.affiliateUserName
                       ? "Affiliate Dashboard"
                       : " Become an affiliate"}
                   </li>
@@ -394,16 +411,26 @@ const Home = () => {
               >
                 List Property
               </div> */}
-
             </div>
           </div>
 
-          <div className=" w-full h-full">
-            <img
+          <div className="w-full h-full">
+            <iframe
+              width="610"
+              height="365"
+              src="https://www.youtube.com/embed/K_NnoLdkt0c?si=92ZKS6_uNAQqiTjo&amp;controls=0"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen
+              className="hero-vid"
+            ></iframe>
+            {/* <img
               src={hero}
               loading="lazy"
               className="w-full h-full lg:h-full rounded-lg"
-            />
+            /> */}
           </div>
         </div>
       </div>
@@ -553,6 +580,42 @@ const Home = () => {
       </div>
       {/* SERVICE SECTION ENDS */}
 
+      {/* <Splide
+        options={{
+          rewind: true,
+          type: "loop",
+          width: 800,
+          gap: "1rem",
+          autoplay: true,
+          interval: "1450",
+        }}
+        aria-label="My Favorite Images"
+      >
+        <SplideSlide>
+          <img src={slider1} alt="Image 1" />
+        </SplideSlide>
+        <SplideSlide>
+          <img src={slider2} alt="Image 1" />
+        </SplideSlide>
+        <SplideSlide>
+          <img src={slider3} alt="Image 1" />
+        </SplideSlide>
+        <SplideSlide>
+          <img src={slider4} alt="Image 1" />
+        </SplideSlide>
+        <SplideSlide>
+          <img src={slider5} alt="Image 1" />
+        </SplideSlide>
+        <SplideSlide>
+          <img src={slider6} alt="Image 1" />
+        </SplideSlide>
+        <SplideSlide>
+          <img src={slider7} alt="Image 1" />
+        </SplideSlide>
+        <SplideSlide>
+          <img src={slider8} alt="Image 1" />
+        </SplideSlide>
+      </Splide> */}
       {/* PARTNERS SECTION STARTS */}
       <h1
         // onClick={display}

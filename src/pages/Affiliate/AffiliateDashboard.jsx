@@ -4,14 +4,13 @@ import dp from "../../assets/dp.png";
 import money from "../../assets/money.svg";
 import target from "../../assets/target.svg";
 import Input from "../../components/Input";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
+
 import { useDispatch, useSelector } from "react-redux";
 import {
   resetWithdrawal,
   withdrawalDetailsUpdate,
 } from "../../Redux/Features/WithdrawalDetailsSlice";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { getUserDetails } from "../../Redux/Features/authSlice";
 import {
   requestPayment,
@@ -155,7 +154,6 @@ const AffiliateDashboard = () => {
   const navigate = useNavigate();
   return (
     <React.Fragment>
-      <ToastContainer position="top-center" hideProgressBar />
       {user ? (
         <div className="w-full h-full lg:flex gap-[60px] lg:items-start lg:justify-start px-5 lg:px-[70px] mb-10 mt-10">
           {/* LEFT SECTION STARTS HERE */}

@@ -18,7 +18,8 @@ import {
   getPendingProperty,
   editProperty,
 } from "../../Redux/Features/propertySlice";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-hot-toast";
+
 
 const AdminProperty = () => {
   const [isOpen, setIsOpen] = useState();
@@ -373,8 +374,7 @@ const AdminProperty = () => {
   }, []);
 
   return (
-    <div className="flex flex-col w-full px-10 h-screen py-8 overflow-y-auto">
-      <ToastContainer position="top-center" hideProgressBar />
+    <div className="flex flex-col w-full px-10 h-screen py-8 overflow-y-auto"> 
       {/* TOP SECTION STARTS HERE */}
       <div className="w-full h-max flex items-end justify-between ">
         <h1 className="text-3xl font-sans font-bold">

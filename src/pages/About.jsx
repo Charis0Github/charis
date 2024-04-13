@@ -1,5 +1,6 @@
 import React from "react";
-import about from "../assets/about.png";
+// import about from "../assets/about.png";
+import about from "../assets/carousel-images/carousel-image8.jpg";
 import quote from "../assets/quote.svg";
 import ben1 from "../assets/ben1.svg";
 import ben2 from "../assets/ben2.svg";
@@ -43,7 +44,7 @@ const About = () => {
             <img
               src={about}
               loading="lazy"
-              className="w-full h-full lg:h-[80%] rounded-lg "
+              className="w-full h-full lg:h-[86%] rounded-lg "
             />
           </div>
         </div>

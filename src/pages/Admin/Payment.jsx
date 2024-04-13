@@ -9,7 +9,7 @@ import {
   getAllPayment,
   resetAllUserPayment,
 } from "../../Redux/Features/allUserPaymentSlice";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 
 const Payment = () => {
   const {
@@ -82,7 +82,6 @@ const Payment = () => {
 
   return (
     <div className="flex flex-col w-full px-10 h-screen py-8 overflow-y-auto">
-      <ToastContainer position="top-center" hideProgressBar />
       <div className="w-full overflow-x-auto">
         <table className="mt-10 w-full table-auto">
           <thead>

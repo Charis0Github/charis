@@ -17,7 +17,8 @@ import {
   resetCorporativeRegister,
   resetFormData,
 } from "../Redux/Features/formSlice";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
+
 import { getSinglePayment } from "../Redux/Features/SinglePaymentHistorySlice";
 
 const VerifyPayment = () => {

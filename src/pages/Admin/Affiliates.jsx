@@ -6,7 +6,7 @@ import {
   getApprovedWithdrawal,
   resetApprovedWithdrawal,
 } from "../../Redux/Features/approvedWithdrawal";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import load from "../../assets/loading.json";
 import Lottie from "lottie-react";
 
@@ -229,7 +229,6 @@ const Affiliates = () => {
 
   return (
     <div className="flex flex-col w-full px-10 h-screen py-8 overflow-y-auto">
-      <ToastContainer position="top-center" hideProgressBar />
       <div className="w-full flex items-center gap-8">
         <p
           className={`${

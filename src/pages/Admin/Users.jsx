@@ -23,7 +23,7 @@ import {
   getUsersStatus,
   resetUsersStatus,
 } from "../../Redux/Features/UserStatusSlice";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 
 const Users = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -467,7 +467,6 @@ const Users = () => {
 
   return (
     <div className="flex flex-col w-full px-10 h-screen py-8 overflow-y-auto">
-      <ToastContainer position="top-center" hideProgressBar />
       <div className="flex w-full items-start gap-14">
         <div className="h-[199px] w-[360px] px-4 py-4 rounded-lg user_card_banner bg-cover flex flex-col text-white  gap-10">
           <p>Active Users</p>

@@ -1,5 +1,5 @@
 import react, { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import Input from "../../components/Input";
 import add from "../../assets/add.svg";
 import { useDispatch, useSelector } from "react-redux";

@@ -24,11 +24,14 @@ import VerifyPayment from "./pages/VerifyPayment";
 import ReferralLogin from "./pages/ReferralLogin";
 import SingleProperty from "./pages/PropertyDetails";
 import Terms from "./pages/Terms";
+import { Toaster } from "react-hot-toast";
 
 function App() {
-  const user = useSelector((state) => state.auth.user);
+  // const user = useSelector((state) => state.auth.user);
+  console.log({ Toaster });
   return (
     <Routes>
+      {/* <Toaster /> */}
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="about" element={<About />} />

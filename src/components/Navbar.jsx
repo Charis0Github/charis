@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import logo from "../assets/logo.svg";
+// import logo from "../assets/logo.svg";
+// import logo from "../assets/logo.jpg";
+import logo from "../assets/charis-logo-transparent.png";
 import profile from "../assets/user.svg";
 import arr from "../assets/dwnArr.svg";
 import logout from "../assets/logout.svg";
@@ -110,15 +112,15 @@ const Navbar = () => {
   const handleNav = () => {
     setNav(!nav);
   };
-
   return (
     <div className="h-[67px] w-full shadow-sm shadow-black lg:shadow-none  px-4 md:px-10 lg:px-[64px] lg:pt-2 flex justify-between items-center z-30">
       <div className="z-50 w-full">
         <img
-          style={{ padding: "0" }}
-          width={60}
-          height={60}
-          className="md:h-[90px] cursor-pointer object-contain"
+          // style={{ padding: "0" }}
+          // width={60}
+          // height={60}
+          // className="md:h-[90px] cursor-pointer object-contain"
+          className="nav-logo"
           src={logo}
           alt="logo"
         />
@@ -135,7 +137,7 @@ const Navbar = () => {
           </li>
         ))}
 
-        {user ? (
+        {user?.email ? (
           <div
             onClick={() => setMenu(!menu)}
             className=" relative flex items-center justify-between p-2 px-4 lg:py-2 rounded-lg space-x-2 w-auto text-white text-sm bg-[#FF6700] cursor-pointer"
@@ -209,10 +211,13 @@ const Navbar = () => {
       </div>
 
       <ul
+        onTouchMove={() => {
+          setNav(false);
+        }}
         className={
           !nav
-            ? "absolute left-0 top-16  opacity-0 flex-col justify-center items-center w-full overflow-hidden h-0"
-            : "lg:hidden z-30 pt-16 bg-[#fff] shadow-md shadow-black  text-sm absolute left-0 top-0 flex flex-col  justify-end items-start py-5 px-5 h-auto w-full text-left text-black capitalize font-bold duration-300 "
+            ? "red absolute left-0 top-16  opacity-0 flex-col justify-center items-center w-full overflow-hidden h-0"
+            : "red lg:hidden z-30 pt-16 bg-[#fff] shadow-md shadow-black  text-sm absolute left-0 top-0 flex flex-col  justify-end items-start py-5 px-5 h-auto w-full text-left text-black capitalize font-bold duration-300 "
         }
       >
         {links.map((link) => (

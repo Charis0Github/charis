@@ -1,0 +1,35 @@
+* {
+  /* border: 1px red solid; */
+}
+.hero-vid {
+  margin-top: 3rem;
+  border-radius: 16px;
+  max-width: 100%;
+  border: 1px whitesmoke solid;
+}
+
+.nav-logo {
+  margin-top: 45px !important;
+  transform: scale(2.5);
+  width: 60px;
+  height: 60px;
+  /* border: 1px red solid; */
+}
+
+.red {
+  border: 10px red solid;
+}
+
+@media screen and (max-width: 602px) {
+  .nav-logo {
+    margin-top: 30px;
+    margin-left: 30px;
+    transform: scale(2.5);
+    width: 40px;
+    height: 40px;
+  }
+}
+
+.login-page-styles {
+  /* padding: 3rem 0px !important; */
+}
