@@ -300,7 +300,7 @@ const Home = () => {
   //     dispatch(resetPayment());
   //   };
   // }, []);
-
+  console.log({ active });
   return (
     <>
       {/* HERO SECTION STARTS */}
@@ -443,7 +443,7 @@ const Home = () => {
               <p
                 className={
                   active === index
-                    ? "text-[#FD6602] p-2 relative inline-block"
+                    ? "text-[#FD6602] p-2 relative inline-block font-extrabold"
                     : "p-2 relative inline-block"
                 }
                 onClick={() => handleClick(tab.id, index)}
@@ -453,7 +453,7 @@ const Home = () => {
                 <span
                   className={
                     active === index
-                      ? "absolute block bottom-0 w-[50%] h-[2px] bg-white"
+                      ? "absolute block bottom-0 w-[92%] h-[2px] bg-white"
                       : "hidden"
                   }
                 ></span>
@@ -461,112 +461,154 @@ const Home = () => {
             ))}
           </div>
 
-          <div className="lg:flex items-center w-full lg:gap-12 space-y-[2rem] lg:space-y-0  mt-20">
-            <div className="lg:h-[18rem] h-auto p-3 lg:w-full w-full py-[5rem] lg:py-0 flex flex-col items-center justify-center text-center">
-              {active === 0 && (
-                <p className="mb-2 text-white text-sm">
-                  Join The Housing <br /> Co-Operative.
-                </p>
-              )}
-              {active === 1 && (
-                <p className="mb-2 text-white text-sm">
-                  Join The Housing <br /> Co-Operative.
-                </p>
-              )}
-              {active === 2 && (
-                <p className="mb-2 text-white text-sm">
-                  Join The Housing <br /> Co-Operative.
-                </p>
-              )}
-
-              <div className="circle w-[99px] h-[99px] rounded-full border-4 border-[#929292] bg-[#FD6602] flex items-center justify-center">
-                <p className="text-white text-sm font-semibold text-center">
-                  Step 1
-                </p>
+          {active === 3 && (
+            <div className="lg:flex items-center w-full lg:gap-12 space-y-[2rem] lg:space-y-0">
+              <div className="lg:flex flex-col w-full items-center justify-center mt-16">
+                <img src="./calgint.webp" alt="" className="w-80" />
+                <h1 className="text-lime-50 text-2xl font-extrabold leading-[4rem] text-center">
+                  Calgint
+                </h1>
+                <h1 className="text-lime-50  font-semibold leading-[2rem] text-center">
+                  Shop products for best prices at your convenience.
+                </h1>
               </div>
             </div>
+          )}
+          {active !== 3 && (
+            <div className="lg:flex items-center w-full lg:gap-12 space-y-[2rem] lg:space-y-0">
+              <div className="lg:h-[18rem] h-auto p-3 lg:w-full w-full py-[5rem] lg:py-0 flex flex-col items-center justify-center text-center">
+                {active === 0 && (
+                  <p className="mb-2 text-white text-sm animate-journey">
+                    Join The Housing <br /> Co-Operative.
+                  </p>
+                )}
+                {active === 1 && (
+                  <p className="mb-2 text-white text-sm animate-journey">
+                    Join The Housing <br /> Co-Operative.
+                  </p>
+                )}
+                {active === 2 && (
+                  <p className="mb-2 text-white text-sm animate-journey">
+                    Join The Housing <br /> Co-Operative.
+                  </p>
+                )}
+                (
+                <div
+                  className={
+                    "circle w-[70px] h-[70px] rounded-full border-4 border-[#929292] flex items-center justify-center" +
+                    (user ? " bg-[#FD6602]" : "")
+                  }
+                >
+                  <p className="text-white text-sm font-semibold text-center">
+                    Step 1
+                  </p>
+                </div>
+                )
+              </div>
 
-            <div className="lg:h-[18rem] h-auto p-3 lg:w-full w-full py-[5rem] lg:py-0 flex flex-col items-center justify-center">
-              {active === 0 && (
-                <p className="mb-2 text-white text-sm">
-                  Apply For House <br /> Of Your Choice
-                </p>
-              )}
-              {active === 1 && (
-                <p className="mb-2 text-white text-sm lg:h-10">
-                  Apply For Loan.
-                </p>
-              )}
-              {active === 2 && (
-                <p className="mb-2 text-white text-sm lg:h-10">
-                  Buy Share Capital.
-                </p>
-              )}
+              <div className="lg:h-[18rem] h-auto p-3 lg:w-full w-full py-[5rem] lg:py-0 flex flex-col items-center justify-center">
+                {active === 0 && (
+                  <p className="mb-2 text-white text-sm animate-journey">
+                    Apply For House <br /> Of Your Choice
+                  </p>
+                )}
+                {active === 1 && (
+                  <p className="mb-2 text-white text-sm animate-journey lg:h-10">
+                    Apply For Loan.
+                  </p>
+                )}
+                {active === 2 && (
+                  <p className="mb-2 text-white text-sm animate-journey lg:h-10">
+                    Buy Share Capital.
+                  </p>
+                )}
+                (
+                <div className="circle w-[70px] h-[70px] rounded-full border-4 border-[#929292] bg-transparent flex items-center justify-center">
+                  <p className="text-white text-sm font-semibold text-center">
+                    Step 2
+                  </p>
+                </div>
+                )
+              </div>
 
-              <div className="circle w-[99px] h-[99px] rounded-full border-4 border-[#929292] bg-transparent flex items-center justify-center">
-                <p className="text-white text-sm font-semibold text-center">
-                  Step 2
-                </p>
+              <div className="lg:h-[18rem] h-auto p-3 lg:w-full w-full py-[5rem] lg:py-0 flex flex-col items-center justify-center text-center">
+                {active === 0 && (
+                  <p className="mb-2 text-white text-sm animate-journey">
+                    Get House <br /> Allocation
+                  </p>
+                )}
+                {active === 1 && (
+                  <p className="mb-2 text-white text-sm animate-journey">
+                    Get
+                    <br /> Approval.
+                  </p>
+                )}
+                {active === 2 && (
+                  <p className="mb-2 text-white text-sm animate-journey lg:h-10">
+                    Review Status.
+                  </p>
+                )}
+                (
+                <div className="circle w-[70px] h-[70px] rounded-full border-4 border-[#929292] flex items-center justify-center">
+                  <p className="text-white text-sm font-semibold text-center">
+                    Step 3
+                  </p>
+                </div>
+                )
+              </div>
+
+              <div className="lg:h-[18rem] h-auto p-3 lg:w-full w-full py-[5rem] lg:py-0 flex flex-col items-center justify-center text-center">
+                {active === 0 && (
+                  <p className="mb-2 text-white text-sm animate-journey">
+                    Take Full Possession
+                    <br />
+                    Of The Property
+                  </p>
+                )}
+                {active === 1 && (
+                  <p className="mb-2 text-white text-sm animate-journey lg:h-10">
+                    Access Loan.
+                  </p>
+                )}
+                {active === 2 && (
+                  <p className="mb-2 text-white text-sm animate-journey lg:h-10">
+                    Get Earnings.
+                  </p>
+                )}
+
+                {active !== 3 && (
+                  <div className="w-[70px] h-[70px] rounded-full border-4 border-[#929292] flex items-center justify-center">
+                    <p className="text-white text-sm font-semibold text-center">
+                      Step 4
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
+          )}
 
-            <div className="lg:h-[18rem] h-auto p-3 lg:w-full w-full py-[5rem] lg:py-0 flex flex-col items-center justify-center text-center">
-              {active === 0 && (
-                <p className="mb-2 text-white text-sm">
-                  Get House <br /> Allocation
-                </p>
-              )}
-              {active === 1 && (
-                <p className="mb-2 text-white text-sm">
-                  Get
-                  <br /> Approval.
-                </p>
-              )}
-              {active === 2 && (
-                <p className="mb-2 text-white text-sm lg:h-10">
-                  Review Status.
-                </p>
-              )}
-
-              <div className="circle w-[99px] h-[99px] rounded-full border-4 border-[#929292] flex items-center justify-center">
-                <p className="text-white text-sm font-semibold text-center">
-                  Step 3
-                </p>
-              </div>
+          {active !== 3 && (
+            <div
+              onClick={handleForm}
+              className="flex items-center lg:justify-start justify-center w-full mt-3 lg:pl-20 "
+            >
+              <h1 className="text-black bg-white join p-2 rounded-lg text-sm px-6 py-3 font-bold cursor-pointer">
+                Join co-operative
+              </h1>
             </div>
-
-            <div className="lg:h-[18rem] h-auto p-3 lg:w-full w-full py-[5rem] lg:py-0 flex flex-col items-center justify-center text-center">
-              {active === 0 && (
-                <p className="mb-2 text-white text-sm">
-                  Take Full Possession
-                  <br />
-                  Of The Property
-                </p>
-              )}
-              {active === 1 && (
-                <p className="mb-2 text-white text-sm lg:h-10">Access Loan.</p>
-              )}
-              {active === 2 && (
-                <p className="mb-2 text-white text-sm lg:h-10">Get Earnings.</p>
-              )}
-
-              <div className="w-[99px] h-[99px] rounded-full border-4 border-[#929292] flex items-center justify-center">
-                <p className="text-white text-sm font-semibold text-center">
-                  Step 4
-                </p>
-              </div>
+          )}
+          {active === 3 && (
+            <div
+              onClick={() => {
+                window.location.href = "https://www.calgint.com";
+              }}
+              className="flex items-center lg:justify-start justify-center w-full mt-3 lg:pl-20 "
+            >
+              <h1 className="text-black bg-white join p-2 rounded-lg text-sm px-6 py-3 font-bold cursor-pointer">
+                Start Shopping Now!
+              </h1>
             </div>
-          </div>
-
-          <div
-            onClick={handleForm}
-            className="flex items-center lg:justify-start justify-center w-full mt-3 lg:pl-20 "
-          >
-            <h1 className="text-black bg-white join p-2 rounded-lg text-sm px-6 py-3 font-bold cursor-pointer">
-              Join co-operative
-            </h1>
-          </div>
-
+          )}
           <h1 className="text-3xl font-extrabold text-white text-center mt-[5rem]">
             Our Services
           </h1>

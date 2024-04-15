@@ -136,10 +136,10 @@ input::-webkit-inner-spin-button {
   content: "";
   background: #929292;
   position: absolute;
-  top: 2.5rem;
-  left: 6rem;
+  /* top: 2.5rem; */
+  left: 4rem;
   z-index: 1;
-  width: 232px;
+  width: 250px;
   height: 5px;
 }
 
@@ -226,8 +226,8 @@ input::-webkit-inner-spin-button {
 
 @media (max-width: 768px) {
   .circle::after {
-    top: 12rem;
-    left: -3.3rem;
+    top: 10rem;
+    left: -4rem;
     width: 190px;
     transform: rotate(90deg);
   }
@@ -242,8 +242,8 @@ input::-webkit-inner-spin-button {
 }
 @media (max-width: 912px) {
   .circle::after {
-    top: 12rem;
-    left: -3.3rem;
+    top: 10rem;
+    left: -4rem;
     width: 190px;
     transform: rotate(90deg);
   }
@@ -256,5 +256,20 @@ input::-webkit-inner-spin-button {
   }
   .containerStyles {
     overflow-x: scroll;
+  }
+}
+
+.animate-journey {
+  animation: aj 450ms ease-out;
+}
+
+@keyframes aj {
+  from {
+    filter: blur(10);
+    transform: translateX(20px);
+  }
+  to {
+    filter: blur(0);
+    transform: translateX(0px);
   }
 }

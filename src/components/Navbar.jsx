@@ -211,9 +211,9 @@ const Navbar = () => {
       </div>
 
       <ul
-        onTouchMove={() => {
-          setNav(false);
-        }}
+        // onTouchMove={() => {
+        //   setNav(false);
+        // }}
         className={
           !nav
             ? "red absolute left-0 top-16  opacity-0 flex-col justify-center items-center w-full overflow-hidden h-0"
