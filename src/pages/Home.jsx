@@ -329,7 +329,7 @@ const Home = () => {
                 onClick={handleGetStarted}
                 // onClick={handleHomeOwnership}
                 className={`items-center space-x-3 justify-center text-xl bg-black py-2 px-4 rounded-md w-[220px] font-bold text-white ${
-                  user ? "hidden lg:flex" : null
+                  user?._id ? "hidden lg:flex" : null
                 }`}
               >
                 <p className="font-bold text-lg text-center">Get Started</p>
@@ -476,7 +476,23 @@ const Home = () => {
           )}
           {active !== 3 && (
             <div className="lg:flex items-center w-full lg:gap-12 space-y-[2rem] lg:space-y-0">
-              <div className="lg:h-[18rem] h-auto p-3 lg:w-full w-full py-[5rem] lg:py-0 flex flex-col items-center justify-center text-center">
+              <div className="py-app-5rem lg:h-[18rem] h-auto p-3 lg:w-full w-full py-[5rem] lg:py-0 flex flex-col items-center justify-center text-center">
+                <p className="mb-2 text-white text-sm animate-journey">
+                  Create An account <br /> Today
+                </p>
+                <div
+                  className={
+                    "circle w-[70px] h-[70px] rounded-full border-4 border-[#929292] flex items-center justify-center  cursor-pointer hover:bg-[#FD6602]" +
+                    (user?._id ? " bg-[#FD6602]" : "")
+                  }
+                >
+                  <p className="text-white text-sm font-semibold text-center">
+                    Step 1
+                  </p>
+                </div>
+              </div>
+
+              <div className="py-app-5rem lg:h-[18rem] h-auto p-3 lg:w-full w-full py-[5rem] lg:py-0 flex flex-col items-center justify-center text-center">
                 {active === 0 && (
                   <p className="mb-2 text-white text-sm animate-journey">
                     Join The Housing <br /> Co-Operative.
@@ -492,21 +508,25 @@ const Home = () => {
                     Join The Housing <br /> Co-Operative.
                   </p>
                 )}
-                (
+
                 <div
+                  // onClick={() => {
+                  //   console.log(userDetails?.userData);
+                  // }}
                   className={
-                    "circle w-[70px] h-[70px] rounded-full border-4 border-[#929292] flex items-center justify-center" +
-                    (user ? " bg-[#FD6602]" : "")
+                    "circle w-[70px] h-[70px] rounded-full border-4 border-[#929292] flex items-center justify-center  cursor-pointer hover:bg-[#FD6602]" +
+                    (userDetails?.userData?.status !== "not-paid"
+                      ? " bg-[#FD6602]"
+                      : "")
                   }
                 >
                   <p className="text-white text-sm font-semibold text-center">
-                    Step 1
+                    Step 2
                   </p>
                 </div>
-                )
               </div>
 
-              <div className="lg:h-[18rem] h-auto p-3 lg:w-full w-full py-[5rem] lg:py-0 flex flex-col items-center justify-center">
+              <div className="py-app-5rem lg:h-[18rem] h-auto p-3 lg:w-full w-full py-[5rem] lg:py-0 flex flex-col items-center justify-center">
                 {active === 0 && (
                   <p className="mb-2 text-white text-sm animate-journey">
                     Apply For House <br /> Of Your Choice
@@ -522,16 +542,15 @@ const Home = () => {
                     Buy Share Capital.
                   </p>
                 )}
-                (
-                <div className="circle w-[70px] h-[70px] rounded-full border-4 border-[#929292] bg-transparent flex items-center justify-center">
+
+                <div className="circle w-[70px] h-[70px] rounded-full border-4 border-[#929292] bg-transparent flex items-center justify-center  cursor-pointer hover:bg-[#FD6602]">
                   <p className="text-white text-sm font-semibold text-center">
-                    Step 2
+                    Step 3
                   </p>
                 </div>
-                )
               </div>
 
-              <div className="lg:h-[18rem] h-auto p-3 lg:w-full w-full py-[5rem] lg:py-0 flex flex-col items-center justify-center text-center">
+              <div className="py-app-5rem lg:h-[18rem] h-auto p-3 lg:w-full w-full py-[5rem] lg:py-0 flex flex-col items-center justify-center text-center">
                 {active === 0 && (
                   <p className="mb-2 text-white text-sm animate-journey">
                     Get House <br /> Allocation
@@ -548,16 +567,15 @@ const Home = () => {
                     Review Status.
                   </p>
                 )}
-                (
-                <div className="circle w-[70px] h-[70px] rounded-full border-4 border-[#929292] flex items-center justify-center">
+
+                <div className="circle w-[70px] h-[70px] rounded-full border-4 border-[#929292] flex items-center justify-center cursor-pointer hover:bg-[#FD6602]">
                   <p className="text-white text-sm font-semibold text-center">
-                    Step 3
+                    Step 4
                   </p>
                 </div>
-                )
               </div>
 
-              <div className="lg:h-[18rem] h-auto p-3 lg:w-full w-full py-[5rem] lg:py-0 flex flex-col items-center justify-center text-center">
+              <div className="py-app-5rem lg:h-[18rem] h-auto p-3 lg:w-full w-full py-[5rem] lg:py-0 flex flex-col items-center justify-center text-center">
                 {active === 0 && (
                   <p className="mb-2 text-white text-sm animate-journey">
                     Take Full Possession
@@ -577,9 +595,9 @@ const Home = () => {
                 )}
 
                 {active !== 3 && (
-                  <div className="w-[70px] h-[70px] rounded-full border-4 border-[#929292] flex items-center justify-center">
+                  <div className="w-[70px] h-[70px] rounded-full border-4 border-[#929292] flex items-center justify-center cursor-pointer hover:bg-[#FD6602]">
                     <p className="text-white text-sm font-semibold text-center">
-                      Step 4
+                      Step 5
                     </p>
                   </div>
                 )}
@@ -622,7 +640,10 @@ const Home = () => {
       </div>
       {/* SERVICE SECTION ENDS */}
 
-      <div style={{ marginLeft: "calc(50% - 400px)" }}>
+      <div
+        style={{ marginLeft: "calc(50% - 400px)" }}
+        className="splide-on-mobile"
+      >
         <Splide
           options={{
             rewind: true,
@@ -630,7 +651,7 @@ const Home = () => {
             width: 800,
             gap: "1rem",
             autoplay: true,
-            interval: "5000",
+            interval: "1000",
           }}
           aria-label="My Favorite Images"
         >

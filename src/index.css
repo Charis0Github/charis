@@ -139,8 +139,21 @@ input::-webkit-inner-spin-button {
   /* top: 2.5rem; */
   left: 4rem;
   z-index: 1;
-  width: 250px;
+  width: 160px;
   height: 5px;
+}
+.circle::before {
+  content: "";
+  /* background: #929292; */
+  position: absolute;
+  /* top: 2.5rem; */
+  left: calc(4rem + 160px);
+  z-index: 1;
+  width: 0;
+  height: 0;
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+  border-left: 15px solid #fd6602;
 }
 
 .join {
@@ -225,13 +238,23 @@ input::-webkit-inner-spin-button {
 }
 
 @media (max-width: 768px) {
+  .py-app-5rem {
+    /*  */
+    padding-top: 2rem /* 32px */;
+    padding-bottom: 2rem; /* 32px */
+  }
   .circle::after {
     top: 10rem;
     left: -4rem;
-    width: 190px;
+    width: 180px;
     transform: rotate(90deg);
   }
-
+  .circle::before {
+    left: calc(1rem + 10px);
+    transform: rotate(90deg);
+    bottom: -225px;
+    z-index: 2;
+  }
   .card {
     width: 100% !important;
     max-width: 100% !important;
@@ -241,11 +264,20 @@ input::-webkit-inner-spin-button {
   }
 }
 @media (max-width: 912px) {
+  .splide-on-mobile {
+    margin-left: unset !important;
+  }
   .circle::after {
-    top: 10rem;
-    left: -4rem;
-    width: 190px;
+    top: 6rem;
+    left: 0rem;
+    width: 64px;
     transform: rotate(90deg);
+  }
+  .circle::before {
+    left: calc(1rem + 8px);
+    transform: rotate(90deg);
+    bottom: -90px;
+    z-index: 2;
   }
   .card {
     width: 100% !important;

@@ -137,7 +137,7 @@ const Navbar = () => {
           </li>
         ))}
 
-        {user?.email ? (
+        {user?._id ? (
           <div
             onClick={() => setMenu(!menu)}
             className=" relative flex items-center justify-between p-2 px-4 lg:py-2 rounded-lg space-x-2 w-auto text-white text-sm bg-[#FF6700] cursor-pointer"
