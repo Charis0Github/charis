@@ -33,3 +33,11 @@
 .login-page-styles {
   /* padding: 3rem 0px !important; */
 }
+
+.splide__slide img {
+  border-radius: 20px;
+}
+
+.splide__arrow {
+  opacity: 0;
+}

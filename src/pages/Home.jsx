@@ -622,42 +622,44 @@ const Home = () => {
       </div>
       {/* SERVICE SECTION ENDS */}
 
-      {/* <Splide
-        options={{
-          rewind: true,
-          type: "loop",
-          width: 800,
-          gap: "1rem",
-          autoplay: true,
-          interval: "1450",
-        }}
-        aria-label="My Favorite Images"
-      >
-        <SplideSlide>
-          <img src={slider1} alt="Image 1" />
-        </SplideSlide>
-        <SplideSlide>
-          <img src={slider2} alt="Image 1" />
-        </SplideSlide>
-        <SplideSlide>
-          <img src={slider3} alt="Image 1" />
-        </SplideSlide>
-        <SplideSlide>
-          <img src={slider4} alt="Image 1" />
-        </SplideSlide>
-        <SplideSlide>
-          <img src={slider5} alt="Image 1" />
-        </SplideSlide>
-        <SplideSlide>
-          <img src={slider6} alt="Image 1" />
-        </SplideSlide>
-        <SplideSlide>
-          <img src={slider7} alt="Image 1" />
-        </SplideSlide>
-        <SplideSlide>
-          <img src={slider8} alt="Image 1" />
-        </SplideSlide>
-      </Splide> */}
+      <div style={{ marginLeft: "calc(50% - 400px)" }}>
+        <Splide
+          options={{
+            rewind: true,
+            type: "loop",
+            width: 800,
+            gap: "1rem",
+            autoplay: true,
+            interval: "5000",
+          }}
+          aria-label="My Favorite Images"
+        >
+          <SplideSlide>
+            <img src={slider1} alt="Image 1" />
+          </SplideSlide>
+          <SplideSlide>
+            <img src={slider2} alt="Image 1" />
+          </SplideSlide>
+          <SplideSlide>
+            <img src={slider3} alt="Image 1" />
+          </SplideSlide>
+          <SplideSlide>
+            <img src={slider4} alt="Image 1" />
+          </SplideSlide>
+          <SplideSlide>
+            <img src={slider5} alt="Image 1" />
+          </SplideSlide>
+          <SplideSlide>
+            <img src={slider6} alt="Image 1" />
+          </SplideSlide>
+          <SplideSlide>
+            <img src={slider7} alt="Image 1" />
+          </SplideSlide>
+          <SplideSlide>
+            <img src={slider8} alt="Image 1" />
+          </SplideSlide>
+        </Splide>
+      </div>
       {/* PARTNERS SECTION STARTS */}
       <h1
         // onClick={display}
