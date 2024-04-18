@@ -73,7 +73,7 @@ const Navbar = () => {
       setNav(!nav);
     }
     if (id === 7) {
-      if (!userDetails.userData.status === "paid") {
+      if (userDetails?.userData?.status === "paid") {
         navigate("dashboard");
         setNav(!nav);
       } else {
@@ -114,7 +114,7 @@ const Navbar = () => {
   };
   return (
     <div className="h-[67px] w-full shadow-sm shadow-black lg:shadow-none  px-4 md:px-10 lg:px-[64px] lg:pt-2 flex justify-between items-center z-30">
-      <div className="z-50 w-full">
+      <div className="w-full">
         <img
           // style={{ padding: "0" }}
           // width={60}

@@ -84,6 +84,68 @@ export const loginUser = createAsyncThunk(
     }
   }
 );
+export const forgotPassword = createAsyncThunk(
+  "auth/forgotPassword",
+  async (createUser, thunkAPI) => {
+    // console.log("forgot REQUEST: " + JSON.stringify(createUser));
+    try {
+      const response = await axios.post(
+        BASE_URL + "/auth/forgotPassword",
+        createUser
+      );
+      console.log(response.data);
+      if (response.status === 200) {
+        return response.data;
+      }
+    } catch (error) {
+      if (error.response) {
+        const obj = error.response.data;
+        const objKey = Object.keys(obj)[0];
+        let err = obj[objKey];
+        console.log(err);
+        return thunkAPI.rejectWithValue(err);
+      } else if (error.request) {
+        return thunkAPI.rejectWithValue("something went terribly wrong");
+      } else {
+        const obj = error.response.data;
+        const objKey = Object.keys(obj)[0];
+        let err = obj[objKey];
+        return thunkAPI.rejectWithValue(err);
+      }
+    }
+  }
+);
+export const resetPassword = createAsyncThunk(
+  "auth/reset-password",
+  async (createUser, thunkAPI) => {
+    // console.log("forgot REQUEST: " + JSON.stringify(createUser));
+    try {
+      const response = await axios.post(
+        BASE_URL + "/auth/reset-password",
+        createUser
+      );
+      console.log(response.data);
+      if (response.status === 200) {
+        return response.data;
+      }
+    } catch (error) {
+      if (error.response) {
+        const obj = error.response.data;
+        const objKey = Object.keys(obj)[0];
+        let err = obj[objKey];
+        console.log(err);
+        return thunkAPI.rejectWithValue(err);
+      } else if (error.request) {
+        return thunkAPI.rejectWithValue("something went terribly wrong");
+      } else {
+        const obj = error.response.data;
+        const objKey = Object.keys(obj)[0];
+        let err = obj[objKey];
+        return thunkAPI.rejectWithValue(err);
+      }
+    }
+  }
+);
 
 export const getUserDetails = createAsyncThunk(
   "auth/userDeets",
@@ -159,6 +221,25 @@ export const authSlice = createSlice({
       .addCase(loginUser.pending, (state) => {
         state.isLoading = true;
       })
+      // LOGIN USER HANDLER
+      .addCase(forgotPassword.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(resetPassword.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(forgotPassword.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSignInSuccess = true;
+        state.isSignInError = false;
+        state.user = action.payload;
+      })
+      .addCase(resetPassword.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSignInSuccess = true;
+        state.isSignInError = false;
+        state.user = action.payload;
+      })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSignInSuccess = true;
@@ -166,6 +247,18 @@ export const authSlice = createSlice({
         state.user = action.payload;
       })
       .addCase(loginUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        state.user = null;
+      })
+      .addCase(forgotPassword.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        state.user = null;
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

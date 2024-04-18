@@ -8,7 +8,6 @@ import Lottie from "lottie-react";
 import load from "../assets/loading.json";
 import ReactPaginate from "react-paginate";
 import { GrRefresh } from "react-icons/gr";
-import { toast } from "react-hot-toast";
 import { useSelector, useDispatch } from "react-redux";
 import {
   createPaymentLink,
@@ -37,6 +36,9 @@ import {
   resetEigibility,
 } from "../Redux/Features/eligibilitySlice";
 
+import { toast } from "react-hot-toast";
+import { UploadDocumentSection } from "../components/HomeDocumentSubmitionList";
+
 const Dashboard = () => {
   const [payModal, setPayModal] = useState(false);
   const [houseModal, setHouseModal] = useState(false);
@@ -45,6 +47,7 @@ const Dashboard = () => {
   const [shareModal, setShareModal] = useState(false);
   const [shareModal1, setShareModal1] = useState(false);
   const [partShareModal, setPartShareModal] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const [investModal, setInvestModal] = useState(false);
   const [investModal1, setInvestModal1] = useState(false);
@@ -449,6 +452,11 @@ const Dashboard = () => {
     <React.Fragment>
       {user ? (
         <div className="w-full h-full lg:flex gap-[60px] px-5 lg:px-[70px] mb-10 mt-10">
+          {isOpen && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10 p-4">
+              <UploadDocumentSection setIsOpen={setIsOpen} />
+            </div>
+          )}
           <div className="lg:flex-1 w-full h-full">
             {/* DASHBOARD BANNER */}
             <div className="w-full  lg:px-0 h-[230px] aspect-auto rounded-[10px] profile-banner bg-cover lg:bg-cover bg-no-repeat bg-left flex flex-col items-center justify-center">
@@ -745,7 +753,9 @@ const Dashboard = () => {
               </div>
 
               <h1 className="font-bold text-xl">
-                {userDetails ? userDetails?.userData?.name : "user's Name"}
+                {userDetails
+                  ? userDetails?.userData?.name?.toUpperCase()
+                  : "user's Name"}
               </h1>
               <p className="text-black/70">(Active User)</p>
 
@@ -762,16 +772,24 @@ const Dashboard = () => {
               <div className="w-full flex gap-4 items-center">
                 <div
                   onClick={() => dispatch(checkEligibility())}
-                  className="bg-[rgb(253,102,2)] w-full h-[20px] py-[15px] px-[15px] rounded-[5px] flex items-center justify-center my-7 text-white"
+                  className="bg-[rgb(253,102,2)] w-full h-[20px] py-[15px] px-[15px] rounded-[5px] flex items-center justify-center my-7 text-white  cursor-pointer"
                 >
                   {loanEligibleLoading ? "Processing..." : "Get a loan"}
                 </div>
                 <div
                   onClick={() => setPayModal(true)}
-                  className="bg-[#000] w-full h-[20px] py-[15px] px-[5px] rounded-[5px] flex items-center justify-center my-7 text-white text-sm"
+                  className="bg-[#000] w-full h-[20px] py-[15px] px-[5px] rounded-[5px] flex items-center justify-center my-7 text-white text-sm  cursor-pointer"
                 >
                   Pay
                 </div>
+              </div>
+              <div
+                onClick={() => {
+                  setIsOpen(true);
+                }}
+                className="bg-[rgb(253,102,2)] w-full h-[20px] py-[15px] px-[15px] rounded-[5px] flex items-center justify-center my-7 text-white cursor-pointer"
+              >
+                Upload documents
               </div>
               {/* PROFILE SECTION ENDS HERE*/}
 

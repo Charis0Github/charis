@@ -8,6 +8,7 @@ import Lottie from "lottie-react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProperty, resetProperty } from "../Redux/Features/propertySlice";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const Property = () => {
   const dispatch = useDispatch();

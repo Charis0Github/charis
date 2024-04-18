@@ -79,12 +79,13 @@ const Users = () => {
   };
 
   const bioData = () => {
+    console.log({ selected });
     return (
-      <div className="bg-white lg:p-4 p-4 rounded-lg h-[95%] w-[80%] relative">
+      <div className="bg-white lg:p-4 p-4 rounded-lg h-[95%] w-[80%] relative  overflow-y-auto  overflow-x-hidden">
         {/* CLOSE BUTTON STARTS */}
         <div
           onClick={() => setIsOpen(false)}
-          className="absolute -top-5 flex items-center z-10 justify-center lg:-right-4 right-2 h-[40px] w-[40px] rounded-full p-1 bg-black text-white cursor-pointer"
+          className="absolute top-1 flex items-center z-10 justify-center lg:right-1 right-10 h-[32px] w-[32px] rounded-full p-1 bg-black text-white cursor-pointer"
         >
           <h1 className="text-lg font-bold">X</h1>
         </div>
@@ -153,41 +154,38 @@ const Users = () => {
           <div className="w-full flex flex-col items-start gap-3">
             <h1 className="font-semibold text-lg">More Information</h1>
             <div className="w-full flex items-start justify-between">
-              <p>Date of Birth</p>
-              <p>: {selected.dob ? selected.dob : "N/A"}</p>
+              <p>Date of Birth:</p>
+              <p> {selected.dob ? selected.dob : "N/A"}</p>
             </div>
 
             <div className="w-full flex items-start justify-between capitalize">
-              <p>L.G.A Of Origin</p>
-              <p>: {selected.lga ? selected.lga : "N/A"}</p>
+              <p>L.G.A Of Origin:</p>
+              <p> {selected.lga ? selected.lga : "N/A"}</p>
             </div>
 
             <div className="w-full flex items-start justify-between capitalize">
-              <p>status rank</p>
-              <p>: {selected.statusRank ? selected.statusRank : "N/A"}</p>
+              <p>status rank:</p>
+              <p> {selected.statusRank ? selected.statusRank : "N/A"}</p>
             </div>
 
             <div className="w-full flex items-start justify-between capitalize">
-              <p>monthly Income</p>
-              <p>: {selected.monthlyIncome ? selected.monthlyIncome : "N/A"}</p>
+              <p>monthly Income:</p>
+              <p> {selected.monthlyIncome ? selected.monthlyIncome : "N/A"}</p>
             </div>
 
             <div className="w-full flex items-start justify-between capitalize">
-              <p>year of service</p>
+              <p>year of service:</p>
+              <p>{selected.yearsOfService ? selected.yearsOfService : "N/A"}</p>
+            </div>
+
+            <div className="w-full flex items-start justify-between capitalize">
+              <p>Retirement Age:</p>
+              <p> {selected.retirementAge ? selected.retirementAge : "N/A"}</p>
+            </div>
+
+            <div className="w-full flex items-start justify-between capitalize">
+              <p>Educational Qualification:</p>
               <p>
-                : {selected.yearsOfService ? selected.yearsOfService : "N/A"}
-              </p>
-            </div>
-
-            <div className="w-full flex items-start justify-between capitalize">
-              <p>Retirement Age</p>
-              <p>: {selected.retirementAge ? selected.retirementAge : "N/A"}</p>
-            </div>
-
-            <div className="w-full flex items-start justify-between capitalize">
-              <p>Educational Qualification</p>
-              <p>
-                :{" "}
                 {selected.educationalQualification
                   ? selected.educationalQualification
                   : "N/A"}
@@ -200,34 +198,30 @@ const Users = () => {
           <div className="w-full flex flex-col items-start gap-3">
             <h1 className="font-semibold text-lg">Next Of Kin Information</h1>
             <div className="w-full flex items-start justify-between">
-              <p>Name</p>
-              <p>: {selected.nextOfKinName ? selected.nextOfKinName : "N/A"}</p>
+              <p>Name:</p>
+              <p> {selected.nextOfKinName ? selected.nextOfKinName : "N/A"}</p>
             </div>
             <div className="w-full flex items-start justify-between">
-              <p>Home Address</p>
+              <p>Home Address:</p>
               <p>
-                :{" "}
                 {selected.nextOfKinAddress ? selected.nextOfKinAddress : "N/A"}
               </p>
             </div>
             <div className="w-full flex items-start justify-between">
-              <p>Relationship</p>
-              <p>: {selected.relationship ? selected.relationship : "N/A"}</p>
+              <p>Relationship:</p>
+              <p> {selected.relationship ? selected.relationship : "N/A"}</p>
             </div>
             <div className="w-full flex items-start justify-between">
-              <p>Phone Number</p>
+              <p>Phone Number:</p>
               <p>
-                :{" "}
                 {selected.nextOfKinPhoneNumber
                   ? selected.nextOfKinPhoneNumber
                   : "N/A"}
               </p>
             </div>
             <div className="w-full flex items-start justify-between">
-              <p>Email</p>
-              <p>
-                : {selected.nextOfKinEmail ? selected.nextOfKinEmail : "N/A"}
-              </p>
+              <p>Email:</p>
+              <p>{selected.nextOfKinEmail ? selected.nextOfKinEmail : "N/A"}</p>
             </div>
           </div>
           {/* COLUMN TWO ENDS HERE */}
@@ -238,11 +232,11 @@ const Users = () => {
               <h1 className="font-semibold text-lg">House Information</h1>
               <div className="w-full flex items-start justify-between">
                 <p>House Type</p>
-                <p>: {selected.houseType ? selected.houseType : "N/A"}</p>
+                <p> {selected.houseType ? selected.houseType : "N/A"}</p>
               </div>
               <div className="w-full flex items-start justify-between">
                 <p>House Size</p>
-                <p>: {selected.houseSize ? selected.houseSize : "N/A"}</p>
+                <p> {selected.houseSize ? selected.houseSize : "N/A"}</p>
               </div>
               <div className="w-full flex items-start justify-between">
                 <p>preferred Location</p>
@@ -496,6 +490,7 @@ const Users = () => {
             <tr className="text-black/50 font-extralight">
               <th className="text-left pb-2 ">Name</th>
               <th className="text-left pb-2 ">Date Joined</th>
+              <th className="text-left pb-2 ">Active</th>
               <th className="text-left pb-2 ">Share Capital</th>
               <th className="text-left pb-2 ">Gender</th>
               <th className="text-left pb-2">Phone</th>
@@ -513,6 +508,9 @@ const Users = () => {
                     <tr key={item._id}>
                       <td className="text-clip pr-3">{item.name}</td>
                       <td className=" pr-3">{formatDate(item.createdAt)}</td>
+                      <td className=" pr-3">
+                        {item.status === "paid" ? "YES" : "NO"}
+                      </td>
                       <td className=" pr-3">
                         {item.shareCapital ? item.shareCapital : "N/A"}
                       </td>

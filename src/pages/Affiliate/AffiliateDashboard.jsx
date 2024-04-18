@@ -378,7 +378,7 @@ const AffiliateDashboard = () => {
                     }
                   />
                   <p className="text-[#FD6602] font-sans">
-                    {userDetails && userDetails?.userData?.name}
+                    {userDetails && userDetails?.userData?.name?.toUpperCase()}
                   </p>
                 </div>
 

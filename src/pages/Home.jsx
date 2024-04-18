@@ -60,7 +60,7 @@ const Home = () => {
 
   const navigate = useNavigate();
   const { user, userDetails } = useSelector((state) => state.auth);
-  console.log({ user, userDetails });
+  // console.log({ user, userDetails });
   const { paymentStatus, paymentSuccess } = useSelector(
     (state) => state.payment
   );
@@ -300,7 +300,7 @@ const Home = () => {
   //     dispatch(resetPayment());
   //   };
   // }, []);
-  console.log({ active });
+  // console.log({ active });
   return (
     <>
       {/* HERO SECTION STARTS */}
@@ -416,15 +416,15 @@ const Home = () => {
 
           <div className="w-full h-full">
             <iframe
-              width="610"
-              height="365"
+              width="660"
+              height="320"
               src="https://www.youtube.com/embed/K_NnoLdkt0c?si=92ZKS6_uNAQqiTjo&amp;controls=0"
               title="YouTube video player"
               frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               referrerpolicy="strict-origin-when-cross-origin"
               allowfullscreen
-              className="hero-vid"
+              className="hero-vid mt-10"
             ></iframe>
             {/* <img
               src={hero}
