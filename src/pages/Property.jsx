@@ -9,6 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProperty, resetProperty } from "../Redux/Features/propertySlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import NavbarMinimal from "../components/minimal-Navbar";
+import Footer from "../components/Footer";
 
 const Property = () => {
   const dispatch = useDispatch();
@@ -45,49 +47,100 @@ const Property = () => {
     return formattedIntegerPart;
   }
 
-  const handleSearch = (e) => {
-    const term = e.target.value;
-    setSearchTerm(term);
-    if (property) {
-      const results = property?.properties.filter((property) =>
-        property.name.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      setSearchResults(results);
-    }
-  };
+  // const handleSearch = (e) => {
+  //   const term = e.target.value;
+  //   setSearchTerm(term);
+  //   if (property) {
+  //     const results = property?.properties.filter((property) =>
+  //       property.name.toLowerCase().includes(searchTerm.toLowerCase())
+  //     );
+  //     setSearchResults(results);
+  //   }
+  // };
 
-  useEffect(() => {
-    if (propertySuccess) {
-      toast.success("Property Retrieved Successfully");
-      // setIsListing(false);
-      dispatch(resetProperty());
-      setNewProperty(property);
-    }
-    if (propertyError) {
-      toast.error(propertyMessage);
-      dispatch(resetProperty());
-    }
-  }, [propertySuccess, propertyError, propertyMessage]);
+  // useEffect(() => {
+  //   if (propertySuccess) {
+  //     toast.success("Property Retrieved Successfully");
+  //     // setIsListing(false);
+  //     dispatch(resetProperty());
+  //     setNewProperty(property);
+  //   }
+  //   if (propertyError) {
+  //     toast.error(propertyMessage);
+  //     dispatch(resetProperty());
+  //   }
+  // }, [propertySuccess, propertyError, propertyMessage]);
 
-  useEffect(() => {
-    if (searchTerm === "") {
-      setSearchResults(property?.properties);
-    }
-  }, [searchTerm]);
+  // useEffect(() => {
+  //   if (searchTerm === "") {
+  //     setSearchResults(property?.properties);
+  //   }
+  // }, [searchTerm]);
 
-  useEffect(() => {
-    dispatch(getProperty());
-    if (property) {
-      setSearchResults(property?.properties);
-    } else {
-      dispatch(getProperty());
-    }
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getProperty());
+  //   if (property) {
+  //     setSearchResults(property?.properties);
+  //   } else {
+  //     dispatch(getProperty());
+  //   }
+  // }, []);
 
   return (
-    <div className="lg:px-[64px] w-full min-h-screen h-full px-2 ">
+    <div className="w-full min-h-screen h-full">
+      <div className="property-hero">
+        <NavbarMinimal />
+        <div className="content">
+          <h1 className="text-7xl font-semibold mt-32 text-blue-50">
+            Find Your Dream <br /> House
+          </h1>
+          <p className="text-[#FF6700] text-xl">
+            Our catalogue will suprice you, search an unprecented list
+            <br /> of luxurious houses that fits your taste and budget.
+          </p>
+          <a href="/catalogue">
+            <button className="button">Catalogue</button>
+          </a>
+        </div>
+        <div className="property-cat">
+          {[
+            { icon: "house-icons/duplex.svg", name: "Duplex" },
+            { icon: "house-icons/blockofflat.svg", name: "Flats" },
+            { icon: "house-icons/detached.svg", name: "Detached" },
+            { icon: "house-icons/terraced.svg", name: "Terraced" },
+            { icon: "house-icons/semi-detached.svg", name: "Semi..." },
+            { icon: "house-icons/mansions.svg", name: "Mansions" },
+            { icon: "house-icons/condominium.svg", name: "Condom..." },
+            { icon: "house-icons/masionettes.svg", name: "Masione..." },
+          ].map((cat) => (
+            <div>
+              <img src={cat.icon} alt="" />
+              <span>{cat.name}</span>
+            </div>
+          ))}
+        </div>
+      </div>
       {/* TITLE AND SEARCH BAR SECTION STARTS */}
-      <div className="flex lg:flex-row flex-col lg:items-center lg:justify-between lg:gap-0 gap-10 my-20">
+
+      <div className="flex items-center p-7 mt-[8rem]  justify-center gap-7">
+        {/* <img src="./houses/3.webp" alt="" className="w-[360px] rounded" /> */}
+        <img src="./houses/1.webp" alt="" className="w-[360px] rounded" />
+        <img src="./houses/2.webp" alt="" className="w-[360px] rounded" />
+        {/* <img src="./houses/4.webp" alt="" className="w-[360px] rounded" /> */}
+        <div className="flex flex-col items-start justify-center gap-1">
+          <h1 className="text-4xl font-semibold">Elegant</h1>
+          <h1 className="text-4xl font-semibold">Apartments</h1>
+          <span className="text-[#FF6700] text-xl">₦15,000,000</span>
+          <p>Spacious sunny apartments</p>
+          <p>82 M2, 2bedrooms, 2 bathrooms </p>
+          <p className="mt-5">
+            Some things are meant together: <br />
+            Macaroni and cheese, pam beesly and jim
+          </p>
+        </div>
+        {/*  */}
+      </div>
+      {/* <div className="flex lg:flex-row flex-col lg:items-center lg:justify-between lg:gap-0 gap-10 my-20">
         <h1 className="w-full text-5xl font-semibold">
           Find The Best <br /> Property
         </h1>
@@ -101,10 +154,10 @@ const Property = () => {
             Search
           </button>
         </div>
-      </div>
+      </div> */}
       {/* TITLE AND SEARCH BAR SECTION STARTS */}
 
-      {userDetails?.userData?.status === "paid" && (
+      {/* {userDetails?.userData?.status === "paid" && (
         <div className="w-full flex justify-end">
           <div
             onClick={() => navigate("/dashboard")}
@@ -127,10 +180,10 @@ const Property = () => {
             </svg>
           </div>
         </div>
-      )}
+      )} */}
 
       {/* PROPERTY DISPLAY SECTION STARTS */}
-      <div className="w-full lg:flex-wrap flex lg:flex-row flex-col h-max items-center justify-start gap-[6.79rem] py-10 px-5 lg:px-0">
+      {/* <div className="w-full lg:flex-wrap flex lg:flex-row flex-col h-max items-center justify-start gap-[6.79rem] py-10 px-5 lg:px-0">
         {searchResults ? (
           searchResults.map((item) => (
             <div
@@ -171,10 +224,10 @@ const Property = () => {
                     </div>
 
                     <div className="w-full flex items-center gap-3 place-self-start">
-                      {/* <img
+                      <img
                         src={sqft}
                         className=" h-5 w-5 object-cover rounded-t-lg"
-                      /> */}
+                      />
                       <p className="bg-[#FD6602] text-sm p-1 text-white rounded-md">
                         PS
                       </p>
@@ -206,16 +259,17 @@ const Property = () => {
             <p>No Properties Were Found</p>
           </div>
         )}
-      </div>
+      </div> */}
       {/* PROPERTY DISPLAY SECTION ENDS */}
 
-      {propertyLoading && (
+      {/* {propertyLoading && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-30 p-4">
           <div className="bg-transparent lg:p-8 p-4 rounded-lg h-max w-[300px] relative overflow-y-auto">
             <Lottie animationData={load} width={200} height={200} loop={true} />
           </div>
         </div>
-      )}
+      )} */}
+      <Footer />
     </div>
   );
 };

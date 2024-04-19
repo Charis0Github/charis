@@ -26,6 +26,7 @@ import ReferralLogin from "./pages/ReferralLogin";
 import SingleProperty from "./pages/PropertyDetails";
 import Terms from "./pages/Terms";
 import { Toaster } from "react-hot-toast";
+import Catalogue from "./pages/Catalogue";
 
 function App() {
   // const user = useSelector((state) => state.auth.user);
@@ -42,9 +43,10 @@ function App() {
           <Route path="event" element={<Event />} />
           <Route path="terms" element={<Terms />} />
           <Route path="dashboard" element={<Dashboard />} />
-          <Route path="property" element={<Property />} />
           <Route path="list-property/:id" element={<SingleProperty />} />
         </Route>
+        <Route path="property" element={<Property />} />
+        <Route path="catalogue" element={<Catalogue />} />
         <Route path="/login" element={<Login />} />
         <Route path="/auth/reset-password" element={<ResetPasswordPage />} />
         <Route

@@ -418,7 +418,7 @@ const Home = () => {
             <iframe
               width="660"
               height="320"
-              src="https://www.youtube.com/embed/K_NnoLdkt0c?si=92ZKS6_uNAQqiTjo&amp;controls=0"
+              src="https://www.youtube.com/embed/u6iNY3rEzMU?si=92ZKS6_uNAQqiTjo&amp;controls=0"
               title="YouTube video player"
               frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
