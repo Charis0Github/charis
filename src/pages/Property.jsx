@@ -94,7 +94,7 @@ const Property = () => {
           <h1 className="text-7xl font-semibold mt-32 text-blue-50">
             Find Your Dream <br /> House
           </h1>
-          <p className="text-[#FF6700] text-xl">
+          <p className="text-[#FF6700] text-xl mt-4">
             Our catalogue will suprice you, search an unprecented list
             <br /> of luxurious houses that fits your taste and budget.
           </p>
