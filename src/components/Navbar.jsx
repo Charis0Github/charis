@@ -25,6 +25,10 @@ const Navbar = () => {
       text: "Home",
     },
     {
+      id: 9,
+      text: "Properties",
+    },
+    {
       id: 3,
       text: "About us",
     },
@@ -54,6 +58,10 @@ const Navbar = () => {
     setActive(id.toString());
     if (id === 2) {
       navigate("/");
+      setNav(!nav);
+    }
+    if (id === 9) {
+      navigate("/property");
       setNav(!nav);
     }
     if (id === 3) {

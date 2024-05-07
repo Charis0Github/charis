@@ -48,8 +48,8 @@ const ResetPasswordPage = () => {
   const handleLoginSubmit = (e) => {
     e.preventDefault();
     const formData = {
-      resetToken: loginForm.resetToken,
-      password: loginForm.newPassword,
+      resetCode: loginForm.resetToken,
+      newPassword: loginForm.newPassword,
     };
     dispatch(resetPassword(formData));
   };

@@ -35,6 +35,7 @@ function App() {
     <Suspense fallback="">
       <Toaster />
       <Routes>
+        <Route path="*" element={<Home />} />
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="about" element={<About />} />

@@ -122,7 +122,7 @@ const Property = () => {
       </div>
       {/* TITLE AND SEARCH BAR SECTION STARTS */}
 
-      <div className="flex items-center p-7 mt-[8rem]  justify-center gap-7">
+      <div className="flex items-center p-7 mt-[8rem]  justify-center gap-7 max-sm:flex-col">
         {/* <img src="./houses/3.webp" alt="" className="w-[360px] rounded" /> */}
         <img src="./houses/1.webp" alt="" className="w-[360px] rounded" />
         <img src="./houses/2.webp" alt="" className="w-[360px] rounded" />

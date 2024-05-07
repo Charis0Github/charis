@@ -216,7 +216,7 @@ const Home = () => {
   }
 
   const handleForm = () => {
-    if (user) {
+    if (user?._id) {
       if (userDetails?.userData?.status === "paid") {
         setMenu(!menu);
         setPrompt(true);
@@ -230,7 +230,7 @@ const Home = () => {
   };
 
   const handleMainDashboard = () => {
-    if (user) {
+    if (user?._id) {
       if (userDetails?.userData?.status === "paid") {
         setMenu(!menu);
         navigate("/dashboard");
@@ -260,7 +260,7 @@ const Home = () => {
   };
 
   const handleGetStarted = () => {
-    if (user) {
+    if (user?._id) {
       setMenu(!menu);
     } else {
       navigate("/login");
@@ -313,6 +313,41 @@ const Home = () => {
                 needs.
               </span>
             </h1>
+
+            <ul className="list-disc mt-[4rem]">
+              <li className="flex items-center gap-3 my-[1rem] text-3xl">
+                <span className="w-[14px] h-[14px] bg-black block rounded-[999px]"></span>{" "}
+                We help to{" "}
+                <span className="bg-[#FF6700] p-1 rounded-lg text-white">
+                  buy
+                </span>{" "}
+                houses
+              </li>
+              <li className="flex items-center gap-3 my-[1rem] text-3xl">
+                <span className="w-[14px] h-[14px] bg-black block rounded-[999px]"></span>{" "}
+                We help to{" "}
+                <span className="bg-[#FF6700] p-1 rounded-lg text-white">
+                  build
+                </span>{" "}
+                houses
+              </li>
+              <li className="flex items-center gap-3 my-[1rem] text-3xl">
+                <span className="w-[14px] h-[14px] bg-black block rounded-[999px]"></span>{" "}
+                We help to{" "}
+                <span className="bg-[#FF6700] p-1 rounded-lg text-white">
+                  complete
+                </span>{" "}
+                houses
+              </li>
+              <li className="flex items-center gap-3 my-[1rem] text-3xl">
+                <span className="w-[14px] h-[14px] bg-black block rounded-[999px]"></span>{" "}
+                We{" "}
+                <span className="bg-[#FF6700] p-1 rounded-lg text-white">
+                  facilitate
+                </span>{" "}
+                loans
+              </li>
+            </ul>
             <p className="mt-12 lg:w-[90%] text-lg font-extralight text-[#5A5A50] ">
               Access basic necessities at a cheaper rate.
               <br />
@@ -335,15 +370,15 @@ const Home = () => {
                 <p className="font-bold text-lg text-center">Get Started</p>
               </button>
 
-              {user && (
+              {user?._id && (
                 <div
                   onClick={handleGetStarted}
                   className={`relative ${
-                    user ? "lg:hidden" : null
+                    user?._id ? "lg:hidden" : null
                   } flex items-center justify-between p-2 px-4 lg:py-3 rounded-lg space-x-2 w-[220px] h-full text-white text-sm bg-[#FF6700] cursor-pointer`}
                 >
                   <img width={15} height={15} src={profile} alt="user icon" />
-                  <p>{user ? userDetails?.userData?.name : "Username"}</p>
+                  <p>{user?._id ? userDetails?.userData?.name : "Username"}</p>
                   <img
                     width={20}
                     height={20}
