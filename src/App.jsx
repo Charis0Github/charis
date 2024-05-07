@@ -27,6 +27,7 @@ import SingleProperty from "./pages/PropertyDetails";
 import Terms from "./pages/Terms";
 import { Toaster } from "react-hot-toast";
 import Catalogue from "./pages/Catalogue";
+import ListProperty from "./pages/ListProperty";
 
 function App() {
   // const user = useSelector((state) => state.auth.user);
@@ -44,6 +45,7 @@ function App() {
           <Route path="event" element={<Event />} />
           <Route path="terms" element={<Terms />} />
           <Route path="dashboard" element={<Dashboard />} />
+          <Route path="list-property" element={<ListProperty />} />
           <Route path="list-property/:id" element={<SingleProperty />} />
         </Route>
         <Route path="property" element={<Property />} />

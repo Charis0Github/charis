@@ -20,17 +20,21 @@ const NavbarMinimal = () => {
         <a href="/property">
           <li className={"active text-blue-50 text-xl"}>Properties</li>
         </a>
-        <li className={"text-blue-50 text-xl"}>List Property</li>
+        <a href="/list-property">
+          <li className={"text-blue-50 text-xl"}>List Property</li>
+        </a>
         {user && (
           <a href="/dashboard">
             <li className={"text-blue-50 text-xl"}>Main Dashboard</li>
           </a>
         )}
         {!user && (
-          <li className="text-sm p-2 bg-[#FF6700] hover:bg-blue-200 px-2 flex items-center justify-center rounded-xl gap-3">
-            Log In
-            <img width={20} height={20} alt="exit icon" src={profile} />
-          </li>
+          <a href="/login">
+            <li className="text-sm p-2 bg-[#FF6700] hover:bg-blue-200 px-2 flex items-center justify-center rounded-xl gap-3">
+              Log In
+              <img width={20} height={20} alt="exit icon" src={profile} />
+            </li>
+          </a>
         )}
       </ul>
     </div>
