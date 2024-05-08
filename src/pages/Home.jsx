@@ -305,7 +305,7 @@ const Home = () => {
     <>
       {/* HERO SECTION STARTS */}
       <div className="pt-[5px] lg:px-[70px] px-5 w-full h-full lg:flex items-center justify-center">
-        <div className="lg:flex items-center justify-center w-full space-y-3 lg:space-y-0 lg:w-[95%] h-full lg:h-[600px] lg:mt-[1rem]">
+        <div className="lg:flex items-center justify-center w-full space-y-3 lg:space-y-0 lg:w-[95%] h-full lg:h-[600px] lg:mt-[1rem] lg:mb-[10rem]">
           <div className="w-full h-full">
             <h1 className="text-5xl font-semibold lg:mt-[4rem] leading-[4rem] w-full">
               CALGI securely delivers <br /> your{" "}
@@ -349,6 +349,15 @@ const Home = () => {
               </li>
             </ul>
             <p className="mt-12 lg:w-[90%] text-lg font-extralight text-[#5A5A50] ">
+              {/* Experience affordability without compromise.
+              <br />
+              Secure your dream home through flexible rent-to-own options or
+              outright purchase.
+              <br />
+              Earn maximized dividends when you invest into the co-operative.
+              <br />
+              Unlock financial freedom with access to low-interest loans at just
+              <span className="text-[#FF6700]"> 5% interest rate.</span> */}
               Access basic necessities at a cheaper rate.
               <br />
               Own your home on a rent to own basis or an outright payment.
@@ -459,7 +468,7 @@ const Home = () => {
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               referrerpolicy="strict-origin-when-cross-origin"
               allowfullscreen
-              className="hero-vid mt-10"
+              className="hero-vid my-auto"
             ></iframe>
             {/* <img
               src={hero}
@@ -837,11 +846,16 @@ const Home = () => {
               View our Property Listings
             </h1>
             <p className="text-white font-lg">
+              Get your dream home now! From bungalows to luxurious estates,
+              Checkout our handpicked properties tailored to your needs. Get
+              Stated Today!
+            </p>
+            {/* <p className="text-white font-lg">
               Explore a variety of top-notch properties tailored to your
               preferences. From cozy homes to elegant apartments and spacious
               estates, our curated listings offer something for everyone. Begin
               your search for the perfect property today.
-            </p>
+            </p> */}
 
             <button className="flex items-center space-x-3 justify-between mt-8 text-lg bg-black py-2 px-4 lg:px-6  lg:py-2 rounded-md w-auto font-bold text-white">
               <Link to="/property" className="font-bold text-sm">
