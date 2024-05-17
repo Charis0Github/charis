@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 //BASE URL
-const BASE_URL = "https://motionless-pig-top-hat.cyclic.app/api/v1";
+const BASE_URL = "https://api.calgi.org/api/v1";
 
 // GET USER FROM LOCAL STORAGE
 // const user = JSON.parse(localStorage.getItem("user"));
