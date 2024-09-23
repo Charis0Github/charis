@@ -315,34 +315,28 @@ const Home = () => {
             </h1>
 
             <ul className="list-disc mt-[4rem]">
-              <li className="flex items-center gap-3 my-[1rem] text-3xl">
-                <span className="w-[14px] h-[14px] bg-black block rounded-[999px]"></span>{" "}
+              <li className="flex items-center my-[4px] text-[1.6rem]">
+                <span className="w-[10px] h-[10px] bg-black block rounded-[999px] mr-[5px]"></span>{" "}
                 We help to{" "}
-                <span className="bg-[#FF6700] p-1 rounded-lg text-white">
-                  buy
-                </span>{" "}
+                <span className="text-[#FF6700] p-1 rounded-lg">buy</span>{" "}
                 houses
               </li>
-              <li className="flex items-center gap-3 my-[1rem] text-3xl">
-                <span className="w-[14px] h-[14px] bg-black block rounded-[999px]"></span>{" "}
+              <li className="flex items-center my-[4px] text-[1.6rem]">
+                <span className="w-[10px] h-[10px] bg-black block rounded-[999px] mr-[5px]"></span>{" "}
                 We help to{" "}
-                <span className="bg-[#FF6700] p-1 rounded-lg text-white">
-                  build
-                </span>{" "}
+                <span className="text-[#FF6700] p-1 rounded-lg">build</span>{" "}
                 houses
               </li>
-              <li className="flex items-center gap-3 my-[1rem] text-3xl">
-                <span className="w-[14px] h-[14px] bg-black block rounded-[999px]"></span>{" "}
+              <li className="flex items-center my-[4px] text-[1.6rem]">
+                <span className="w-[10px] h-[10px] bg-black block rounded-[999px] mr-[5px]"></span>{" "}
                 We help to{" "}
-                <span className="bg-[#FF6700] p-1 rounded-lg text-white">
-                  complete
-                </span>{" "}
+                <span className="text-[#FF6700] p-1 rounded-lg">complete</span>{" "}
                 houses
               </li>
-              <li className="flex items-center gap-3 my-[1rem] text-3xl">
-                <span className="w-[14px] h-[14px] bg-black block rounded-[999px]"></span>{" "}
+              <li className="flex items-center my-[4px] text-[1.6rem]">
+                <span className="w-[10px] h-[10px] bg-black block rounded-[999px] mr-[5px]"></span>{" "}
                 We{" "}
-                <span className="bg-[#FF6700] p-1 rounded-lg text-white">
+                <span className="text-[#FF6700] p-1 rounded-lg">
                   facilitate
                 </span>{" "}
                 loans
