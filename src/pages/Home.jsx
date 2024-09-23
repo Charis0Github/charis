@@ -307,12 +307,32 @@ const Home = () => {
       <div className="pt-[5px] lg:px-[70px] px-5 w-full h-full lg:flex items-center justify-center">
         <div className="lg:flex items-center justify-center w-full space-y-3 lg:space-y-0 lg:w-[95%] h-full lg:h-[600px] lg:mt-[1rem] lg:mb-[10rem]">
           <div className="w-full h-full">
-            <h1 className="text-5xl font-semibold lg:mt-[4rem] leading-[4rem] w-full">
-              CALGI securely delivers <br /> your{" "}
-              <span className="bg-[#FF6700] p-1 rounded-lg text-white">
-                needs.
-              </span>
-            </h1>
+            <div className="splide-on-mobile p-0 m-0">
+              <Splide
+                options={{
+                  rewind: true,
+                  type: "loop",
+                  width: 400,
+                  gap: "0rem",
+                  autoplay: true,
+                  interval: "1600",
+                }}
+                aria-label="My Favorite Images"
+              >
+                <SplideSlide>
+                  <img src={slider1} alt="Image 1" />
+                </SplideSlide>
+                <SplideSlide>
+                  <img src={slider2} alt="Image 1" />
+                </SplideSlide>
+                <SplideSlide>
+                  <img src={slider3} alt="Image 1" />
+                </SplideSlide>
+                <SplideSlide>
+                  <img src={slider4} alt="Image 1" />
+                </SplideSlide>
+              </Splide>
+            </div>
 
             <ul className="list-disc mt-[4rem]">
               <li className="flex items-center my-[4px] text-[1.6rem]">
@@ -474,7 +494,7 @@ const Home = () => {
       </div>
       {/* HERO SECTION ENDS */}
       {/* SERVICE SECTION STARTS */}
-      <div className="grid lg:px-[70px] px-5 py-5  w-full h-auto lg:h-max service -mt-[5rem]">
+      <div className="min-[600px]:mt-[12rem] mt-9 grid lg:px-[70px] px-5 py-5  w-full h-auto lg:h-max service">
         <div className="w-full h-full flex flex-col lg:py-32 items-center lg:pt-0 pt-28 justify-start">
           <div className="flex lg:mt-36  flex-wrap justify-center lg:justify-start items-center w-full text-left lg:space-x-28 space-x-5 text-[#ffffff68] cursor-pointer">
             {tabs.map((tab, index) => (
