@@ -142,8 +142,6 @@ const Login = () => {
   useEffect(() => {
     if (isSuccess) {
       toast.success(message);
-
-      setRegister(!register);
       setTimeout(() => {
         dispatch(reset());
       }, 4000);
