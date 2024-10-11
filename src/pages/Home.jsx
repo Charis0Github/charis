@@ -304,76 +304,96 @@ const Home = () => {
   return (
     <>
       {/* HERO SECTION STARTS */}
-      <div className="pt-[5px] lg:px-[70px] px-5 w-full h-full lg:flex items-center justify-center">
-        <div className="lg:flex items-center justify-center w-full space-y-3 lg:space-y-0 lg:w-[95%] h-full lg:h-[600px] lg:mt-[1rem] lg:mb-[10rem]">
+      <div className="pt-[3px] lg:px-[70px] p-0 w-full h-full flex items-center justify-center">
+        <div className="lg:flex items-center justify-center w-full space-y-3 lg:space-y-0 lg:w-[95%] h-full lg:h-[540px] lg:mt-[1rem] lg:mb-[10rem] p-2">
           <div className="w-full h-full">
             <div className="splide-on-mobile p-0 m-0">
               <Splide
+                className="!pb-2 !min-w-[360px]"
                 options={{
                   rewind: true,
                   type: "loop",
-                  width: 400,
-                  gap: "0rem",
+                  width: 900,
+                  height: 420,
                   autoplay: true,
                   interval: "1600",
+                  controls: false,
                 }}
-                aria-label="My Favorite Images"
               >
                 <SplideSlide>
-                  <img src={slider1} alt="Image 1" />
+                  <img
+                    className="lg:!w-[840px] lg:!h-[480px] !min-w-[400px]"
+                    src={slider1}
+                    alt="Image 1"
+                  />
                 </SplideSlide>
                 <SplideSlide>
-                  <img src={slider2} alt="Image 1" />
+                  <img
+                    className="lg:!w-[840px] lg:!h-[480px] !min-w-[400px]"
+                    src={slider2}
+                    alt="Image 1"
+                  />
                 </SplideSlide>
                 <SplideSlide>
-                  <img src={slider3} alt="Image 1" />
+                  <img
+                    className="lg:!w-[840px] lg:!h-[480px] !min-w-[400px]"
+                    src={slider3}
+                    alt="Image 1"
+                  />
                 </SplideSlide>
                 <SplideSlide>
-                  <img src={slider4} alt="Image 1" />
+                  <img
+                    className="lg:!w-[840px] lg:!h-[480px] !min-w-[400px]"
+                    src={slider4}
+                    alt="Image 1"
+                  />
                 </SplideSlide>
               </Splide>
+              <div class="my-slider-progress max-w-[740px] rounded-sm mx-auto">
+                <div class="my-slider-progress-bar"></div>
+              </div>
             </div>
 
-            <ul className="list-disc mt-[4rem]">
+            <h1 className="list-discc text-[1.8rem] lg:text-[2.9rem] inline-block gap-1  mt-[2rem]">
+              We
+              <span className="text-[#FF6700]"> buy</span>,
+              <span className="text-[#FF6700]"> build</span>,
+              <span className="text-[#FF6700]"> complete</span> houses and
+              <span className="text-[#FF6700]"> facilitate </span>
+              loans.
+            </h1>
+            {/* 
+            <ul className="list-disc mt-[2rem]">
               <li className="flex items-center my-[4px] text-[1.6rem]">
-                <span className="w-[10px] h-[10px] bg-black block rounded-[999px] mr-[5px]"></span>{" "}
-                We help to{" "}
-                <span className="text-[#FF6700] p-1 rounded-lg">buy</span>{" "}
+                <span className="w-[10px] h-[10px] bg-black block rounded-[999px] mr-[5px]"></span>
+                We help to
+                <span className="text-[#FF6700] p-1 rounded-lg">buy</span>
                 houses
               </li>
               <li className="flex items-center my-[4px] text-[1.6rem]">
-                <span className="w-[10px] h-[10px] bg-black block rounded-[999px] mr-[5px]"></span>{" "}
-                We help to{" "}
-                <span className="text-[#FF6700] p-1 rounded-lg">build</span>{" "}
+                <span className="w-[10px] h-[10px] bg-black block rounded-[999px] mr-[5px]"></span>
+                We help to
+                <span className="text-[#FF6700] p-1 rounded-lg">build</span>
                 houses
               </li>
               <li className="flex items-center my-[4px] text-[1.6rem]">
-                <span className="w-[10px] h-[10px] bg-black block rounded-[999px] mr-[5px]"></span>{" "}
-                We help to{" "}
-                <span className="text-[#FF6700] p-1 rounded-lg">complete</span>{" "}
+                <span className="w-[10px] h-[10px] bg-black block rounded-[999px] mr-[5px]"></span>
+                We help to
+                <span className="text-[#FF6700] p-1 rounded-lg">complete</span>
                 houses
               </li>
               <li className="flex items-center my-[4px] text-[1.6rem]">
-                <span className="w-[10px] h-[10px] bg-black block rounded-[999px] mr-[5px]"></span>{" "}
-                We{" "}
+                <span className="w-[10px] h-[10px] bg-black block rounded-[999px] mr-[5px]"></span>
+                We
                 <span className="text-[#FF6700] p-1 rounded-lg">
                   facilitate
-                </span>{" "}
+                </span>
                 loans
               </li>
-            </ul>
-            <p className="mt-12 lg:w-[90%] text-lg font-extralight text-[#5A5A50] ">
-              {/* Experience affordability without compromise.
-              <br />
-              Secure your dream home through flexible rent-to-own options or
-              outright purchase.
-              <br />
-              Earn maximized dividends when you invest into the co-operative.
-              <br />
-              Unlock financial freedom with access to low-interest loans at just
-              <span className="text-[#FF6700]"> 5% interest rate.</span> */}
-              Access basic necessities at a cheaper rate.
-              <br />
+            </ul> */}
+            <p className="mt-3 lg:w-[90%] text-lg font-extralight text-[#5A5A50] ">
+              {/* Access basic necessities at a cheaper rate.
+              <br /> */}
               Own your home on a rent to own basis or an outright payment.
               <br />
               Earn dividends when you invest into the co-operative.
@@ -455,27 +475,13 @@ const Home = () => {
                   </li>
                 </ul>
               )}
-
-              {/* <div
-                onClick={handleAffiliate}
-                className="text-black bg-white border-[1px] border-black w-auto join p-2 rounded-lg text-sm px-6 py-3 font-bold cursor-pointer"
-              >
-                Become an affiliate
-              </div>
-
-              <div
-                onClick={() => setIsListing(true)}
-                className="text-black bg-white border-[1px] border-black w-auto join p-2 rounded-lg text-sm px-6 py-3 font-bold cursor-pointer"
-              >
-                List Property
-              </div> */}
             </div>
           </div>
 
           <div className="w-full h-full">
             <iframe
-              width="660"
-              height="320"
+              width="900"
+              height="430"
               src="https://www.youtube.com/embed/u6iNY3rEzMU?si=92ZKS6_uNAQqiTjo&amp;controls=0"
               title="YouTube video player"
               frameborder="0"

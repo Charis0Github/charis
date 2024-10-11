@@ -574,7 +574,7 @@ const Login = () => {
             </span>
           </p>
         ) : (
-          <p>
+          <p className="flex gap-1">
             Don't Have an Account?
             <span
               onClick={() => handleRegister("register")}

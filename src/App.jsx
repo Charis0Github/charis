@@ -56,7 +56,6 @@ function App() {
           path="/referralLogin/:referralCode"
           element={<ReferralLogin />}
         />
-
         <Route path="/verify" element={<VerifyPayment />} />
         <Route path="/affiliate" element={<AffiliateLayout />}>
           <Route index element={<AffiliateLogin />} />
